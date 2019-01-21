@@ -5,21 +5,22 @@ import android.support.v4.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
 import android.widget.TextView
 
-class RecordFragment : Fragment() {
+class CharacterDetailFragment : Fragment() {
 
 
     private lateinit var mCharacter : String
     private lateinit var mTitleTextView : TextView
 
     companion object {
-        private val ARG_RECORD_CHARACTER = "record_character"
-        fun newInstance(character : String) : RecordFragment{
+        private val ARG_CHARACTER_DETAIL = "character_detail"
+        fun newInstance(character : String) : CharacterDetailFragment{
             var args = Bundle()
-            args.putSerializable(ARG_RECORD_CHARACTER, character)
+            args.putSerializable(ARG_CHARACTER_DETAIL, character)
 
-            var frag = RecordFragment()
+            var frag = CharacterDetailFragment()
             frag.setArguments(args)
             return frag
         }
@@ -29,7 +30,7 @@ class RecordFragment : Fragment() {
         super.onCreate(savedInstanceState)
 
         mCharacter = arguments?.getSerializable(
-            RecordFragment.ARG_RECORD_CHARACTER
+            CharacterDetailFragment.ARG_CHARACTER_DETAIL
         ) as String
     }
 
@@ -40,7 +41,7 @@ class RecordFragment : Fragment() {
     ): View? {
 
         val v = inflater.inflate(
-            R.layout.record_match_fragment,
+            R.layout.character_detail_fragment,
             container,
             false
         )
@@ -49,6 +50,20 @@ class RecordFragment : Fragment() {
             R.id.title_character_name_text_view
         )
         mTitleTextView.setText(mCharacter)
+
+        val recordButton = v.findViewById<Button>(
+            R.id.record_button
+        )
+        recordButton.setOnClickListener({v ->
+            var frag = MatchRecordFragment.newInstance()
+
+            activity
+                ?.supportFragmentManager
+                ?.beginTransaction()
+                ?.replace(R.id.fragment_container, frag)
+                ?.addToBackStack(null)
+                ?.commit()
+        })
 
         return v
     }

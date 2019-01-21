@@ -5,7 +5,6 @@ import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
-import android.text.Layout
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -65,7 +64,7 @@ class CharacterListFragment() : Fragment() {
         }
 
         override fun onClick(v: View?) {
-            var frag = RecordFragment.newInstance(mItemView.text as String)
+            var frag = CharacterDetailFragment.newInstance(mItemView.text as String)
 
             activity
                 ?.supportFragmentManager
