@@ -28,7 +28,6 @@ class CharacterListFragment() : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
 
-        Log.d("TAG", "onCreateView called")
         val v = inflater.inflate(
             R.layout.character_list_fragment,
             container,
@@ -43,11 +42,9 @@ class CharacterListFragment() : Fragment() {
         )
 
         mCharacterRecyclerView.setAdapter(
-            CharacterAdapter(Characters.smashUltimate)
+            CharacterAdapter(resources.getStringArray(R.array.characters))
         )
-
         return v
-
     }
 
     private inner class CharacterHolder(itemView : View) :
@@ -75,25 +72,25 @@ class CharacterListFragment() : Fragment() {
         }
     }
 
-    private inner class CharacterAdapter(characterList : List<String>) :
+    private inner class CharacterAdapter(characters : Array<String>) :
         RecyclerView.Adapter<CharacterHolder>() {
 
-        private var mCharacterList = characterList
+        private var mCharacters = characters
 
         override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CharacterHolder {
             val inflater = LayoutInflater.from(getActivity())
-            val view = inflater.inflate(R.layout.character_view, parent, false)
+            val view = inflater.inflate(R.layout.character_item, parent, false)
 
 
             return CharacterHolder(view)
         }
 
         override fun getItemCount() : Int {
-            return mCharacterList.size
+            return mCharacters.size
         }
 
         override fun onBindViewHolder(holder: CharacterHolder, position: Int) {
-            val name = mCharacterList[position]
+            val name = mCharacters[position]
             holder.bindCharacter(name)
         }
     }

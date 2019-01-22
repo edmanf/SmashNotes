@@ -16,7 +16,7 @@
 
     <AutoCompleteTextView
             android:id="@+id/character"
-            android:hint="Character"
+            android:hint="@string/character_hint"
             android:inputType="textAutoComplete"
             android:layout_height="wrap_content" android:layout_marginEnd="8dp"
             app:layout_constraintEnd_toEndOf="parent" android:layout_marginTop="8dp"

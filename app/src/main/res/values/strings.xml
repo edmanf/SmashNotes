@@ -3,4 +3,102 @@
 
     <string name="record_button_text">Begin Recording</string>
     <string name="record_button_done_text">Done</string>
+    <string name="character_hint">Character</string>
+
+    <string-array name="stages">
+        <item>Battlefield</item>
+        <item>Final Destination</item>
+        <item>Pokemon Stadium 1</item>
+        <item>Pokemon Stadium 2</item>
+        <item>Smashville</item>
+        <item>Town and City</item>
+        <item>Yoshi\'s Story</item>
+        <item>Lylat Cruise</item>
+        <item>Dreamland</item>
+    </string-array>
+
+    <string-array name="characters">
+        <item>Mario</item>
+        <item>Donkey Kong</item>
+        <item>Link</item>
+        <item>Samus</item>
+        <item>Dark Samus</item>
+        <item>Yoshi</item>
+        <item>Kirby</item>
+        <item>Fox</item>
+        <item>Pikachu</item>
+        <item>Luigi</item>
+        <item>Ness</item>
+        <item>Captain Falcon</item>
+        <item>Jigglypuff</item>
+        <item>Peach</item>
+        <item>Daisy</item>
+        <item>Bowser</item>
+        <item>Ice Climbers</item>
+        <item>Shiek</item>
+        <item>Zelda</item>
+        <item>Dr. Mario</item>
+        <item>Pichu</item>
+        <item>Falco</item>
+        <item>Marth</item>
+        <item>Lucina</item>
+        <item>Young Link</item>
+        <item>Ganondorf</item>
+        <item>Mewtwo</item>
+        <item>Roy</item>
+        <item>Chrom</item>
+        <item>Mr. Game &amp; Watch</item>
+        <item>Meta Knight</item>
+        <item>Pit</item>
+        <item>Dark Pit</item>
+        <item>Zero Suit Samus</item>
+        <item>Wario</item>
+        <item>Snake</item>
+        <item>Ike</item>
+        <item>Pokemon Trainer</item>
+        <item>Squirtle</item>
+        <item>Ivysaur</item>
+        <item>Charizard</item>
+        <item>Diddy Kong</item>
+        <item>Lucas</item>
+        <item>Sonic</item>
+        <item>King Dedede</item>
+        <item>Olimar</item>
+        <item>Lucario</item>
+        <item>R.O.B</item>
+        <item>Toon Link</item>
+        <item>Wolf</item>
+        <item>Villager</item>
+        <item>Mega man</item>
+        <item>Wii Fit Trainer</item>
+        <item>Rosalina &amp; Luma</item>
+        <item>Little Mac</item>
+        <item>Greninja</item>
+        <item>Mii Brawler</item>
+        <item>Mii Swordfighter</item>
+        <item>Mii Gunner</item>
+        <item>Palutena</item>
+        <item>Pac-Man</item>
+        <item>Robin</item>
+        <item>Shulk</item>
+        <item>Bowser Jr.</item>
+        <item>Duck Hunt</item>
+        <item>Ryu</item>
+        <item>Ken</item>
+        <item>Cloud</item>
+        <item>Corrin</item>
+        <item>Bayonetta</item>
+        <item>Inkling</item>
+        <item>Ridley</item>
+        <item>Simon</item>
+        <item>Richter</item>
+        <item>King K. Rool</item>
+        <item>Isabelle</item>
+        <item>Incineroar</item>
+    </string-array>
+
+    <string-array name="win_loss">
+        <item>Win</item>
+        <item>Loss</item>
+    </string-array>
 </resources>

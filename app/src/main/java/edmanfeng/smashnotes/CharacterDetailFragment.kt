@@ -55,7 +55,7 @@ class CharacterDetailFragment : Fragment() {
             R.id.record_button
         )
         recordButton.setOnClickListener({v ->
-            var frag = MatchRecordFragment.newInstance()
+            var frag = MatchRecordFragment.newInstance(mCharacter)
 
             activity
                 ?.supportFragmentManager
