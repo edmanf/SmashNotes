@@ -19,12 +19,13 @@ abstract class GameDatabase : RoomDatabase() {
                 return tempInstance
             }
             synchronized(this) {
-                INSTANCE = Room.databaseBuilder(
+                val instance = Room.databaseBuilder(
                     context.applicationContext,
                     GameDatabase::class.java,
                     "game_database"
                 ).build()
-                INSTANCE
+                INSTANCE = instance // Can't return INSTANCE because it is private
+                return instance
             }
         }
     }

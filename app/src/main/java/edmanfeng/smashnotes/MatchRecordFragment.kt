@@ -1,15 +1,15 @@
 package edmanfeng.smashnotes
 
 import android.os.Bundle
-import android.support.constraint.ConstraintLayout
-import android.support.v4.app.Fragment
-import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.*
+import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.fragment.app.Fragment
+import androidx.recyclerview.widget.RecyclerView
 
-class MatchRecordFragment private constructor() : Fragment() {
+class MatchRecordFragment : Fragment() {
 
     private lateinit var mCharacter : String
 
@@ -26,14 +26,14 @@ class MatchRecordFragment private constructor() : Fragment() {
     private lateinit var mSessionHistory : RecyclerView
 
     companion object {
-        private val ARG_CHARACTER_NAME="character_name"
+        private const val ARG_CHARACTER_NAME = "character_name"
 
         fun newInstance(name : String) : MatchRecordFragment {
             val frag = MatchRecordFragment()
             val args = Bundle()
             args.putSerializable(ARG_CHARACTER_NAME, name)
 
-            frag.setArguments(args)
+            frag.arguments = args
             return frag
         }
     }
@@ -64,11 +64,7 @@ class MatchRecordFragment private constructor() : Fragment() {
 
 
         mSaveButton = v.findViewById(R.id.save_button)
-        mSaveButton.setOnClickListener({ v->
-            saveMatch()
-
-        })
-
+        mSaveButton.setOnClickListener{ saveMatch() }
         val characterAdapter = ArrayAdapter(
             context,
             android.R.layout.simple_dropdown_item_1line,
@@ -106,6 +102,8 @@ class MatchRecordFragment private constructor() : Fragment() {
     }
 
     private inner class MatchHolder(itemView : View) : RecyclerView.ViewHolder(itemView) {
+        private var mItemView = itemView
+
         fun bindMatch(match : GameRecord) {
 
         }
