@@ -11,7 +11,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 
-class CharacterListFragment() : Fragment() {
+class CharacterListFragment private constructor() : Fragment() {
     private val TAG = "CharacterListFragment"
 
     companion object {

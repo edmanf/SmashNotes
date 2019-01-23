@@ -8,7 +8,7 @@ import android.view.ViewGroup
 import android.widget.Button
 import android.widget.TextView
 
-class CharacterDetailFragment : Fragment() {
+class CharacterDetailFragment private constructor() : Fragment() {
 
 
     private lateinit var mCharacter : String

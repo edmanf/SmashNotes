@@ -9,7 +9,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.*
 
-class MatchRecordFragment() : Fragment() {
+class MatchRecordFragment private constructor() : Fragment() {
 
     private lateinit var mCharacter : String
 
@@ -103,5 +103,28 @@ class MatchRecordFragment() : Fragment() {
 
     private fun saveMatch() {
 
+    }
+
+    private inner class MatchHolder(itemView : View) : RecyclerView.ViewHolder(itemView) {
+        fun bindMatch(match : GameRecord) {
+
+        }
+    }
+
+    private inner class MatchAdapter(matches : List<GameRecord>) : RecyclerView.Adapter<MatchHolder>() {
+        private val mMatches = matches
+
+        override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MatchHolder {
+            val v = LayoutInflater.from(context).inflate(R.layout.saved_match_item, parent, false)
+            return MatchHolder(v)
+        }
+
+        override fun getItemCount(): Int {
+            return mMatches.size
+        }
+
+        override fun onBindViewHolder(holder: MatchHolder, position: Int) {
+            holder.bindMatch(mMatches[position])
+        }
     }
 }
