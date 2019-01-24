@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import android.widget.*
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.fragment.app.Fragment
+import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 
 class MatchRecordFragment : Fragment() {
@@ -24,6 +25,8 @@ class MatchRecordFragment : Fragment() {
     private lateinit var mGSPView : EditText
     private lateinit var mNotes : EditText
     private lateinit var mSessionHistory : RecyclerView
+
+    private var mGamesList = mutableListOf<GameRecord>()
 
     companion object {
         private const val ARG_CHARACTER_NAME = "character_name"
@@ -60,7 +63,6 @@ class MatchRecordFragment : Fragment() {
         mHazardsCheck = v.findViewById(R.id.hazards_checkbox)
         mGSPView = v.findViewById(R.id.gsp)
         mNotes = v.findViewById(R.id.match_notes)
-        mSessionHistory = v.findViewById(R.id.session_history)
 
 
         mSaveButton = v.findViewById(R.id.save_button)
@@ -94,35 +96,61 @@ class MatchRecordFragment : Fragment() {
         mResultView = v.findViewById(R.id.match_result)
         mResultView.adapter = resultAdapter
 
+        mSessionHistory = v.findViewById(R.id.session_history)
+        mSessionHistory.adapter = GameAdapter(mGamesList)
+        val manager = LinearLayoutManager(context)
+
+        // make RecyclerView insert at the top, old items go offscreen
+        manager.stackFromEnd = true
+        manager.reverseLayout = true
+        mSessionHistory.layoutManager = manager
+
         return v
     }
 
     private fun saveMatch() {
-
+        val game = GameRecord(
+            0,
+            mPlayerCharacterView.text.toString(),
+            mOpponentCharacterView.text.toString(),
+            mOpponentTagView.text.toString(),
+            mStageView.text.toString(),
+            mHazardsCheck.isChecked,
+            mResultView.selectedItem.toString(),
+            mGSPView.text.toString().toInt(),
+            mNotes.text.toString()
+        )
+        mGamesList.add(game)
+        mSessionHistory.adapter?.notifyDataSetChanged()
     }
 
-    private inner class MatchHolder(itemView : View) : RecyclerView.ViewHolder(itemView) {
+    private inner class GameHolder(itemView : View) : RecyclerView.ViewHolder(itemView) {
         private var mItemView = itemView
+        private lateinit var mGame : GameRecord
 
-        fun bindMatch(match : GameRecord) {
-
+        fun bindGame(game : GameRecord) {
+            mGame = game
+            mItemView.findViewById<TextView>(R.id.player_character).text = mGame.playerCharacter
+            mItemView.findViewById<TextView>(R.id.opponent_character).text = mGame.opponentCharacter
+            mItemView.findViewById<TextView>(R.id.stage).text = mGame.stage
+            mItemView.findViewById<TextView>(R.id.result).text = if (mGame.result == "Win") "W" else "L"
         }
     }
 
-    private inner class MatchAdapter(matches : List<GameRecord>) : RecyclerView.Adapter<MatchHolder>() {
-        private val mMatches = matches
+    private inner class GameAdapter(games : List<GameRecord>) : RecyclerView.Adapter<GameHolder>() {
+        private val mGames = games
 
-        override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MatchHolder {
+        override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): GameHolder {
             val v = LayoutInflater.from(context).inflate(R.layout.saved_match_item, parent, false)
-            return MatchHolder(v)
+            return GameHolder(v)
         }
 
         override fun getItemCount(): Int {
-            return mMatches.size
+            return mGames.size
         }
 
-        override fun onBindViewHolder(holder: MatchHolder, position: Int) {
-            holder.bindMatch(mMatches[position])
+        override fun onBindViewHolder(holder: GameHolder, position: Int) {
+            holder.bindGame(mGames[position])
         }
     }
 }

@@ -15,13 +15,13 @@ class CharacterDetailFragment : Fragment() {
     private lateinit var mTitleTextView : TextView
 
     companion object {
-        private val ARG_CHARACTER_DETAIL = "character_detail"
+        private const val ARG_CHARACTER_DETAIL = "character_detail"
         fun newInstance(character : String) : CharacterDetailFragment{
-            var args = Bundle()
+            val args = Bundle()
             args.putSerializable(ARG_CHARACTER_DETAIL, character)
 
-            var frag = CharacterDetailFragment()
-            frag.setArguments(args)
+            val frag = CharacterDetailFragment()
+            frag.arguments = args
             return frag
         }
     }
@@ -46,16 +46,14 @@ class CharacterDetailFragment : Fragment() {
             false
         )
 
-        mTitleTextView = v.findViewById<TextView>(
-            R.id.title_character_name_text_view
-        )
-        mTitleTextView.setText(mCharacter)
+        mTitleTextView = v.findViewById(R.id.title_character_name_text_view)
+        mTitleTextView.text = mCharacter
 
         val recordButton = v.findViewById<Button>(
             R.id.record_button
         )
-        recordButton.setOnClickListener({v ->
-            var frag = MatchRecordFragment.newInstance(mCharacter)
+        recordButton.setOnClickListener{
+            val frag = MatchRecordFragment.newInstance(mCharacter)
 
             activity
                 ?.supportFragmentManager
@@ -63,7 +61,7 @@ class CharacterDetailFragment : Fragment() {
                 ?.replace(R.id.fragment_container, frag)
                 ?.addToBackStack(null)
                 ?.commit()
-        })
+        }
 
         return v
     }

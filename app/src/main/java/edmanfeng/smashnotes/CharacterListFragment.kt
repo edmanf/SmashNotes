@@ -11,9 +11,10 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 
 class CharacterListFragment : Fragment() {
-    private val TAG = "CharacterListFragment"
 
     companion object {
+        private const val TAG = "CharacterListFragment"
+
         fun newInstance() : CharacterListFragment {
             return CharacterListFragment()
         }
@@ -36,13 +37,13 @@ class CharacterListFragment : Fragment() {
             R.id.character_list_recyclerview
         ) as RecyclerView
 
-        mCharacterRecyclerView.setLayoutManager(
-            LinearLayoutManager(Activity())
+        mCharacterRecyclerView.layoutManager = LinearLayoutManager(Activity())
+
+
+        mCharacterRecyclerView.adapter = CharacterAdapter(
+            resources.getStringArray(R.array.characters)
         )
 
-        mCharacterRecyclerView.setAdapter(
-            CharacterAdapter(resources.getStringArray(R.array.characters))
-        )
         return v
     }
 
@@ -56,11 +57,11 @@ class CharacterListFragment : Fragment() {
         }
 
         fun bindCharacter(character: String) {
-            mItemView.setText(character)
+            mItemView.text = character
         }
 
         override fun onClick(v: View?) {
-            var frag = CharacterDetailFragment.newInstance(mItemView.text as String)
+            val frag = CharacterDetailFragment.newInstance(mItemView.text as String)
 
             activity
                 ?.supportFragmentManager
@@ -77,7 +78,7 @@ class CharacterListFragment : Fragment() {
         private var mCharacters = characters
 
         override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CharacterHolder {
-            val inflater = LayoutInflater.from(getActivity())
+            val inflater = LayoutInflater.from(context)
             val view = inflater.inflate(R.layout.character_item, parent, false)
 
 

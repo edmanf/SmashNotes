@@ -3,7 +3,18 @@
 
     <string name="record_button_text">Begin Recording</string>
     <string name="record_button_done_text">Done</string>
+
+    <string name="save_button_text">Save</string>
     <string name="character_hint">Character</string>
+    <string name="stage_hint">Stage</string>
+    <string name="hazards_label">Hazards</string>
+    <string name="result_label">Result</string>
+    <string name="gsp_hint">GSP</string>
+    <string name="notes_hint">Notes</string>
+
+    <string name="player_name_hint">Name</string>
+
+    <string name="game_vs_text">v</string>
 
     <string-array name="stages">
         <item>Battlefield</item>
