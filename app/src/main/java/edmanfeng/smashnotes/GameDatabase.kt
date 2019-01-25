@@ -14,11 +14,7 @@ abstract class GameDatabase : RoomDatabase() {
         private var INSTANCE: GameDatabase? = null
 
         fun getDatabase(context: Context) : GameDatabase {
-            val tempInstance = INSTANCE
-            if (tempInstance != null) {
-                return tempInstance
-            }
-            synchronized(this) {
+            return INSTANCE?: synchronized(this) {
                 val instance = Room.databaseBuilder(
                     context.applicationContext,
                     GameDatabase::class.java,

@@ -7,11 +7,13 @@ import android.view.ViewGroup
 import android.widget.*
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 
 class MatchRecordFragment : Fragment() {
 
+    private lateinit var mGameViewModel: GameViewModel
     private lateinit var mCharacter : String
 
     private lateinit var mSaveButton : Button
@@ -26,7 +28,7 @@ class MatchRecordFragment : Fragment() {
     private lateinit var mNotes : EditText
     private lateinit var mSessionHistory : RecyclerView
 
-    private var mGamesList = mutableListOf<GameRecord>()
+    //private var mGamesList = mutableListOf<GameRecord>()
 
     companion object {
         private const val ARG_CHARACTER_NAME = "character_name"
@@ -45,6 +47,7 @@ class MatchRecordFragment : Fragment() {
         super.onCreate(savedInstanceState)
 
         mCharacter = arguments?.getString(ARG_CHARACTER_NAME) as String
+        mGameViewModel = ViewModelProviders.of(this).get(GameViewModel::class.java)
     }
 
     override fun onCreateView(
@@ -97,7 +100,7 @@ class MatchRecordFragment : Fragment() {
         mResultView.adapter = resultAdapter
 
         mSessionHistory = v.findViewById(R.id.session_history)
-        mSessionHistory.adapter = GameAdapter(mGamesList)
+        mSessionHistory.adapter = GameAdapter(mGameViewModel.sessionGames)
         val manager = LinearLayoutManager(context)
 
         // make RecyclerView insert at the top, old items go offscreen
@@ -120,7 +123,7 @@ class MatchRecordFragment : Fragment() {
             mGSPView.text.toString().toInt(),
             mNotes.text.toString()
         )
-        mGamesList.add(game)
+        mGameViewModel.insert(game)
         mSessionHistory.adapter?.notifyDataSetChanged()
     }
 
