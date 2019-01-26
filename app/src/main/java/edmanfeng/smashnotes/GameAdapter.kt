@@ -7,8 +7,12 @@ import android.widget.TextView
 import androidx.lifecycle.LiveData
 import androidx.recyclerview.widget.RecyclerView
 
-public class GameAdapter(games : List<GameRecord>) : RecyclerView.Adapter<GameAdapter.GameHolder>() {
-    private val mGames = games
+public class GameAdapter(games : List<GameRecord>?) : RecyclerView.Adapter<GameAdapter.GameHolder>() {
+    private var mGames : List<GameRecord>
+
+    init {
+        mGames = games ?: mutableListOf()
+    }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): GameHolder {
         val v = LayoutInflater.from(parent.context).inflate(R.layout.saved_match_item, parent, false)
@@ -21,6 +25,11 @@ public class GameAdapter(games : List<GameRecord>) : RecyclerView.Adapter<GameAd
 
     override fun onBindViewHolder(holder: GameHolder, position: Int) {
         holder.bindGame(mGames[position])
+    }
+
+    fun setGames(games: List<GameRecord>) {
+        mGames = games
+        notifyDataSetChanged()
     }
 
 
