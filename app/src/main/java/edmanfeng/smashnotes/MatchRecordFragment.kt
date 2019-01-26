@@ -127,33 +127,5 @@ class MatchRecordFragment : Fragment() {
         mSessionHistory.adapter?.notifyDataSetChanged()
     }
 
-    private inner class GameHolder(itemView : View) : RecyclerView.ViewHolder(itemView) {
-        private var mItemView = itemView
-        private lateinit var mGame : GameRecord
 
-        fun bindGame(game : GameRecord) {
-            mGame = game
-            mItemView.findViewById<TextView>(R.id.player_character).text = mGame.playerCharacter
-            mItemView.findViewById<TextView>(R.id.opponent_character).text = mGame.opponentCharacter
-            mItemView.findViewById<TextView>(R.id.stage).text = mGame.stage
-            mItemView.findViewById<TextView>(R.id.result).text = if (mGame.result == "Win") "W" else "L"
-        }
-    }
-
-    private inner class GameAdapter(games : List<GameRecord>) : RecyclerView.Adapter<GameHolder>() {
-        private val mGames = games
-
-        override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): GameHolder {
-            val v = LayoutInflater.from(context).inflate(R.layout.saved_match_item, parent, false)
-            return GameHolder(v)
-        }
-
-        override fun getItemCount(): Int {
-            return mGames.size
-        }
-
-        override fun onBindViewHolder(holder: GameHolder, position: Int) {
-            holder.bindGame(mGames[position])
-        }
-    }
 }
