@@ -24,7 +24,7 @@ class OverviewFragment : Fragment() {
         val v = inflater.inflate(R.layout.overview_fragment, container, false)
 
         mGamesRecyclerView.findViewById<RecyclerView>(R.id.game_history_recyclerview)
-        mGamesRecyclerView.adapter = GameAdapter()
+        mGamesRecyclerView.adapter = GameAdapter(mGameViewModel.sessionGames)
 
 
         val manager = LinearLayoutManager(context)

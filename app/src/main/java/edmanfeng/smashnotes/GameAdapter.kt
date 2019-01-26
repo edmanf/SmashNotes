@@ -23,9 +23,6 @@ public class GameAdapter(games : List<GameRecord>) : RecyclerView.Adapter<GameAd
         holder.bindGame(mGames[position])
     }
 
-    fun setGames(games: LiveData<List<GameRecord>>) {
-
-    }
 
     public class GameHolder(itemView : View) : RecyclerView.ViewHolder(itemView) {
         private var mItemView = itemView
