@@ -1,5 +1,6 @@
 package edmanfeng.smashnotes
 
+import android.graphics.Typeface
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -42,7 +43,13 @@ public class GameAdapter(games : List<GameRecord>?) : RecyclerView.Adapter<GameA
             mItemView.findViewById<TextView>(R.id.player_character).text = mGame.playerCharacter
             mItemView.findViewById<TextView>(R.id.opponent_character).text = mGame.opponentCharacter
             mItemView.findViewById<TextView>(R.id.stage).text = mGame.stage
-            mItemView.findViewById<TextView>(R.id.result).text = if (mGame.result == "Win") "W" else "L"
+            if (mGame.result == "Win") {
+                mItemView.findViewById<TextView>(R.id.player_character).setTypeface(null, Typeface.BOLD)
+                mItemView.findViewById<TextView>(R.id.opponent_character).setTypeface(null, Typeface.NORMAL)
+            } else {
+                mItemView.findViewById<TextView>(R.id.opponent_character).setTypeface(null, Typeface.BOLD)
+                mItemView.findViewById<TextView>(R.id.player_character).setTypeface(null, Typeface.NORMAL)
+            }
         }
     }
 }
