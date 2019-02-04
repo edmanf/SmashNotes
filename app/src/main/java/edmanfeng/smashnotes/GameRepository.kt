@@ -10,4 +10,14 @@ class GameRepository(private val gameDao: GameDao) {
     suspend fun insert(game: GameRecord) {
         gameDao.insert(game)
     }
+
+    @WorkerThread
+    suspend fun delete(game: GameRecord) {
+        gameDao.delete(game)
+    }
+
+    @WorkerThread
+    suspend fun deleteAll(games: List<GameRecord>) {
+        gameDao.deleteAll(games)
+    }
 }

@@ -29,4 +29,16 @@ class GameViewModel(application: Application) : AndroidViewModel(application) {
             repository.insert(game)
         }
     }
+
+    fun delete(game: GameRecord) {
+        sessionGames.remove(game)
+        scope.launch(Dispatchers.IO) {
+            repository.delete(game)
+        }
+    }
+
+    fun deleteAll() {
+        // TODO: Check if assigning to mutableListOf() would work
+        sessionGames.removeAll(sessionGames)
+    }
 }

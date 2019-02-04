@@ -67,7 +67,7 @@ class MatchRecordFragment : Fragment() {
         mGSPView = v.findViewById(R.id.gsp)
         mNotes = v.findViewById(R.id.match_notes)
 
-
+        getContext()
         mSaveButton = v.findViewById(R.id.save_button)
         mSaveButton.setOnClickListener{ saveMatch() }
         val characterAdapter = ArrayAdapter(
@@ -121,7 +121,8 @@ class MatchRecordFragment : Fragment() {
             mHazardsCheck.isChecked,
             mResultView.selectedItem.toString(),
             mGSPView.text.toString().toInt(),
-            mNotes.text.toString()
+            mNotes.text.toString(),
+            "SSBU"
         )
         mGameViewModel.insert(game)
         mSessionHistory.adapter?.notifyDataSetChanged()

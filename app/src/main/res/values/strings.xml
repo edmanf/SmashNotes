@@ -16,6 +16,16 @@
 
     <string name="game_vs_text">v</string>
 
+    <string-array name="games">
+        <item>64</item>
+        <item>Melee</item>
+        <item>Brawl</item>
+        <item>Smash 4</item>
+        <item>Ultimate</item>
+        <item>PM</item>
+        <item>SSF2</item>
+    </string-array>
+
     <string-array name="stages">
         <item>Battlefield</item>
         <item>Final Destination</item>
@@ -26,6 +36,12 @@
         <item>Yoshi\'s Story</item>
         <item>Lylat Cruise</item>
         <item>Dreamland</item>
+        <item>Fountain of Dreams</item>
+        <item>Midgar</item>
+        <item>Wily Castle</item>
+        <item>Duck Hunt</item>
+        <item>Kalos Pokemon League</item>
+        <item>Unova Pokemon League</item>
     </string-array>
 
     <string-array name="characters">
