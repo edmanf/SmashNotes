@@ -1,13 +1,11 @@
 package edmanfeng.smashnotes
 
 import android.os.Bundle
-import android.service.autofill.FieldClassification
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
 import android.widget.Spinner
-import android.widget.SpinnerAdapter
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
@@ -33,6 +31,7 @@ class OverviewFragment : Fragment() {
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+        val context = requireContext()
         val v = inflater.inflate(R.layout.overview_fragment, container, false)
 
         val gamesRecyclerView = v.findViewById<RecyclerView>(R.id.game_history_recyclerview)

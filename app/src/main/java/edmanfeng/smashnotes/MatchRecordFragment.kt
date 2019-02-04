@@ -55,7 +55,7 @@ class MatchRecordFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-
+        val context = requireContext()
         val v = inflater.inflate(R.layout.match_record_view, container, false)
         val player1 = v.findViewById(R.id.player1) as ConstraintLayout
         val player2 = v.findViewById(R.id.player2) as ConstraintLayout
