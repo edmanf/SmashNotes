@@ -1,10 +1,12 @@
 package edmanfeng.smashnotes
 
 import android.graphics.Typeface
+import android.os.Build
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import androidx.core.content.res.ResourcesCompat.getColor
 import androidx.recyclerview.widget.RecyclerView
 
 public class GameAdapter(games : List<GameRecord>?) : RecyclerView.Adapter<GameAdapter.GameHolder>() {
@@ -48,6 +50,27 @@ public class GameAdapter(games : List<GameRecord>?) : RecyclerView.Adapter<GameA
             } else {
                 mItemView.findViewById<TextView>(R.id.opponent_character).setTypeface(null, Typeface.BOLD)
                 mItemView.findViewById<TextView>(R.id.player_character).setTypeface(null, Typeface.NORMAL)
+            }
+            when(mGame.game) {
+                Game.SSB64.toString() -> setColorVersionSafe(R.color.SSB64)
+                Game.SSBM.toString() -> setColorVersionSafe(R.color.SSBM)
+                Game.SSBB.toString() -> setColorVersionSafe(R.color.SSBB)
+                Game.SSB4.toString() -> setColorVersionSafe(R.color.SSB4)
+                Game.SSBU.toString() -> setColorVersionSafe(R.color.SSBU)
+                else -> setColorVersionSafe(R.color.design_default_color_background)
+            }
+        }
+
+        /**
+         * Sets the background color of the holder to the specified color
+         * resource.
+         */
+        private fun setColorVersionSafe(color: Int) {
+            val resources = mItemView.context.resources
+            if (Build.VERSION.SDK_INT >= 23) {
+                mItemView.setBackgroundColor(resources.getColor(color, null))
+            } else {
+                mItemView.setBackgroundColor(resources.getColor(color))
             }
         }
     }

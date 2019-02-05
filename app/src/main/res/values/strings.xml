@@ -20,10 +20,9 @@
         <item>64</item>
         <item>Melee</item>
         <item>Brawl</item>
+        <item>PM</item>
         <item>Smash 4</item>
         <item>Ultimate</item>
-        <item>PM</item>
-        <item>SSF2</item>
     </string-array>
 
     <string-array name="stages">

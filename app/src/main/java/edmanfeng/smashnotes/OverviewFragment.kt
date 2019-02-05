@@ -27,14 +27,22 @@ class OverviewFragment : Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        mGameViewModel = ViewModelProviders.of(this).get(GameViewModel::class.java)
+        mGameViewModel = ViewModelProviders
+            .of(this)
+            .get(GameViewModel::class.java)
     }
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
+
         val context = requireContext()
         val v = inflater.inflate(R.layout.overview_fragment, container, false)
 
-        val gamesRecyclerView = v.findViewById<RecyclerView>(R.id.game_history_recyclerview)
+        val gamesRecyclerView = v
+            .findViewById<RecyclerView>(R.id.game_history_recyclerview)
 
         val adapter = GameAdapter(mGameViewModel.allGames.value)
         mGameViewModel.allGames.observe(this, Observer { games ->
@@ -49,17 +57,21 @@ class OverviewFragment : Fragment() {
         gamesRecyclerView.layoutManager = manager
 
         val gameSpinner = v.findViewById<Spinner>(R.id.game_spinner)
-        val spinnerAdapter = ArrayAdapter.createFromResource(
+        val spinnerAdapter = ArrayAdapter(
             context,
-            R.array.games,
-            android.R.layout.simple_spinner_item
+            android.R.layout.simple_spinner_item,
+            enumValues<Game>()
         )
-        spinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+        spinnerAdapter.setDropDownViewResource(
+            android.R.layout.simple_spinner_dropdown_item
+        )
         gameSpinner.adapter = spinnerAdapter
+
 
         val fab = v.findViewById<FloatingActionButton>(R.id.add_button)
         fab.setOnClickListener {
-            val frag = MatchRecordFragment.newInstance("")
+            val frag = MatchRecordFragment
+                .newInstance(gameSpinner.selectedItem.toString())
             activity?.supportFragmentManager
                 ?.beginTransaction()
                 ?.replace(R.id.fragment_container, frag)

@@ -12,10 +12,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 
 class MatchRecordFragment : Fragment() {
-
     private lateinit var mGameViewModel: GameViewModel
-    private lateinit var mCharacter : String
-
     private lateinit var mSaveButton : Button
     private lateinit var mPlayerTagView : EditText
     private lateinit var mOpponentTagView : EditText
@@ -28,15 +25,17 @@ class MatchRecordFragment : Fragment() {
     private lateinit var mNotes : EditText
     private lateinit var mSessionHistory : RecyclerView
 
+    private lateinit var mGame : String
+
     //private var mGamesList = mutableListOf<GameRecord>()
 
     companion object {
-        private const val ARG_CHARACTER_NAME = "character_name"
+        private const val ARG_GAME_NAME = "game"
 
         fun newInstance(name : String) : MatchRecordFragment {
             val frag = MatchRecordFragment()
             val args = Bundle()
-            args.putSerializable(ARG_CHARACTER_NAME, name)
+            args.putSerializable(ARG_GAME_NAME, name)
 
             frag.arguments = args
             return frag
@@ -45,9 +44,11 @@ class MatchRecordFragment : Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
-        mCharacter = arguments?.getString(ARG_CHARACTER_NAME) as String
-        mGameViewModel = ViewModelProviders.of(this).get(GameViewModel::class.java)
+        mGame = arguments
+            ?.getString(MatchRecordFragment.ARG_GAME_NAME) ?: ""
+        mGameViewModel = ViewModelProviders
+            .of(this)
+            .get(GameViewModel::class.java)
     }
 
     override fun onCreateView(
@@ -69,14 +70,16 @@ class MatchRecordFragment : Fragment() {
 
         getContext()
         mSaveButton = v.findViewById(R.id.save_button)
-        mSaveButton.setOnClickListener{ saveMatch() }
+        mSaveButton.setOnClickListener{
+            saveMatch()
+            resetText()
+        }
         val characterAdapter = ArrayAdapter(
             context,
             android.R.layout.simple_dropdown_item_1line,
             resources.getStringArray(R.array.characters)
         )
         mPlayerCharacterView = player1.findViewById(R.id.character)
-        mPlayerCharacterView.setText(mCharacter)
         mPlayerCharacterView.setAdapter(characterAdapter)
 
         mOpponentCharacterView = player2.findViewById(R.id.character)
@@ -116,17 +119,20 @@ class MatchRecordFragment : Fragment() {
             0,
             mPlayerCharacterView.text.toString(),
             mOpponentCharacterView.text.toString(),
-            mOpponentTagView.text.toString(),
-            mStageView.text.toString(),
+            mOpponentTagView.text?.toString() ?: "N/A",
+            mStageView.text?.toString() ?: "N/A",
             mHazardsCheck.isChecked,
             mResultView.selectedItem.toString(),
-            mGSPView.text.toString().toInt(),
-            mNotes.text.toString(),
-            "SSBU"
+            mGSPView.text?.toString()?.toInt() ?: 0,
+            mNotes.text?.toString() ?: "",
+            mGame
         )
         mGameViewModel.insert(game)
         mSessionHistory.adapter?.notifyDataSetChanged()
     }
 
+    private fun resetText() {
+
+    }
 
 }
