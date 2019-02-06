@@ -1,5 +1,6 @@
 package edmanfeng.smashnotes
 
+import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -34,6 +35,8 @@ class MatchRecordFragment : Fragment() {
     companion object {
         private const val ARG_GAME_NAME = "game"
 
+
+
         fun newInstance(name : String) : MatchRecordFragment {
             val frag = MatchRecordFragment()
             val args = Bundle()
@@ -58,6 +61,7 @@ class MatchRecordFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+
         val context = requireContext()
         val v = inflater.inflate(R.layout.match_record_view, container, false)
         val player1 = v.findViewById(R.id.player1) as ConstraintLayout
@@ -75,28 +79,37 @@ class MatchRecordFragment : Fragment() {
         mSaveButton.setOnClickListener{
             saveMatch()
             clearInput()
+            savePreferences()
         }
 
 
 
-        var stageArrayId : Int
-        var charArrayId : Int
+        val stageArrayId : Int
+        val charArrayId : Int
         when (mGame) {
             Game.SSBU.toString() -> {
                 stageArrayId = R.array.stagesUltimate
                 charArrayId = R.array.charactersUltimate
             }
-            Game.SSB64.toString() -> {
-                stageArrayId = R.array.stages64
-                charArrayId = R.array.characters64
+            Game.SSB4.toString() -> {
+                stageArrayId = R.array.stages4wiiu
+                charArrayId = R.array.characters4
+            }
+            Game.SSBB.toString() -> {
+                stageArrayId = R.array.stagesBrawl
+                charArrayId = R.array.stagesBrawl
             }
             Game.SSBM.toString() -> {
                 stageArrayId = R.array.stagesMelee
                 charArrayId = R.array.charactersMelee
             }
+            Game.SSB64.toString() -> {
+                stageArrayId = R.array.stages64
+                charArrayId = R.array.characters64
+            }
             else -> {
                 // throw IllegalStateException("Game string was not in correct format")
-                // TODO: add other games
+                // TODO: add PM, SSF2
                 stageArrayId = R.array.stagesUltimate
                 charArrayId = R.array.charactersUltimate
             }
@@ -140,7 +153,25 @@ class MatchRecordFragment : Fragment() {
         manager.reverseLayout = true
         mSessionHistory.layoutManager = manager
 
+        val sharedPref = activity?.getPreferences(Context.MODE_PRIVATE) ?: return v
+        mPlayerCharacterView.setText(
+            sharedPref.getString(SharedPrefs.CHAR_SHARED_PREF_KEY, "")
+        )
+        mStageView.setText(
+            sharedPref.getString(SharedPrefs.STAGE_SHARED_PREF_KEY, "")
+        )
+
         return v
+    }
+
+    private fun savePreferences() {
+        val sharedPref = activity?.getPreferences(Context.MODE_PRIVATE) ?: return
+        with (sharedPref.edit()) {
+            putString(SharedPrefs.GAME_SHARED_PREF_KEY, mGame)
+            putString(SharedPrefs.CHAR_SHARED_PREF_KEY, mPlayerCharacterView.text.toString())
+            putString(SharedPrefs.STAGE_SHARED_PREF_KEY, mStageView.text.toString())
+            apply()
+        }
     }
 
     private fun saveMatch() {

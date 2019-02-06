@@ -130,6 +130,155 @@
         <item>Dracula\'s Castle</item>
     </string-array>
 
+    <string-array name="stages43ds">
+        <item>3D Land</item>
+        <item>Arena Ferox</item>
+        <item>Balloon Fight</item>
+        <item>Battlefield</item>
+        <item>Boxing Ring</item>
+        <item>Brinstar</item>
+        <item>Corneria</item>
+        <item>Distant Planet</item>
+        <item>Dream Land (64)</item>
+        <item>Dream Land</item>
+        <item>Duck Hunt</item>
+        <item>Final Destination</item>
+        <item>Find Mii</item>
+        <item>Flat Zone 2</item>
+        <item>Gaur Plain</item>
+        <item>Gerudo Valley</item>
+        <item>Golden Plains</item>
+        <item>Green Hill Zone</item>
+        <item>Hyrule Castle</item>
+        <item>Jungle Japes</item>
+        <item>Living Room</item>
+        <item>Magicant</item>
+        <item>Midgar</item>
+        <item>Mushroomy Kingdom</item>
+        <item>Mute City</item>
+        <item>Pac-Maze</item>
+        <item>Paper Mario</item>
+        <item>Peach\'s Castle</item>
+        <item>PictoChat 2</item>
+        <item>Prism Tower</item>
+        <item>Rainbow Road</item>
+        <item>Reset Bomb Forest</item>
+        <item>Spirit Train</item>
+        <item>Super Mario Maker</item>
+        <item>Suzaku Castle</item>
+        <item>Tomodachi Life</item>
+        <item>Tortimer Island</item>
+        <item>Umbra Clock Tower</item>
+        <item>Unova Pokemon League</item>
+        <item>Warior Ware, Inc.</item>
+        <item>Wily Castle</item>
+        <item>Yoshi\'s Island (Brawl)</item>
+
+    </string-array>
+
+    <string-array name="stages4wiiu">
+        <item>75m</item>
+        <item>Battlefield</item>
+        <item>Big Battlefield</item>
+        <item>Boxing Ring</item>
+        <item>Bridge of Eldin</item>
+        <item>Castle Siege</item>
+        <item>Coliseum</item>
+        <item>Delfino Plaza</item>
+        <item>Dream Land (64)</item>
+        <item>Duck Hunt</item>
+        <item>Final Destination</item>
+        <item>Flat Zone X</item>
+        <item>Gamer</item>
+        <item>Garden of Hope</item>
+        <item>Gaur Plain</item>
+        <item>The Great Cove Offensive</item>
+        <item>Halberd</item>
+        <item>Hyrule Castle</item>
+        <item>Jungle Hijinxs</item>
+        <item>Kalos Pokemon League</item>
+        <item>Kongo Jungle</item>
+        <item>Luigi\'s Mansion</item>
+        <item>Lylat Cruise</item>
+        <item>Mario Circuit (Brawl)</item>
+        <item>Mario Circuit</item>
+        <item>Mario Galaxy</item>
+        <item>Midgar</item>
+        <item>Miiverse</item>
+        <item>Mushroom Kingdom U</item>
+        <item>Norfair</item>
+        <item>Onett</item>
+        <item>Orbital Gate Assault</item>
+        <item>Pac-Land</item>
+        <item>Palutena\'s Temple</item>
+        <item>Peach\'s Castle</item>
+        <item>Pilotwings</item>
+        <item>Pirate Ship</item>
+        <item>Pokemon Stadium 2</item>
+        <item>Port Town Aero Dive</item>
+        <item>Pyrosphere</item>
+        <item>Skyloft</item>
+        <item>Skyworld</item>
+        <item>Smashville</item>
+        <item>Super Mario Galaxy</item>
+        <item>Super Mario Maker</item>
+        <item>Suzaku Castle</item>
+        <item>Temple</item>
+        <item>Town and City</item>
+        <item>Umbra Clock Tower</item>
+        <item>Wii Fit Studio</item>
+        <item>Wily Castle</item>
+        <item>Windy Hill Zone</item>
+        <item>Woolly World</item>
+        <item>Wrecking Crew</item>
+        <item>Wuhu Island</item>
+        <item>Yoshi\'s Island (Melee)</item>
+    </string-array>
+    
+    <string-array name="stagesBrawl">
+        <item>75m</item>
+        <item>Battlefield</item>
+        <item>Bridge of Eldin</item>
+        <item>Castle Siege</item>
+        <item>Delfino Plaza</item>
+        <item>Distant Planet</item>
+        <item>Final Destination</item>
+        <item>Flat Zone 2</item>
+        <item>Frigate Orpheon</item>
+        <item>Green Hill Zone</item>
+        <item>Halberd</item>
+        <item>Hanenbow</item>
+        <item>Luigi\'s Mansion</item>
+        <item>Lylat Cruise</item>
+        <item>Mario Bros.</item>
+        <item>Mario Circuit</item>
+        <item>Mushroomy Kingdom</item>
+        <item>New Pork City</item>
+        <item>Norfair</item>
+        <item>PictoChat</item>
+        <item>Pirate Ship</item>
+        <item>Pokemon Stadium 2</item>
+        <item>Port Town Aero Dive</item>
+        <item>Rumble Falls</item>
+        <item>Shadow Moses Island</item>
+        <item>Skyworld</item>
+        <item>Smashville</item>
+        <item>Spear Pillar</item>
+        <item>Summit</item>
+        <item>WarioWare, Inc.</item>
+        <item>Yoshi\'s Island</item>
+        <item>Big Blue</item>
+        <item>Brinstar</item>
+        <item>Corneria</item>
+        <item>Green Greens</item>
+        <item>Jungle Japes</item>
+        <item>Onett</item>
+        <item>Pokemon Stadium</item>
+        <item>Rainbow Cruise</item>
+        <item>Temple</item>
+        <item>Yoshi\'s Island</item>
+    </string-array>
+
     <string-array name="stagesMelee">
         <item>Battlefield</item>
         <item>Big Blue</item>
@@ -221,7 +370,7 @@
         <item>King Dedede</item>
         <item>Olimar</item>
         <item>Lucario</item>
-        <item>R.O.B</item>
+        <item>R.O.B.</item>
         <item>Toon Link</item>
         <item>Wolf</item>
         <item>Villager</item>
@@ -253,6 +402,106 @@
         <item>Incineroar</item>
     </string-array>
 
+    <string-array name="characters4">
+        <item>Mario</item>
+        <item>Luigi</item>
+        <item>Peach</item>
+        <item>Bowser</item>
+        <item>Dr. Mario</item>
+        <item>Yoshi</item>
+        <item>Donkey Kong</item>
+        <item>Diddy Kong</item>
+        <item>Link</item>
+        <item>Zelda</item>
+        <item>Sheik</item>
+        <item>Ganondorf</item>
+        <item>Toon Link</item>
+        <item>Samus</item>
+        <item>Zero Suit Samus</item>
+        <item>Kirby</item>
+        <item>Meta Knight</item>
+        <item>King Dedede</item>
+        <item>Fox</item>
+        <item>Falco</item>
+        <item>Pikachu</item>
+        <item>Jigglypuff</item>
+        <item>Mewtwo</item>
+        <item>Charizard</item>
+        <item>Lucario</item>
+        <item>Captain Falcon</item>
+        <item>Ness</item>
+        <item>Lucas</item>
+        <item>Marth</item>
+        <item>Roy</item>
+        <item>Ike</item>
+        <item>Mr Game &amp; Watch</item>
+        <item>Pit</item>
+        <item>Wario</item>
+        <item>Olimar</item>
+        <item>R.O.B.</item>
+        <item>Sonic</item>
+        <item>Rosalina &amp; Luma</item>
+        <item>Bowser Jr.</item>
+        <item>Greninja</item>
+        <item>Robin</item>
+        <item>Lucina</item>
+        <item>Corrin</item>
+        <item>Palutena</item>
+        <item>Dark Pit</item>
+        <item>Villager</item>
+        <item>Little Mac</item>
+        <item>Wii Fit Trainer</item>
+        <item>Shulk</item>
+        <item>Duck Hunt</item>
+        <item>Mega Man</item>
+        <item>Pac-Man</item>
+        <item>Ryu</item>
+        <item>Cloud</item>
+        <item>Bayonetta</item>
+        <item>Mii Brawler</item>
+        <item>Mii Swordfighter</item>
+        <item>Mii Gunner</item>
+    </string-array>
+
+    <string-array name="charactersBrawl">
+        <item>Mario</item>
+        <item>Luigi</item>
+        <item>Peach</item>
+        <item>Bowser</item>
+        <item>Yoshi</item>
+        <item>Donkey Kong</item>
+        <item>Kirby</item>
+        <item>Link</item>
+        <item>Zelda/Sheik</item>
+        <item>Ganondorf</item>
+        <item>Samus</item>
+        <item>Fox</item>
+        <item>Falco</item>
+        <item>Pikachu</item>
+        <item>Jigglypuff</item>
+        <item>Captain Falcon</item>
+        <item>Ness</item>
+        <item>Ice Climbers</item>
+        <item>Marth</item>
+        <item>Mr. Game &amp; Watch</item>
+        <item>Diddy Kong</item>
+        <item>Meta Knight</item>
+        <item>King Dedede</item>
+        <item>Toon Link</item>
+        <item>Zero Suit Samus</item>
+        <item>Wolf</item>
+        <item>Pokemon Trainer</item>
+        <item>Lucario</item>
+        <item>Lucas</item>
+        <item>Ike</item>
+        <item>Pit</item>
+        <item>Wario</item>
+        <item>Olimar</item>
+        <item>R.O.B.</item>
+        <item>Snake</item>
+        <item>Sonic</item>
+    </string-array>
+
     <string-array name="charactersMelee">
         <item>Dr. Mario</item>
         <item>Mario</item>
@@ -269,8 +518,7 @@
         <item>Ice Climbers</item>
         <item>Kirby</item>
         <item>Samus</item>
-        <item>Shiek</item>
-        <item>Zelda</item>
+        <item>Zelda/Sheik</item>
         <item>Link</item>
         <item>Young Link</item>
         <item>Pichu</item>

@@ -1,5 +1,6 @@
 package edmanfeng.smashnotes
 
+import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -66,6 +67,13 @@ class OverviewFragment : Fragment() {
             android.R.layout.simple_spinner_dropdown_item
         )
         gameSpinner.adapter = spinnerAdapter
+
+        val sharedPrefs = activity?.getPreferences(Context.MODE_PRIVATE)
+        val game = sharedPrefs?.getString(
+            SharedPrefs.GAME_SHARED_PREF_KEY, Game.SSBU.toString()
+        ) ?: Game.SSBU.toString()
+        val pos = spinnerAdapter.getPosition(Game.valueOf(game))
+        gameSpinner.setSelection(pos)
 
 
         val fab = v.findViewById<FloatingActionButton>(R.id.add_button)
