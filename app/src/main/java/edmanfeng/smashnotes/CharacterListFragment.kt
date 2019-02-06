@@ -41,7 +41,7 @@ class CharacterListFragment : Fragment() {
 
 
         mCharacterRecyclerView.adapter = CharacterAdapter(
-            resources.getStringArray(R.array.characters)
+            resources.getStringArray(R.array.charactersUltimate)
         )
 
         return v

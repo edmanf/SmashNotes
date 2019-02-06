@@ -10,6 +10,8 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import java.lang.IllegalStateException
+import java.lang.NumberFormatException
 
 class MatchRecordFragment : Fragment() {
     private lateinit var mGameViewModel: GameViewModel
@@ -72,12 +74,46 @@ class MatchRecordFragment : Fragment() {
         mSaveButton = v.findViewById(R.id.save_button)
         mSaveButton.setOnClickListener{
             saveMatch()
-            resetText()
+            clearInput()
         }
+
+
+
+        var stageArrayId : Int
+        var charArrayId : Int
+        when (mGame) {
+            Game.SSBU.toString() -> {
+                stageArrayId = R.array.stagesUltimate
+                charArrayId = R.array.charactersUltimate
+            }
+            Game.SSB64.toString() -> {
+                stageArrayId = R.array.stages64
+                charArrayId = R.array.characters64
+            }
+            Game.SSBM.toString() -> {
+                stageArrayId = R.array.stagesMelee
+                charArrayId = R.array.charactersMelee
+            }
+            else -> {
+                // throw IllegalStateException("Game string was not in correct format")
+                // TODO: add other games
+                stageArrayId = R.array.stagesUltimate
+                charArrayId = R.array.charactersUltimate
+            }
+        }
+
+        val stageAdapter = ArrayAdapter(
+            context,
+            android.R.layout.simple_dropdown_item_1line,
+            resources.getStringArray(stageArrayId)
+        )
+        mStageView = v.findViewById(R.id.stage_choice)
+        mStageView.setAdapter(stageAdapter)
+
         val characterAdapter = ArrayAdapter(
             context,
             android.R.layout.simple_dropdown_item_1line,
-            resources.getStringArray(R.array.characters)
+            resources.getStringArray(charArrayId)
         )
         mPlayerCharacterView = player1.findViewById(R.id.character)
         mPlayerCharacterView.setAdapter(characterAdapter)
@@ -85,14 +121,7 @@ class MatchRecordFragment : Fragment() {
         mOpponentCharacterView = player2.findViewById(R.id.character)
         mOpponentCharacterView.setAdapter(characterAdapter)
 
-        val stageAdapter = ArrayAdapter(
-            context,
-            android.R.layout.simple_dropdown_item_1line,
-            resources.getStringArray(R.array.stages)
-        )
 
-        mStageView = v.findViewById(R.id.stage_choice)
-        mStageView.setAdapter(stageAdapter)
 
         val resultAdapter = ArrayAdapter(
             context,
@@ -115,6 +144,14 @@ class MatchRecordFragment : Fragment() {
     }
 
     private fun saveMatch() {
+        var gsp : Int
+        try {
+            gsp = mGSPView.text?.toString()?.toInt() ?: 0
+        } catch (error: NumberFormatException) {
+            // likely because user left input blank, so its an empty string
+            gsp = 0
+        }
+
         val game = GameRecord(
             0,
             mPlayerCharacterView.text.toString(),
@@ -123,7 +160,7 @@ class MatchRecordFragment : Fragment() {
             mStageView.text?.toString() ?: "N/A",
             mHazardsCheck.isChecked,
             mResultView.selectedItem.toString(),
-            mGSPView.text?.toString()?.toInt() ?: 0,
+            gsp,
             mNotes.text?.toString() ?: "",
             mGame
         )
@@ -131,8 +168,12 @@ class MatchRecordFragment : Fragment() {
         mSessionHistory.adapter?.notifyDataSetChanged()
     }
 
-    private fun resetText() {
-
+    /**
+     * Clears the non-repeating user input.
+     * Currently this means GSP and notes
+     */
+    private fun clearInput() {
+        mNotes.setText("")
+        mGSPView.setText("")
     }
-
 }

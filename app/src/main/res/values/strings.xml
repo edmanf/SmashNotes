@@ -25,25 +25,155 @@
         <item>Ultimate</item>
     </string-array>
 
-    <string-array name="stages">
+    <string-array name="stagesUltimate">
         <item>Battlefield</item>
+        <item>Big Battlefield</item>
         <item>Final Destination</item>
-        <item>Pokemon Stadium 1</item>
-        <item>Pokemon Stadium 2</item>
-        <item>Smashville</item>
-        <item>Town and City</item>
+        <item>Peach\'s Castle</item>
+        <item>Kongo Jungle</item>
+        <item>Hyrule Castle</item>
+        <item>Super Happy Tree</item>
+        <item>Dream Land</item>
+        <item>Saffron City</item>
+        <item>Mushroom Kingdom</item>
+        <item>Princess Peach\'s Castle</item>
+        <item>Rainbow Cruise</item>
+        <item>Kong Falls</item>
+        <item>Jungle Japes</item>
+        <item>Great Bay</item>
+        <item>Temple</item>
+        <item>Brinstar</item>
+        <item>Yoshi\'s Island (Melee)</item>
         <item>Yoshi\'s Story</item>
-        <item>Lylat Cruise</item>
-        <item>Dreamland</item>
         <item>Fountain of Dreams</item>
-        <item>Midgar</item>
-        <item>Wily Castle</item>
-        <item>Duck Hunt</item>
-        <item>Kalos Pokemon League</item>
+        <item>Green Greens</item>
+        <item>Corneria</item>
+        <item>Venom</item>
+        <item>Pokemon Stadium</item>
+        <item>Onett</item>
+        <item>Mushroom Kingdom II</item>
+        <item>Brinstar Depths</item>
+        <item>Big Blue</item>
+        <item>Fourside</item>
+        <item>Delfino Plaza</item>
+        <item>Mushroomy Kingdom</item>
+        <item>Figure-8 Circuit</item>
+        <item>WarioWare, Inc.</item>
+        <item>Bridge of Eldin</item>
+        <item>Norfair</item>
+        <item>Frigate Orpheon</item>
+        <item>Yoshi\'s Island</item>
+        <item>Halberd</item>
+        <item>Lylat Cruise</item>
+        <item>Pokemon Stadium 2</item>
+        <item>Port Town Aero Dive</item>
+        <item>Castle Siege</item>
+        <item>Distant Planet</item>
+        <item>Smashville</item>
+        <item>New Pork City</item>
+        <item>Summit</item>
+        <item>Skyworld</item>
+        <item>Shadow Moses Island</item>
+        <item>Luigi\'s Mansion</item>
+        <item>Pirate Ship</item>
+        <item>Spear Pillar</item>
+        <item>75 m</item>
+        <item>Mario Bros.</item>
+        <item>Hanenbow</item>
+        <item>Green Hill Zone</item>
+        <item>3D Land</item>
+        <item>Golden Plains</item>
+        <item>Paper Mario</item>
+        <item>Gerudo Valley</item>
+        <item>Dream Land GB</item>
         <item>Unova Pokemon League</item>
+        <item>Prism Tower</item>
+        <item>Mute City SNES</item>
+        <item>Magicant</item>
+        <item>Arena Ferox</item>
+        <item>Reset Bomb Forest</item>
+        <item>Tortimer Island</item>
+        <item>Balloon Fight</item>
+        <item>Living Room</item>
+        <item>Find Mii</item>
+        <item>Tomodachi Life</item>
+        <item>PictoChat 2</item>
+        <item>Mushroom Kingdom U</item>
+        <item>Mario Galaxy</item>
+        <item>Mario Circuit</item>
+        <item>Skyloft</item>
+        <item>The Great Cave Offensive</item>
+        <item>Kalos Pokemon League</item>
+        <item>Coliseum</item>
+        <item>Flat Zone X</item>
+        <item>Palutena\'s Temple</item>
+        <item>Gamer</item>
+        <item>Garden of Hope</item>
+        <item>Town and City</item>
+        <item>Wii Fit Studio</item>
+        <item>Boxing Ring</item>
+        <item>Gaur Plain</item>
+        <item>Duck Hunt</item>
+        <item>Wrecking Crew</item>
+        <item>Pilotwings</item>
+        <item>Wuhu Island</item>
+        <item>Windy Hill Zone</item>
+        <item>Wily Castle</item>
+        <item>PAC-LAND</item>
+        <item>Super Mario Maker</item>
+        <item>Suzaku Castle</item>
+        <item>Midgar</item>
+        <item>Umbra Clock Tower</item>
+        <item>New Donk City Hall</item>
+        <item>Great Plateau Tower</item>
+        <item>Moray Towers</item>
+        <item>Dracula\'s Castle</item>
     </string-array>
 
-    <string-array name="characters">
+    <string-array name="stagesMelee">
+        <item>Battlefield</item>
+        <item>Big Blue</item>
+        <item>Brinstar</item>
+        <item>Brinstar Depths</item>
+        <item>Corneria</item>
+        <item>Final Destination</item>
+        <item>Flat Zone</item>
+        <item>Fountain of Dreams</item>
+        <item>Fourside</item>
+        <item>Great Bay</item>
+        <item>Green Greens</item>
+        <item>Icicle Mountain</item>
+        <item>Jungle Japes</item>
+        <item>Kongo Jungle</item>
+        <item>Mushroom Kingdom</item>
+        <item>Mushroom Kingdom II</item>
+        <item>Mute City</item>
+        <item>Onett</item>
+        <item>Poke Floats</item>
+        <item>Pokemon Stadium</item>
+        <item>Princess Peach\'s Castle</item>
+        <item>Rainbow Cruise</item>
+        <item>Temple</item>
+        <item>Venom</item>
+        <item>Yoshi\'s Island</item>
+        <item>Yoshi\'s Story</item>
+        <item>Dream Land</item>
+        <item>Yoshi\'s Island (64)</item>
+    </string-array>
+
+    <string-array name="stages64">
+        <item>Peach\'s Castle</item>
+        <item>Congo Jungle</item>
+        <item>Hyrule Castle</item>
+        <item>Planet Zebes</item>
+        <item>Mushroom Kingdom</item>
+        <item>Yoshi\'s Island</item>
+        <item>Dream Land</item>
+        <item>Sector Z</item>
+        <item>Saffron City</item>
+    </string-array>
+
+    <string-array name="charactersUltimate">
         <item>Mario</item>
         <item>Donkey Kong</item>
         <item>Link</item>
@@ -121,6 +251,50 @@
         <item>King K. Rool</item>
         <item>Isabelle</item>
         <item>Incineroar</item>
+    </string-array>
+
+    <string-array name="charactersMelee">
+        <item>Dr. Mario</item>
+        <item>Mario</item>
+        <item>Luigi</item>
+        <item>Bowser</item>
+        <item>Peach</item>
+        <item>Yoshi</item>
+        <item>Donkey Kong</item>
+        <item>Captain Falcon</item>
+        <item>Ganondorf</item>
+        <item>Falco</item>
+        <item>Fox</item>
+        <item>Ness</item>
+        <item>Ice Climbers</item>
+        <item>Kirby</item>
+        <item>Samus</item>
+        <item>Shiek</item>
+        <item>Zelda</item>
+        <item>Link</item>
+        <item>Young Link</item>
+        <item>Pichu</item>
+        <item>Pikachu</item>
+        <item>Jigglypuff</item>
+        <item>Mewtwo</item>
+        <item>Mr. Game &amp; Watch</item>
+        <item>Marth</item>
+        <item>Roy</item>
+    </string-array>
+
+    <string-array name="characters64">
+        <item>Luigi</item>
+        <item>Mario</item>
+        <item>Donkey Kong</item>
+        <item>Link</item>
+        <item>Samus</item>
+        <item>Captain Falcon</item>
+        <item>Ness</item>
+        <item>Yoshi</item>
+        <item>Kirby</item>
+        <item>Fox</item>
+        <item>Pikachu</item>
+        <item>Jigglypuff</item>
     </string-array>
 
     <string-array name="win_loss">
