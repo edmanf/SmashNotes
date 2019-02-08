@@ -48,7 +48,7 @@ class OverviewFragment : Fragment() {
 
         val adapter = GameAdapter(mGameViewModel.allGames.value)
         mGameViewModel.allGames.observe(this, Observer { games ->
-            games?.let{adapter.setGames(games)} // safe call for non null games
+            games?.let{adapter.setGames(games)}
         })
         gamesRecyclerView.adapter = adapter
 

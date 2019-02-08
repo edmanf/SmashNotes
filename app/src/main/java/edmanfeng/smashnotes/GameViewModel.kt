@@ -11,8 +11,10 @@ import kotlinx.coroutines.launch
 class GameViewModel(application: Application) : AndroidViewModel(application) {
 
     private val repository: GameRepository
+
     val sessionGames = mutableListOf<GameRecord>() // local copy of session games
     val allGames: LiveData<List<GameRecord>>
+    val games: LiveData<List<GameRecord>>
 
     private var parentJob = Job()
     private val scope = CoroutineScope(Dispatchers.Main + parentJob)
@@ -21,7 +23,10 @@ class GameViewModel(application: Application) : AndroidViewModel(application) {
         val gameDao = GameDatabase.getDatabase(application).gameDao()
         repository = GameRepository(gameDao)
         allGames = repository.allGames
+        games = repository.allGames
     }
+
+
 
     fun insert(game: GameRecord) {
         sessionGames.add(game)

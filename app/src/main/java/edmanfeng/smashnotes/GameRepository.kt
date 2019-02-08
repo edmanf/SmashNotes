@@ -20,4 +20,7 @@ class GameRepository(private val gameDao: GameDao) {
     suspend fun deleteAll(games: List<GameRecord>) {
         gameDao.deleteAll(games)
     }
+
+    @WorkerThread
+    suspend fun getGame(game: Game) = gameDao.getGame(game)
 }
