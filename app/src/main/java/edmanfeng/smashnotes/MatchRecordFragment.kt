@@ -30,12 +30,8 @@ class MatchRecordFragment : Fragment() {
 
     private lateinit var mGame : String
 
-    //private var mGamesList = mutableListOf<GameRecord>()
-
     companion object {
         private const val ARG_GAME_NAME = "game"
-
-
 
         fun newInstance(name : String) : MatchRecordFragment {
             val frag = MatchRecordFragment()
@@ -175,6 +171,10 @@ class MatchRecordFragment : Fragment() {
     }
 
     private fun saveMatch() {
+        if (mGame == "All") {
+            // TODO: Add a spinner to allow game choice, then make a toast that says to choose a game
+            return
+        }
         var gsp : Int
         try {
             gsp = mGSPView.text?.toString()?.toInt() ?: 0

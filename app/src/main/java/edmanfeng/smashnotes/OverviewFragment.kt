@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.Spinner
 import androidx.fragment.app.Fragment
@@ -58,23 +59,34 @@ class OverviewFragment : Fragment() {
         gamesRecyclerView.layoutManager = manager
 
         val gameSpinner = v.findViewById<Spinner>(R.id.game_spinner)
+        val games = mutableListOf<String>("All")
+        enumValues<Game>().forEach { games.add(it.toString())}
         val spinnerAdapter = ArrayAdapter(
             context,
             android.R.layout.simple_spinner_item,
-            enumValues<Game>()
+            games
         )
         spinnerAdapter.setDropDownViewResource(
             android.R.layout.simple_spinner_dropdown_item
         )
         gameSpinner.adapter = spinnerAdapter
 
+
         val sharedPrefs = activity?.getPreferences(Context.MODE_PRIVATE)
         val game = sharedPrefs?.getString(
             SharedPrefs.GAME_SHARED_PREF_KEY, Game.SSBU.toString()
         ) ?: Game.SSBU.toString()
-        val pos = spinnerAdapter.getPosition(Game.valueOf(game))
+        val pos = spinnerAdapter.getPosition(game)
         gameSpinner.setSelection(pos)
+        gameSpinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+            override fun onNothingSelected(parent: AdapterView<*>?) {}
 
+            override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
+                val editor = sharedPrefs?.edit()
+                editor?.putString(SharedPrefs.GAME_SHARED_PREF_KEY, parent?.getItemAtPosition(position) as String)
+                editor?.apply()
+            }
+        }
 
         val fab = v.findViewById<FloatingActionButton>(R.id.add_button)
         fab.setOnClickListener {
