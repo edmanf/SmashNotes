@@ -5,6 +5,7 @@ import androidx.lifecycle.LiveData
 
 class GameRepository(private val gameDao: GameDao) {
     val allGames: LiveData<List<GameRecord>> = gameDao.getAll()
+    val games: LiveData<List<GameRecord>> = gameDao.getAll()
 
     @WorkerThread
     suspend fun insert(game: GameRecord) {
@@ -22,5 +23,5 @@ class GameRepository(private val gameDao: GameDao) {
     }
 
     @WorkerThread
-    suspend fun getGame(game: Game) = gameDao.getGame(game)
+    suspend fun getGame(game: Game) = gameDao.getGame(game.toString())
 }

@@ -26,7 +26,19 @@ class GameViewModel(application: Application) : AndroidViewModel(application) {
         games = repository.allGames
     }
 
+    fun getGame(game: Game?) : List<GameRecord> {
+        if (game == null) {
+            return allGames.value ?: listOf()
+        }
+        return allGames.value?.filter {it.game == game.toString()} ?: listOf()
+    }
 
+    fun getGame(game: String) : List<GameRecord> {
+        if (game == "All") {
+            return getGame(null)
+        }
+        return getGame(Game.valueOf(game))
+    }
 
     fun insert(game: GameRecord) {
         sessionGames.add(game)

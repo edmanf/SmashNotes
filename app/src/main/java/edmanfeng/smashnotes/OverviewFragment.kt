@@ -43,15 +43,20 @@ class OverviewFragment : Fragment() {
         val context = requireContext()
         val v = inflater.inflate(R.layout.overview_fragment, container, false)
 
+        val sharedPrefs = activity?.getPreferences(Context.MODE_PRIVATE)
+        val game = sharedPrefs?.getString(
+            SharedPrefs.GAME_SHARED_PREF_KEY, Game.SSBU.toString()
+        ) ?: Game.SSBU.toString()
+
         val gamesRecyclerView = v
             .findViewById<RecyclerView>(R.id.game_history_recyclerview)
 
         val adapter = GameAdapter(mGameViewModel.allGames.value)
-        mGameViewModel.allGames.observe(this, Observer { games ->
-            games?.let{adapter.setGames(games)}
+        mGameViewModel.allGames.observe(this, Observer { _ ->
+            // update games whenever any game gets added/removed
+            adapter.setGames(mGameViewModel.getGame(game))
         })
         gamesRecyclerView.adapter = adapter
-
 
         val manager = LinearLayoutManager(context)
         manager.stackFromEnd = true
@@ -72,10 +77,7 @@ class OverviewFragment : Fragment() {
         gameSpinner.adapter = spinnerAdapter
 
 
-        val sharedPrefs = activity?.getPreferences(Context.MODE_PRIVATE)
-        val game = sharedPrefs?.getString(
-            SharedPrefs.GAME_SHARED_PREF_KEY, Game.SSBU.toString()
-        ) ?: Game.SSBU.toString()
+
         val pos = spinnerAdapter.getPosition(game)
         gameSpinner.setSelection(pos)
         gameSpinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
