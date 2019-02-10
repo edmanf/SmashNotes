@@ -84,8 +84,11 @@ class OverviewFragment : Fragment() {
             override fun onNothingSelected(parent: AdapterView<*>?) {}
 
             override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
+                val item = parent?.getItemAtPosition(position) as String
+                adapter.setGames(mGameViewModel.getGame(item))
+
                 val editor = sharedPrefs?.edit()
-                editor?.putString(SharedPrefs.GAME_SHARED_PREF_KEY, parent?.getItemAtPosition(position) as String)
+                editor?.putString(SharedPrefs.GAME_SHARED_PREF_KEY, item)
                 editor?.apply()
             }
         }
