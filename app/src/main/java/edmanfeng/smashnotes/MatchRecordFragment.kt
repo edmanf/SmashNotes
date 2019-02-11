@@ -93,7 +93,7 @@ class MatchRecordFragment : Fragment() {
             }
             Game.SSBB.toString() -> {
                 stageArrayId = R.array.stagesBrawl
-                charArrayId = R.array.stagesBrawl
+                charArrayId = R.array.charactersBrawl
             }
             Game.SSBM.toString() -> {
                 stageArrayId = R.array.stagesMelee
