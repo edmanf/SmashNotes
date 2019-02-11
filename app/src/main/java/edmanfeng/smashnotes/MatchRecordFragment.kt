@@ -27,8 +27,7 @@ class MatchRecordFragment : Fragment() {
     private lateinit var mGSPView : EditText
     private lateinit var mNotes : EditText
     private lateinit var mSessionHistory : RecyclerView
-
-    private lateinit var mGame : String
+    private lateinit var mGameSpinner: Spinner
 
     companion object {
         private const val ARG_GAME_NAME = "game"
@@ -45,8 +44,6 @@ class MatchRecordFragment : Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        mGame = arguments
-            ?.getString(MatchRecordFragment.ARG_GAME_NAME) ?: ""
         mGameViewModel = ViewModelProviders
             .of(this)
             .get(GameViewModel::class.java)
@@ -63,6 +60,8 @@ class MatchRecordFragment : Fragment() {
         val player1 = v.findViewById(R.id.player1) as ConstraintLayout
         val player2 = v.findViewById(R.id.player2) as ConstraintLayout
 
+        val game = arguments
+            ?.getString(MatchRecordFragment.ARG_GAME_NAME) ?: ""
 
         mPlayerTagView = player1.findViewById(R.id.player_name)
         mOpponentTagView = player2.findViewById(R.id.player_name)
@@ -70,7 +69,6 @@ class MatchRecordFragment : Fragment() {
         mGSPView = v.findViewById(R.id.gsp)
         mNotes = v.findViewById(R.id.match_notes)
 
-        getContext()
         mSaveButton = v.findViewById(R.id.save_button)
         mSaveButton.setOnClickListener{
             saveMatch()
@@ -79,10 +77,22 @@ class MatchRecordFragment : Fragment() {
         }
 
 
+        mGameSpinner = v.findViewById(R.id.game_spinner)
+        val gameSpinnerAdapter = ArrayAdapter(
+            context,
+            android.R.layout.simple_spinner_item,
+            Game.getAdapterList()
+        )
+        gameSpinnerAdapter.setDropDownViewResource(
+            R.layout.support_simple_spinner_dropdown_item
+        )
+        mGameSpinner.adapter = gameSpinnerAdapter
+        val pos = gameSpinnerAdapter.getPosition(game)
+        mGameSpinner.setSelection(pos)
 
         val stageArrayId : Int
         val charArrayId : Int
-        when (mGame) {
+        when (game) {
             Game.SSBU.toString() -> {
                 stageArrayId = R.array.stagesUltimate
                 charArrayId = R.array.charactersUltimate
@@ -163,7 +173,7 @@ class MatchRecordFragment : Fragment() {
     private fun savePreferences() {
         val sharedPref = activity?.getPreferences(Context.MODE_PRIVATE) ?: return
         with (sharedPref.edit()) {
-            putString(SharedPrefs.GAME_SHARED_PREF_KEY, mGame)
+            putString(SharedPrefs.GAME_SHARED_PREF_KEY, mGameSpinner.selectedItem as String)
             putString(SharedPrefs.CHAR_SHARED_PREF_KEY, mPlayerCharacterView.text.toString())
             putString(SharedPrefs.STAGE_SHARED_PREF_KEY, mStageView.text.toString())
             apply()
@@ -171,7 +181,8 @@ class MatchRecordFragment : Fragment() {
     }
 
     private fun saveMatch() {
-        if (mGame == "All") {
+        val game = mGameSpinner.selectedItem as String
+        if (game == "All") {
             // TODO: Add a spinner to allow game choice, then make a toast that says to choose a game
             return
         }
@@ -183,7 +194,7 @@ class MatchRecordFragment : Fragment() {
             gsp = 0
         }
 
-        val game = GameRecord(
+        val record = GameRecord(
             0,
             mPlayerCharacterView.text.toString(),
             mOpponentCharacterView.text.toString(),
@@ -193,9 +204,9 @@ class MatchRecordFragment : Fragment() {
             mResultView.selectedItem.toString(),
             gsp,
             mNotes.text?.toString() ?: "",
-            mGame
+            game
         )
-        mGameViewModel.insert(game)
+        mGameViewModel.insert(record)
         mSessionHistory.adapter?.notifyDataSetChanged()
     }
 

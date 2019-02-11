@@ -48,20 +48,20 @@ class OverviewFragment : Fragment() {
             SharedPrefs.GAME_SHARED_PREF_KEY, Game.SSBU.toString()
         ) ?: Game.SSBU.toString()
 
+
         val gamesRecyclerView = v
             .findViewById<RecyclerView>(R.id.game_history_recyclerview)
-
         val adapter = GameAdapter(mGameViewModel.allGames.value)
         mGameViewModel.allGames.observe(this, Observer { _ ->
             // update games whenever any game gets added/removed
             adapter.setGames(mGameViewModel.getGame(game))
         })
         gamesRecyclerView.adapter = adapter
-
         val manager = LinearLayoutManager(context)
         manager.stackFromEnd = true
         manager.reverseLayout = true
         gamesRecyclerView.layoutManager = manager
+
 
         val gameSpinner = v.findViewById<Spinner>(R.id.game_spinner)
         val games = mutableListOf<String>("All")
@@ -75,9 +75,6 @@ class OverviewFragment : Fragment() {
             android.R.layout.simple_spinner_dropdown_item
         )
         gameSpinner.adapter = spinnerAdapter
-
-
-
         val pos = spinnerAdapter.getPosition(game)
         gameSpinner.setSelection(pos)
         gameSpinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
