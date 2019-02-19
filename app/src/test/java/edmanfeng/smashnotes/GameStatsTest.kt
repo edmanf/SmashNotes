@@ -45,7 +45,7 @@ class GameStatsTest {
     fun testCharacterWinRate() {
         assertEquals(
             BigDecimal.ONE.divide(BigDecimal(2), MathContext(GameStats.PRECISION)),
-            GameStats.getCharacterWinRate(mGameRecordList, "Mario", Game.SSBU)
+            GameStats.getWinRate(mGameRecordList, Game.SSBU, character = "Mario")
         )
     }
 
@@ -53,7 +53,7 @@ class GameStatsTest {
     fun emptyListTest() {
         assertEquals(
             BigDecimal.ZERO,
-            GameStats.getCharacterWinRate(emptyList(), "Yoshi",Game.SSBU)
+            GameStats.getWinRate(emptyList(),Game.SSBU, character = "Yoshi")
         )
     }
 
@@ -61,17 +61,17 @@ class GameStatsTest {
     fun zeroWinTest() {
         assertEquals(
             BigDecimal.ZERO,
-            GameStats.getCharacterWinRate(mGameRecordList, "Yoshi", Game.SSBU)
+            GameStats.getWinRate(mGameRecordList, Game.SSBU, "Yoshi")
         )
     }
 
     @Test
     fun differentGameTest() {
         assertEquals(
-            BigDecimal(0.5), GameStats.getCharacterWinRate(mGameRecordList, "Mario", Game.SSBU)
+            BigDecimal(0.5), GameStats.getWinRate(mGameRecordList, Game.SSBU, character = "Mario")
         )
         assertEquals(
-            BigDecimal.ONE, GameStats.getCharacterWinRate(mGameRecordList, "Mario", Game.SSB4)
+            BigDecimal.ONE, GameStats.getWinRate(mGameRecordList, Game.SSB4, character = "Mario")
         )
     }
 }
