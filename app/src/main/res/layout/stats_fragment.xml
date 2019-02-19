@@ -31,5 +31,11 @@
             app:layout_constraintTop_toTopOf="@id/player_character_spinner"
             app:layout_constraintBottom_toBottomOf="@id/player_character_spinner"
             app:layout_constraintStart_toEndOf="@id/player_character_spinner" />
+    <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/game_history_recyclerview"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            app:layout_constraintStart_toStartOf="@id/game_spinner"
+            app:layout_constraintTop_toBottomOf="@id/player_character_spinner" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
