@@ -2,23 +2,28 @@ package edmanfeng.smashnotes
 
 import android.content.Context
 import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.Spinner
+import androidx.appcompat.app.ActionBar
+import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.widget.Toolbar
+import androidx.core.view.GravityCompat
+import androidx.drawerlayout.widget.DrawerLayout
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.floatingactionbutton.FloatingActionButton
+import java.lang.NullPointerException
 
 class OverviewFragment : Fragment() {
 
 
     private lateinit var mGameViewModel : GameViewModel
+    private lateinit var mDrawerLayout : DrawerLayout
 
     companion object {
         private const val TAG = "OverviewFragment"
@@ -32,6 +37,7 @@ class OverviewFragment : Fragment() {
         mGameViewModel = ViewModelProviders
             .of(this)
             .get(GameViewModel::class.java)
+        mDrawerLayout = activity?.findViewById(R.id.drawer_layout) ?: throw NullPointerException()
     }
 
     override fun onCreateView(
@@ -42,6 +48,15 @@ class OverviewFragment : Fragment() {
 
         val context = requireContext()
         val v = inflater.inflate(R.layout.overview_fragment, container, false)
+
+        val toolbar = v.findViewById<Toolbar>(R.id.toolbar)
+        val compatActivity = activity as AppCompatActivity
+        compatActivity.setSupportActionBar(toolbar)
+        val actionbar: ActionBar? = compatActivity.supportActionBar
+        actionbar?.apply {
+            setDisplayHomeAsUpEnabled(true)
+            setHomeAsUpIndicator(R.drawable.ic_menu_black_24dp)
+        }
 
         val sharedPrefs = activity?.getPreferences(Context.MODE_PRIVATE)
         val game = sharedPrefs?.getString(
@@ -102,5 +117,21 @@ class OverviewFragment : Fragment() {
         }
 
         return v
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return when(item.itemId) {
+            android.R.id.home -> {
+                mDrawerLayout?.openDrawer(GravityCompat.START)
+                true
+            }
+            else -> super.onOptionsItemSelected(item)
+        }
+
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        super.onCreateOptionsMenu(menu, inflater)
+        inflater.inflate(R.menu.drawer_view, menu)
     }
 }

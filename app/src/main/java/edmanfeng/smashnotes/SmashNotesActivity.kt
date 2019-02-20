@@ -6,4 +6,6 @@ class SmashNotesActivity : SingleFragmentActivity() {
     override fun createFragment(): Fragment {
         return OverviewFragment.newInstance()
     }
+
+
 }
