@@ -5,6 +5,7 @@
         android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
+
     <androidx.appcompat.widget.AppCompatSpinner
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -12,30 +13,41 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"/>
     <androidx.appcompat.widget.AppCompatSpinner
-            android:id="@+id/stage_spinner"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            app:layout_constraintStart_toEndOf="@id/game_spinner"
-            app:layout_constraintTop_toTopOf="@id/game_spinner"
-            app:layout_constraintBottom_toBottomOf="@id/game_spinner" />
-    <androidx.appcompat.widget.AppCompatSpinner
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:id="@+id/player_character_spinner"
             app:layout_constraintStart_toStartOf="@id/game_spinner"
-            app:layout_constraintTop_toBottomOf="@id/game_spinner" />
-    <androidx.appcompat.widget.AppCompatSpinner
-            android:id="@+id/opponent_character_spinner"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            app:layout_constraintTop_toTopOf="@id/player_character_spinner"
-            app:layout_constraintBottom_toBottomOf="@id/player_character_spinner"
-            app:layout_constraintStart_toEndOf="@id/player_character_spinner" />
+            app:layout_constraintTop_toTopOf="@id/game_spinner"
+            app:layout_constraintBottom_toBottomOf="@id/game_spinner"
+    />
+
+    <com.github.mikephil.charting.charts.LineChart
+            android:id="@+id/rating_chart"
+            android:background="@color/colorAccent"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="8dp"
+            app:layout_constraintTop_toBottomOf="@id/game_spinner"
+            app:layout_constraintStart_toStartOf="parent"
+    />
+
+    <androidx.constraintlayout.widget.Barrier
+            android:id="@+id/barrier"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:barrierDirection="bottom"
+            app:constraint_referenced_ids="rating_chart"
+    />
     <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/game_history_recyclerview"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             app:layout_constraintStart_toStartOf="@id/game_spinner"
-            app:layout_constraintTop_toBottomOf="@id/player_character_spinner" />
+            app:layout_constraintTop_toBottomOf="@id/barrier"
+            app:layout_constraintBottom_toBottomOf="parent"
+    />
+
+
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>
