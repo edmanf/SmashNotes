@@ -1,6 +1,8 @@
 <resources>
     <string name="app_name">SmashNotes</string>
 
+    <string name="nav_stats">Statistics</string>
+
     <string name="record_button_text">Begin Recording</string>
     <string name="record_button_done_text">Done</string>
 
