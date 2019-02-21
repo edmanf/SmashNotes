@@ -22,6 +22,14 @@ class SmashNotesActivity : SingleFragmentNavDrawerActivity() {
         navView.setNavigationItemSelectedListener {
             drawerLayout.closeDrawer(GravityCompat.START)
             when(it.itemId) {
+                R.id.nav_stats -> {
+                    val statsFragment = StatsFragment.newInstance()
+                    supportFragmentManager.beginTransaction()
+                        .replace(R.id.fragment_container, statsFragment)
+                        .addToBackStack(null)
+                        .commit()
+                    true
+                }
                 else -> true
             }
         }
