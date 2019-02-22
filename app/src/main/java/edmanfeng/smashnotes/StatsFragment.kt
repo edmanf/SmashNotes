@@ -17,6 +17,7 @@ import com.github.mikephil.charting.charts.LineChart
 import com.github.mikephil.charting.data.Entry
 import com.github.mikephil.charting.data.LineData
 import com.github.mikephil.charting.data.LineDataSet
+import java.util.Arrays.sort
 
 /**
  * This fragment is for displaying the
@@ -26,12 +27,13 @@ class StatsFragment : Fragment() {
         fun newInstance() : StatsFragment {
             return StatsFragment()
         }
-
-        private lateinit var mGame : Game
     }
+    private lateinit var mGame : Game
+    private lateinit var mCharacter : String
 
     lateinit var mGameViewModel : GameViewModel
     lateinit var mRatingChart : LineChart
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -43,6 +45,8 @@ class StatsFragment : Fragment() {
         val game = activity?.getPreferences(Context.MODE_PRIVATE)
             ?.getString(SharedPrefs.GAME_SHARED_PREF_KEY, Game.SSBU.toString())
         mGame = Game.valueOf(game ?: Game.SSBU.toString())
+        mCharacter = activity?.getPreferences(Context.MODE_PRIVATE)
+            ?.getString(SharedPrefs.CHAR_SHARED_PREF_KEY, "") ?: ""
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -72,18 +76,53 @@ class StatsFragment : Fragment() {
 
         gameSpinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
         gameSpinner.adapter = gameSpinnerAdapter
-        val pos = gameSpinnerAdapter.getPosition(mGame.toString())
+        var pos = gameSpinnerAdapter.getPosition(mGame.toString())
         gameSpinner.setSelection(pos)
         gameSpinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onNothingSelected(parent: AdapterView<*>?) {}
 
             override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
                 val item = parent?.getItemAtPosition(position) as String
-                gameAdapter.setGames(mGameViewModel.getGame(item))
-                updateChart(mGameViewModel.getGame(item))
+                val games = mGameViewModel.getGame(item).filter {it.playerCharacter == mCharacter}
+                mGame = Game.valueOf(item)
+                gameAdapter.setGames(games)
+                updateChart(games)
             }
         }
+
         val characterSpinner = v.findViewById<Spinner>(R.id.player_character_spinner)
+        val charArrayId = when(mGame) {
+            Game.SSB64 -> R.array.characters64
+            Game.SSBM -> R.array.charactersMelee
+            Game.SSBB -> R.array.charactersBrawl
+            Game.PM -> R.array.charactersUltimate // TODO : Add PM
+            Game.SSB4 -> R.array.characters4
+            Game.SSBU -> R.array.charactersUltimate
+        }
+        val charArray = resources.getStringArray(charArrayId)
+        charArray.sort()
+        val characterSpinnerAdapter = ArrayAdapter(
+            context,
+            android.R.layout.simple_spinner_item,
+            charArray
+        )
+        characterSpinnerAdapter.setDropDownViewResource(
+            android.R.layout.simple_spinner_dropdown_item
+        )
+        characterSpinner.adapter = characterSpinnerAdapter
+        pos = characterSpinnerAdapter.getPosition(mCharacter)
+        characterSpinner.setSelection(pos)
+        characterSpinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+            override fun onNothingSelected(parent: AdapterView<*>?) {}
+
+            override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
+                val item = parent?.getItemAtPosition(position) as String
+                mCharacter = item
+                val games = mGameViewModel.getGame(mGame).filter {it.playerCharacter == item}
+                updateChart(games)
+                gameAdapter.setGames(games)
+            }
+        }
 
         return v
     }
