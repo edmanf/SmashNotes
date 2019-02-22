@@ -14,6 +14,8 @@ import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.github.mikephil.charting.charts.LineChart
+import com.github.mikephil.charting.components.XAxis
+import com.github.mikephil.charting.components.YAxis
 import com.github.mikephil.charting.data.Entry
 import com.github.mikephil.charting.data.LineData
 import com.github.mikephil.charting.data.LineDataSet
@@ -44,7 +46,9 @@ class StatsFragment : Fragment() {
 
         val game = activity?.getPreferences(Context.MODE_PRIVATE)
             ?.getString(SharedPrefs.GAME_SHARED_PREF_KEY, Game.SSBU.toString())
-        mGame = Game.valueOf(game ?: Game.SSBU.toString())
+        mGame = if (game == "All") Game.SSBU else {
+            Game.valueOf(game ?: Game.SSBU.toString())
+        }
         mCharacter = activity?.getPreferences(Context.MODE_PRIVATE)
             ?.getString(SharedPrefs.CHAR_SHARED_PREF_KEY, "") ?: ""
     }
@@ -61,6 +65,8 @@ class StatsFragment : Fragment() {
         gameRecyclerView.layoutManager = gameRecyclerViewManager
 
         mRatingChart = v.findViewById(R.id.rating_chart)
+        styleRatingChart()
+
         mGameViewModel.allGames.observe(this, Observer {
             updateChart(mGameViewModel.getGame(mGame))
             gameAdapter.setGames(mGameViewModel.getGame(mGame))
@@ -144,5 +150,18 @@ class StatsFragment : Fragment() {
         val lineData = LineData(dataSet)
         mRatingChart.data = lineData
         mRatingChart.invalidate() // refresh chart
+    }
+
+    private fun styleRatingChart() {
+        with (mRatingChart.xAxis) {
+            setDrawGridLines(false)
+            setDrawLabels(false)
+        }
+
+        with (mRatingChart.axisRight) {
+            setDrawLabels(false)
+        }
+
+
     }
 }
