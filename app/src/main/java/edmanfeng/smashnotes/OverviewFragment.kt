@@ -2,6 +2,7 @@ package edmanfeng.smashnotes
 
 import android.content.Context
 import android.os.Bundle
+import android.util.Log
 import android.view.*
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
@@ -50,7 +51,7 @@ class OverviewFragment : Fragment() {
         val gamesRecyclerView = v
             .findViewById<RecyclerView>(R.id.game_history_recyclerview)
         val adapter = GameAdapter(mGameViewModel.getGame(game))
-        mGameViewModel.allGames.observe(this, Observer { _ ->
+        mGameViewModel.allGames.observe(this, Observer {
             // update games whenever any game gets added/removed
             adapter.setGames(mGameViewModel.getGame(game))
         })
@@ -59,7 +60,6 @@ class OverviewFragment : Fragment() {
         manager.stackFromEnd = true
         manager.reverseLayout = true
         gamesRecyclerView.layoutManager = manager
-
 
         val gameSpinner = v.findViewById<Spinner>(R.id.game_spinner)
         val spinnerAdapter = ArrayAdapter(
@@ -85,6 +85,8 @@ class OverviewFragment : Fragment() {
                 editor?.apply()
             }
         }
+        Log.d("Overview", "count: " + adapter.itemCount)
+        gamesRecyclerView.smoothScrollToPosition(adapter.itemCount)
 
         val fab: FloatingActionButton = v.findViewById(R.id.add_button)
         fab.setOnClickListener {
