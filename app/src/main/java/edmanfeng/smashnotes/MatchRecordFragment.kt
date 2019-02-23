@@ -29,6 +29,8 @@ class MatchRecordFragment : Fragment() {
     private lateinit var mSessionHistory : RecyclerView
     private lateinit var mGameSpinner: Spinner
 
+    private lateinit var mGame: String
+
     companion object {
         private const val ARG_GAME_NAME = "game"
 
@@ -60,7 +62,7 @@ class MatchRecordFragment : Fragment() {
         val player1 = v.findViewById(R.id.player1) as ConstraintLayout
         val player2 = v.findViewById(R.id.player2) as ConstraintLayout
 
-        val game = arguments
+        mGame = arguments
             ?.getString(MatchRecordFragment.ARG_GAME_NAME) ?: ""
 
         mPlayerTagView = player1.findViewById(R.id.player_name)
@@ -87,12 +89,12 @@ class MatchRecordFragment : Fragment() {
             R.layout.support_simple_spinner_dropdown_item
         )
         mGameSpinner.adapter = gameSpinnerAdapter
-        val pos = gameSpinnerAdapter.getPosition(game)
+        val pos = gameSpinnerAdapter.getPosition(mGame)
         mGameSpinner.setSelection(pos)
 
         val stageArrayId : Int
         val charArrayId : Int
-        when (game) {
+        when (mGame) {
             Game.SSBU.toString() -> {
                 stageArrayId = R.array.stagesUltimate
                 charArrayId = R.array.charactersUltimate
@@ -172,8 +174,9 @@ class MatchRecordFragment : Fragment() {
 
     private fun savePreferences() {
         val sharedPref = activity?.getPreferences(Context.MODE_PRIVATE) ?: return
+        val game: String = if (mGame != "All") mGameSpinner.selectedItem as String else "All"
         with (sharedPref.edit()) {
-            putString(SharedPrefs.GAME_SHARED_PREF_KEY, mGameSpinner.selectedItem as String)
+            putString(SharedPrefs.GAME_SHARED_PREF_KEY, game)
             putString(SharedPrefs.CHAR_SHARED_PREF_KEY, mPlayerCharacterView.text.toString())
             putString(SharedPrefs.STAGE_SHARED_PREF_KEY, mStageView.text.toString())
             apply()

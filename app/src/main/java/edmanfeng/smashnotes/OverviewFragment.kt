@@ -6,18 +6,12 @@ import android.view.*
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.Spinner
-import androidx.appcompat.app.ActionBar
-import androidx.appcompat.app.AppCompatActivity
-import androidx.appcompat.widget.Toolbar
-import androidx.core.view.GravityCompat
-import androidx.drawerlayout.widget.DrawerLayout
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.floatingactionbutton.FloatingActionButton
-import java.lang.NullPointerException
 
 class OverviewFragment : Fragment() {
 
@@ -55,7 +49,7 @@ class OverviewFragment : Fragment() {
 
         val gamesRecyclerView = v
             .findViewById<RecyclerView>(R.id.game_history_recyclerview)
-        val adapter = GameAdapter(mGameViewModel.allGames.value)
+        val adapter = GameAdapter(mGameViewModel.getGame(game))
         mGameViewModel.allGames.observe(this, Observer { _ ->
             // update games whenever any game gets added/removed
             adapter.setGames(mGameViewModel.getGame(game))
@@ -68,12 +62,10 @@ class OverviewFragment : Fragment() {
 
 
         val gameSpinner = v.findViewById<Spinner>(R.id.game_spinner)
-        val games = mutableListOf<String>("All")
-        enumValues<Game>().forEach { games.add(it.toString())}
         val spinnerAdapter = ArrayAdapter(
             context,
             android.R.layout.simple_spinner_item,
-            games
+            Game.getAdapterList("All")
         )
         spinnerAdapter.setDropDownViewResource(
             android.R.layout.simple_spinner_dropdown_item
@@ -94,7 +86,7 @@ class OverviewFragment : Fragment() {
             }
         }
 
-        val fab = v.findViewById<FloatingActionButton>(R.id.add_button)
+        val fab: FloatingActionButton = v.findViewById(R.id.add_button)
         fab.setOnClickListener {
             val frag = MatchRecordFragment
                 .newInstance(gameSpinner.selectedItem.toString())
