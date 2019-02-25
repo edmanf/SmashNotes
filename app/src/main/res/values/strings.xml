@@ -6,7 +6,8 @@
     <string name="record_button_text">Begin Recording</string>
     <string name="record_button_done_text">Done</string>
 
-    <string name="save_button_text">Save</string>
+    <string name="win_button_text">Win</string>
+    <string name="loss_button_text">Loss</string>
     <string name="character_hint">Character</string>
     <string name="stage_hint">Stage</string>
     <string name="hazards_label">Hazards</string>
