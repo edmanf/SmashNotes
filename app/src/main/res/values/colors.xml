@@ -10,4 +10,7 @@
     <color name="SSB4">#00BCD4</color>
     <color name="SSBU">#63000000</color>
     <color name="PM">#2839A2</color>
+
+    <color name="winButton">#388E3C</color>
+    <color name="lossButton">#D32F2F</color>
 </resources>

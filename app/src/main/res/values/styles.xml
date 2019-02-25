@@ -7,7 +7,24 @@
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
 
-        <item name="textInputStyle">@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense</item>
+        <item name="textInputStyle">@style/TextInputStyle</item>
+        <item name="materialButtonStyle">@style/buttonStyle</item>
+    </style>
+
+    <style name="TextInputStyle" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+        <item name="materialThemeOverlay">@style/editTextStyle</item>
+        <item name="android:padding">0dp</item>
+    </style>
+
+    <style name="editTextStyle" parent="ThemeOverlay.MaterialComponents.TextInputEditText.OutlinedBox">
+        <item name="android:paddingStart">12dp</item>
+        <item name="android:paddingEnd">8dp</item>
+        <item name="android:paddingBottom">14dp</item>
+        <item name="android:paddingTop">14dp</item>
+    </style>
+
+    <style name="buttonStyle" parent="@style/Widget.MaterialComponents.Button">
+        <item name="cornerRadius">0dp</item>
     </style>
 
 </resources>

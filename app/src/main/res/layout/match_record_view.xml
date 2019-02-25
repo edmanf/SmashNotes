@@ -16,6 +16,7 @@
     <com.google.android.material.button.MaterialButton
             android:id="@+id/loss_button"
             android:text="@string/loss_button_text"
+            android:backgroundTint="@color/lossButton"
             android:layout_width="0dp"
             app:layout_constraintHorizontal_weight="1"
             android:layout_height="wrap_content" app:layout_constraintStart_toEndOf="@+id/game_spinner"
@@ -26,6 +27,7 @@
     <com.google.android.material.button.MaterialButton
             android:id="@+id/win_button"
             android:text="@string/win_button_text"
+            android:backgroundTint="@color/winButton"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             app:layout_constraintTop_toTopOf="parent"
@@ -60,14 +62,12 @@
            app:layout_constraintHorizontal_chainStyle="packed"
            app:layout_constraintTop_toBottomOf="@+id/player2" android:layout_marginEnd="8dp"
            app:layout_constraintEnd_toStartOf="@+id/hazards_checkbox_label">
-       <AutoCompleteTextView
+       <edmanfeng.smashnotes.TextInputAutoCompleteTextView
                android:id="@+id/stage_choice"
                android:hint="@string/stage_hint"
                tools:text="STAGE"
-               android:paddingStart="12dp"
-               android:paddingEnd="8dp"
                android:layout_width="match_parent"
-               android:layout_height="match_parent"/>
+               android:layout_height="wrap_content"/>
    </com.google.android.material.textfield.TextInputLayout>
 
     <TextView
@@ -114,7 +114,8 @@
             android:layout_height="wrap_content"
             app:layout_constraintEnd_toEndOf="@+id/hazards_checkbox"
             app:layout_constraintTop_toBottomOf="@+id/stage_input_layout"
-            app:layout_constraintStart_toEndOf="@+id/match_result" android:layout_marginStart="8dp"
+            app:layout_constraintStart_toEndOf="@+id/match_result"
+            android:layout_marginStart="8dp"
             android:layout_marginTop="8dp">
 
         <com.google.android.material.textfield.TextInputEditText
