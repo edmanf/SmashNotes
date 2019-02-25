@@ -6,17 +6,20 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.*
+import androidx.appcompat.widget.AppCompatSpinner
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import java.lang.IllegalStateException
+import com.google.android.material.button.MaterialButton
+import kotlinx.android.synthetic.main.match_record_view.view.*
+import kotlinx.android.synthetic.main.player_character_view.view.*
 import java.lang.NumberFormatException
 
 class MatchRecordFragment : Fragment() {
     private lateinit var mGameViewModel: GameViewModel
-    private lateinit var mSaveButton : Button
+    private lateinit var mSaveButton : MaterialButton
     private lateinit var mPlayerTagView : EditText
     private lateinit var mOpponentTagView : EditText
     private lateinit var mPlayerCharacterView : AutoCompleteTextView
@@ -27,7 +30,7 @@ class MatchRecordFragment : Fragment() {
     private lateinit var mGSPView : EditText
     private lateinit var mNotes : EditText
     private lateinit var mSessionHistory : RecyclerView
-    private lateinit var mGameSpinner: Spinner
+    private lateinit var mGameSpinner: AppCompatSpinner
 
     private lateinit var mGame: String
 
@@ -65,13 +68,13 @@ class MatchRecordFragment : Fragment() {
         mGame = arguments
             ?.getString(MatchRecordFragment.ARG_GAME_NAME) ?: ""
 
-        mPlayerTagView = player1.findViewById(R.id.player_name)
-        mOpponentTagView = player2.findViewById(R.id.player_name)
-        mHazardsCheck = v.findViewById(R.id.hazards_checkbox)
-        mGSPView = v.findViewById(R.id.gsp)
-        mNotes = v.findViewById(R.id.match_notes)
+        mPlayerTagView = player1.player_name
+        mOpponentTagView = player2.player_name
+        mHazardsCheck = v.hazards_checkbox
+        mGSPView = v.gsp
+        mNotes = v.match_notes
 
-        mSaveButton = v.findViewById(R.id.save_button)
+        mSaveButton = v.win_button
         mSaveButton.setOnClickListener{
             saveMatch()
             clearInput()
@@ -79,7 +82,7 @@ class MatchRecordFragment : Fragment() {
         }
 
 
-        mGameSpinner = v.findViewById(R.id.game_spinner)
+        mGameSpinner = v.game_spinner
         val gameSpinnerAdapter = ArrayAdapter(
             context,
             android.R.layout.simple_spinner_item,
@@ -128,7 +131,7 @@ class MatchRecordFragment : Fragment() {
             android.R.layout.simple_dropdown_item_1line,
             resources.getStringArray(stageArrayId)
         )
-        mStageView = v.findViewById(R.id.stage_choice)
+        mStageView = v.stage_choice
         mStageView.setAdapter(stageAdapter)
 
         val characterAdapter = ArrayAdapter(
@@ -136,10 +139,10 @@ class MatchRecordFragment : Fragment() {
             android.R.layout.simple_dropdown_item_1line,
             resources.getStringArray(charArrayId)
         )
-        mPlayerCharacterView = player1.findViewById(R.id.character)
+        mPlayerCharacterView = player1.character
         mPlayerCharacterView.setAdapter(characterAdapter)
 
-        mOpponentCharacterView = player2.findViewById(R.id.character)
+        mOpponentCharacterView = player2.character
         mOpponentCharacterView.setAdapter(characterAdapter)
 
 
@@ -149,10 +152,10 @@ class MatchRecordFragment : Fragment() {
             android.R.layout.simple_dropdown_item_1line,
             resources.getStringArray(R.array.win_loss)
         )
-        mResultView = v.findViewById(R.id.match_result)
+        mResultView = v.match_result
         mResultView.adapter = resultAdapter
 
-        mSessionHistory = v.findViewById(R.id.session_history)
+        mSessionHistory = v.session_history
         mSessionHistory.adapter = GameAdapter(mGameViewModel.sessionGames)
         val manager = LinearLayoutManager(context)
 
