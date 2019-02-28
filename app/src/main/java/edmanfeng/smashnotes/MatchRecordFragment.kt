@@ -30,7 +30,7 @@ class MatchRecordFragment : Fragment() {
     private lateinit var mGSPView : EditText
     private lateinit var mNotes : EditText
     private lateinit var mSessionHistory : RecyclerView
-    private lateinit var mGameSpinner: AppCompatSpinner
+    private lateinit var mGameSpinner: Spinner
 
     private lateinit var mGame: String
 
