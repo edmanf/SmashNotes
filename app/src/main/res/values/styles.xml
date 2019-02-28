@@ -8,30 +8,37 @@
         <item name="colorAccent">@color/colorAccent</item>
 
         <item name="materialButtonStyle">@style/buttonStyle</item>
-        <item name="textInputStyle">@style/TextInputStyle</item>
+
+        <item name="android:editTextStyle">@style/customEditTextStyle</item>
+        <item name="textInputStyle">@style/customTextInputStyle</item>
     </style>
 
-    <style name="TextInputStyle" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense">
-        <item name="autoCompleteTextViewStyle">@style/autocompleteTextViewStyle</item>
-        <item name="android:editTextStyle">@style/editTextStyle</item>
-        <item name="android:paddingStart">12dp</item>
-        <item name="android:paddingEnd">8dp</item>
-        <item name="android:paddingTop">8dp</item>
-        <item name="android:paddingBottom">8dp</item>
+    <style name="customTextInputStyle" parent="Widget.MaterialComponents.TextInputLayout.FilledBox.Dense">
+        <item name="boxBackgroundColor">@color/winButton</item>
+        <item name="android:editTextStyle">@style/customEditTextStyle</item>
+
+
+
+        <!--
+        effects all textinputlayouts
+        -->
+
     </style>
 
-    <style name="autocompleteTextViewStyle" parent="Widget.AppCompat.AutoCompleteTextView">
-        <item name="android:paddingStart">12dp</item>
+    <style name="customEditTextStyle" parent="Widget.MaterialComponents.TextInputEditText.FilledBox.Dense">
+        <item name="android:paddingStart">8dp</item>
         <item name="android:paddingEnd">8dp</item>
-        <item name="android:paddingTop">8dp</item>
-        <item name="android:paddingBottom">8dp</item>
-    </style>
+        <item name="android:paddingTop">12dp</item>
+        <item name="android:paddingBottom">12dp</item>
+        <item name="android:textColor">@color/colorAccent</item>
 
-    <style name="editTextStyle" parent="Widget.MaterialComponents.TextInputEditText.OutlinedBox.Dense">
-        <item name="android:paddingStart">0dp</item>
-        <item name="android:paddingEnd">8dp</item>
-        <item name="android:paddingTop">8dp</item>
-        <item name="android:paddingBottom">8dp</item>
+
+
+        <!--
+        sets values for textinputautocompletetextview only (but why?)
+        paddingTop sets distance between focused hint and top of text
+        paddingBottom sets distance between bottom and text
+        keep-->
     </style>
 
     <style name="buttonStyle" parent="@style/Widget.MaterialComponents.Button">
