@@ -83,7 +83,7 @@
             app:layout_constraintTop_toTopOf="@+id/stage_input_layout"
             app:layout_constraintBottom_toBottomOf="@+id/stage_input_layout"
             app:layout_constraintEnd_toStartOf="@+id/hazards_checkbox" android:layout_marginEnd="8dp"/>
-    <CheckBox
+    <com.google.android.material.checkbox.MaterialCheckBox
             android:id="@+id/hazards_checkbox"
             app:layout_constraintHorizontal_weight="1"
             android:layout_width="0dp" android:layout_height="wrap_content"
