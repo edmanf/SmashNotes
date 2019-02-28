@@ -2,43 +2,34 @@
 
     <!-- Base application theme. -->
     <style name="AppTheme" parent="Theme.MaterialComponents.Light.NoActionBar">
-        <!-- Customize your theme here. -->
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
 
         <item name="materialButtonStyle">@style/buttonStyle</item>
-
-        <item name="android:editTextStyle">@style/customEditTextStyle</item>
         <item name="textInputStyle">@style/customTextInputStyle</item>
     </style>
 
-    <style name="customTextInputStyle" parent="Widget.MaterialComponents.TextInputLayout.FilledBox.Dense">
-        <item name="boxBackgroundColor">@color/winButton</item>
-        <item name="android:editTextStyle">@style/customEditTextStyle</item>
-
-
-
-        <!--
+    <!--
         effects all textinputlayouts
-        -->
-
+        materialThemeOverlay must be set for editTextStyle to work
+     -->
+    <style name="customTextInputStyle" parent="Widget.MaterialComponents.TextInputLayout.FilledBox.Dense">
+        <item name="boxBackgroundColor">@color/design_default_color_background</item>
+        <item name="materialThemeOverlay">@style/ThemeOverlay.MaterialComponents.TextInputEditText</item>
+        <item name="android:editTextStyle">@style/customEditTextStyle</item>
     </style>
 
-    <style name="customEditTextStyle" parent="Widget.MaterialComponents.TextInputEditText.FilledBox.Dense">
-        <item name="android:paddingStart">8dp</item>
-        <item name="android:paddingEnd">8dp</item>
-        <item name="android:paddingTop">12dp</item>
-        <item name="android:paddingBottom">12dp</item>
-        <item name="android:textColor">@color/colorAccent</item>
 
-
-
-        <!--
-        sets values for textinputautocompletetextview only (but why?)
+    <!--
         paddingTop sets distance between focused hint and top of text
         paddingBottom sets distance between bottom and text
         keep-->
+    <style name="customEditTextStyle" parent="Widget.MaterialComponents.TextInputEditText.FilledBox.Dense">
+        <item name="android:paddingStart">12dp</item>
+        <item name="android:paddingEnd">12dp</item>
+        <item name="android:paddingTop">12dp</item>
+        <item name="android:paddingBottom">12dp</item>
     </style>
 
     <style name="buttonStyle" parent="@style/Widget.MaterialComponents.Button">
