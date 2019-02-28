@@ -21,6 +21,7 @@ import android.view.View
 import android.view.ViewParent
 import android.view.inputmethod.EditorInfo
 import android.view.inputmethod.InputConnection
+import android.widget.AutoCompleteTextView
 import androidx.appcompat.widget.AppCompatAutoCompleteTextView
 import androidx.appcompat.widget.AppCompatEditText
 import com.google.android.material.R
@@ -37,7 +38,7 @@ class TextInputAutoCompleteTextView @JvmOverloads constructor(
     context: Context,
     attrs: AttributeSet? = null,
     defStyleAttr: Int = android.R.attr.editTextStyle
-) : AppCompatAutoCompleteTextView(context, attrs, defStyleAttr) {
+) : AutoCompleteTextView(context, attrs, defStyleAttr) {
 
     private val textInputLayout: TextInputLayout?
         get() {

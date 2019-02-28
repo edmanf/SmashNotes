@@ -128,17 +128,20 @@ class MatchRecordFragment : Fragment() {
 
         val stageAdapter = ArrayAdapter(
             context,
-            android.R.layout.simple_dropdown_item_1line,
+            android.R.layout.simple_list_item_1,
             resources.getStringArray(stageArrayId)
         )
+
         mStageView = v.stage_choice
         mStageView.setAdapter(stageAdapter)
+        mStageView.setDropDownBackgroundDrawable(requireContext().getDrawable(R.drawable.autocomplete_dropdown))
 
         val characterAdapter = ArrayAdapter(
             context,
-            android.R.layout.simple_dropdown_item_1line,
+            android.R.layout.simple_list_item_1,
             resources.getStringArray(charArrayId)
         )
+
         mPlayerCharacterView = player1.character
         mPlayerCharacterView.setAdapter(characterAdapter)
 
