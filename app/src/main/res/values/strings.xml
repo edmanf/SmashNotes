@@ -14,6 +14,8 @@
     <string name="result_label">Result</string>
     <string name="gsp_hint">GSP</string>
     <string name="notes_hint">Notes</string>
+    <string name="hazards_on_switch_label">Hazards on</string>
+    <string name="hazards_off_switch_label">Hazards off</string>
 
     <string name="player_name_hint">Name</string>
 

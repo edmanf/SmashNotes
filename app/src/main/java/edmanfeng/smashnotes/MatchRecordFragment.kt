@@ -13,6 +13,7 @@ import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.button.MaterialButton
+import com.google.android.material.switchmaterial.SwitchMaterial
 import kotlinx.android.synthetic.main.match_record_view.view.*
 import kotlinx.android.synthetic.main.player_character_view.view.*
 import java.lang.NumberFormatException
@@ -25,7 +26,7 @@ class MatchRecordFragment : Fragment() {
     private lateinit var mPlayerCharacterView : AutoCompleteTextView
     private lateinit var mOpponentCharacterView : AutoCompleteTextView
     private lateinit var mStageView : AutoCompleteTextView
-    private lateinit var mHazardsCheck : CheckBox
+    private lateinit var mHazardsCheck : SwitchMaterial
     private lateinit var mResultView : Spinner
     private lateinit var mGSPView : EditText
     private lateinit var mNotes : EditText
@@ -61,7 +62,7 @@ class MatchRecordFragment : Fragment() {
     ): View? {
 
         val context = requireContext()
-        val v = requireActivity().layoutInflater.inflate(R.layout.match_record_view, container, false)
+        val v = inflater.inflate(R.layout.match_record_view, container, false)
         val player1 = v.findViewById(R.id.player1) as ConstraintLayout
         val player2 = v.findViewById(R.id.player2) as ConstraintLayout
 
@@ -70,7 +71,7 @@ class MatchRecordFragment : Fragment() {
 
         mPlayerTagView = player1.player_name
         mOpponentTagView = player2.player_name
-        mHazardsCheck = v.hazards_checkbox
+
         mGSPView = v.gsp
         mNotes = v.match_notes
 
@@ -135,6 +136,14 @@ class MatchRecordFragment : Fragment() {
         mStageView = v.stage_choice
         mStageView.setAdapter(stageAdapter)
         mStageView.setDropDownBackgroundDrawable(requireContext().getDrawable(R.drawable.autocomplete_dropdown))
+
+
+        mHazardsCheck = v.hazards_checkbox
+        setHazardsLabel()
+        mHazardsCheck.setOnClickListener {
+            setHazardsLabel()
+        }
+
 
         val characterAdapter = ArrayAdapter(
             context,
@@ -226,5 +235,14 @@ class MatchRecordFragment : Fragment() {
     private fun clearInput() {
         mNotes.setText("")
         mGSPView.setText("")
+    }
+
+    private fun setHazardsLabel() {
+        val context = requireContext()
+        if (mHazardsCheck.isChecked) {
+            mHazardsCheck.text = context.getString(R.string.hazards_on_switch_label)
+        } else {
+            mHazardsCheck.text = context.getString(R.string.hazards_off_switch_label)
+        }
     }
 }
