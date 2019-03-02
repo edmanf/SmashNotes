@@ -84,26 +84,6 @@
             app:layout_constraintTop_toTopOf="@+id/stage_input_layout"
             app:layout_constraintEnd_toEndOf="parent"
             />
-    <TextView
-            android:id="@+id/match_result_label"
-            android:text="@string/result_label"
-            tools:text="Result"
-            android:gravity="center"
-            app:layout_constraintHorizontal_weight="2"
-            android:layout_width="wrap_content"
-            android:layout_height="0dp"
-            app:layout_constraintStart_toStartOf="@+id/stage_input_layout"
-            app:layout_constraintTop_toTopOf="@+id/match_result"
-            app:layout_constraintBottom_toBottomOf="@+id/match_result"/>
-    <Spinner
-            android:id="@+id/match_result"
-            app:layout_constraintHorizontal_weight="1"
-            android:layout_width="wrap_content"
-            android:layout_marginStart="8dp"
-            android:layout_height="0dp"
-            app:layout_constraintStart_toEndOf="@+id/match_result_label"
-            app:layout_constraintTop_toBottomOf="@+id/stage_input_layout"
-            app:layout_constraintBottom_toBottomOf="@+id/gsp_input_layout" android:layout_marginBottom="8dp"/>
     <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/gsp_input_layout"
             app:layout_constraintHorizontal_weight="2"
@@ -111,7 +91,7 @@
             android:layout_height="wrap_content"
             app:layout_constraintEnd_toEndOf="@+id/hazards_checkbox"
             app:layout_constraintTop_toBottomOf="@+id/stage_input_layout"
-            app:layout_constraintStart_toEndOf="@+id/match_result"
+            app:layout_constraintStart_toStartOf="parent"
             android:layout_marginStart="8dp">
         <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/gsp"

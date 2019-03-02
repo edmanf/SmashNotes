@@ -20,14 +20,13 @@ import java.lang.NumberFormatException
 
 class MatchRecordFragment : Fragment() {
     private lateinit var mGameViewModel: GameViewModel
-    private lateinit var mSaveButton : MaterialButton
+
     private lateinit var mPlayerTagView : EditText
     private lateinit var mOpponentTagView : EditText
     private lateinit var mPlayerCharacterView : AutoCompleteTextView
     private lateinit var mOpponentCharacterView : AutoCompleteTextView
     private lateinit var mStageView : AutoCompleteTextView
     private lateinit var mHazardsCheck : SwitchMaterial
-    private lateinit var mResultView : Spinner
     private lateinit var mGSPView : EditText
     private lateinit var mNotes : EditText
     private lateinit var mSessionHistory : RecyclerView
@@ -75,9 +74,14 @@ class MatchRecordFragment : Fragment() {
         mGSPView = v.gsp
         mNotes = v.match_notes
 
-        mSaveButton = v.win_button
-        mSaveButton.setOnClickListener{
-            saveMatch()
+        v.win_button.setOnClickListener{
+            saveMatch(true)
+            clearInput()
+            savePreferences()
+        }
+
+        v.loss_button.setOnClickListener {
+            saveMatch(false)
             clearInput()
             savePreferences()
         }
@@ -157,16 +161,6 @@ class MatchRecordFragment : Fragment() {
         mOpponentCharacterView = player2.character
         mOpponentCharacterView.setAdapter(characterAdapter)
 
-
-
-        val resultAdapter = ArrayAdapter(
-            context,
-            android.R.layout.simple_dropdown_item_1line,
-            resources.getStringArray(R.array.win_loss)
-        )
-        mResultView = v.match_result
-        mResultView.adapter = resultAdapter
-
         mSessionHistory = v.session_history
         mSessionHistory.adapter = GameAdapter(mGameViewModel.sessionGames)
         val manager = LinearLayoutManager(context)
@@ -198,7 +192,7 @@ class MatchRecordFragment : Fragment() {
         }
     }
 
-    private fun saveMatch() {
+    private fun saveMatch(isVictory: Boolean) {
         val game = mGameSpinner.selectedItem as String
         if (game == "All") {
             // TODO: Add a spinner to allow game choice, then make a toast that says to choose a game
@@ -219,13 +213,14 @@ class MatchRecordFragment : Fragment() {
             mOpponentTagView.text?.toString() ?: "N/A",
             mStageView.text?.toString() ?: "N/A",
             mHazardsCheck.isChecked,
-            mResultView.selectedItem.toString(),
+            if (isVictory) "Win" else "Loss",
             gsp,
             mNotes.text?.toString() ?: "",
             game
         )
         mGameViewModel.insert(record)
         mSessionHistory.adapter?.notifyDataSetChanged()
+        mSessionHistory.smoothScrollToPosition(mSessionHistory.adapter!!.itemCount)
     }
 
     /**
