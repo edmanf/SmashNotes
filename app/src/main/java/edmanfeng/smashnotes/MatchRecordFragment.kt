@@ -6,13 +6,11 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.*
-import androidx.appcompat.widget.AppCompatSpinner
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.google.android.material.button.MaterialButton
 import com.google.android.material.switchmaterial.SwitchMaterial
 import kotlinx.android.synthetic.main.match_record_view.view.*
 import kotlinx.android.synthetic.main.player_character_view.view.*
@@ -198,12 +196,12 @@ class MatchRecordFragment : Fragment() {
             // TODO: Add a spinner to allow game choice, then make a toast that says to choose a game
             return
         }
-        var gsp : Int
-        try {
-            gsp = mGSPView.text?.toString()?.toInt() ?: 0
+
+        val gsp = try {
+            mGSPView.text?.toString()?.toInt() ?: 0
         } catch (error: NumberFormatException) {
             // likely because user left input blank, so its an empty string
-            gsp = 0
+            0
         }
 
         val record = GameRecord(
