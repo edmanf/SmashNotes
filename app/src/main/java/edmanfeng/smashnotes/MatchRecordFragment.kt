@@ -1,6 +1,7 @@
 package edmanfeng.smashnotes
 
 import android.content.Context
+import android.graphics.Color
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -15,6 +16,9 @@ import com.google.android.material.switchmaterial.SwitchMaterial
 import kotlinx.android.synthetic.main.match_record_view.view.*
 import kotlinx.android.synthetic.main.player_character_view.view.*
 import java.lang.NumberFormatException
+import android.widget.TextView
+
+
 
 class MatchRecordFragment : Fragment() {
     private lateinit var mGameViewModel: GameViewModel
@@ -65,6 +69,9 @@ class MatchRecordFragment : Fragment() {
 
         mGame = arguments
             ?.getString(MatchRecordFragment.ARG_GAME_NAME) ?: ""
+        if (mGame == "All") {
+            mGame = "SSBU"
+        }
 
         mPlayerTagView = player1.player_name
         mOpponentTagView = player2.player_name
@@ -73,15 +80,11 @@ class MatchRecordFragment : Fragment() {
         mNotes = v.match_notes
 
         v.win_button.setOnClickListener{
-            saveMatch(true)
-            clearInput()
-            savePreferences()
+            saveResultButtonAction(true)
         }
 
         v.loss_button.setOnClickListener {
-            saveMatch(false)
-            clearInput()
-            savePreferences()
+            saveResultButtonAction(false)
         }
 
 
@@ -89,7 +92,7 @@ class MatchRecordFragment : Fragment() {
         val gameSpinnerAdapter = ArrayAdapter(
             context,
             android.R.layout.simple_spinner_item,
-            Game.getAdapterList()
+            Game.getAdapterList(null)
         )
         gameSpinnerAdapter.setDropDownViewResource(
             R.layout.support_simple_spinner_dropdown_item
@@ -177,6 +180,27 @@ class MatchRecordFragment : Fragment() {
         )
 
         return v
+    }
+
+    private fun saveResultButtonAction(isVictory: Boolean) {
+        val error = false
+        // TODO: finish this
+        if (mPlayerCharacterView.text.isBlank()
+            || mOpponentCharacterView.text.isBlank()) {
+            displayErrors()
+        }
+        saveMatch(isVictory)
+        clearInput()
+        savePreferences()
+    }
+
+    private fun displayErrors() {
+        if (mGameSpinner.selectedItem.toString() == "All") {
+            val errorText = mGameSpinner.selectedView as TextView
+            errorText.error = ""
+            errorText.setTextColor(Color.RED)//just to highlight that this is an error
+            errorText.text = "my actual error text"//changes the selected item text to this
+        }
     }
 
     private fun savePreferences() {

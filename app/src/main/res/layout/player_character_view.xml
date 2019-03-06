@@ -37,7 +37,6 @@
                 android:hint="@string/character_hint"
                 android:inputType="textAutoComplete"
                 android:completionThreshold="1"
-                android:dropDownAnchor="@id/character_input_layout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
         />
