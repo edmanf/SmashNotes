@@ -17,6 +17,7 @@
         <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/player_name"
                 android:hint="@string/player_name_hint"
+                android:imeOptions="actionNext"
                 android:inputType="text"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"/>
@@ -34,6 +35,7 @@
             app:layout_constraintStart_toEndOf="@+id/player_name_input_layout">
         <AutoCompleteTextView
                 android:id="@+id/character"
+                android:imeOptions="actionNext"
                 android:hint="@string/character_hint"
                 android:inputType="textAutoComplete"
                 android:completionThreshold="1"
