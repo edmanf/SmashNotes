@@ -183,25 +183,27 @@ class MatchRecordFragment : Fragment() {
     }
 
     private fun saveResultButtonAction(isVictory: Boolean) {
-        val error = false
-        // TODO: finish this
-        if (mPlayerCharacterView.text.isBlank()
-            || mOpponentCharacterView.text.isBlank()) {
-            displayErrors()
+        var error = false
+
+        if (mPlayerCharacterView.text.isBlank()) {
+            mPlayerCharacterView.error = "Player character required"
+            error = true
         }
-        saveMatch(isVictory)
-        clearInput()
-        savePreferences()
+        if (mOpponentCharacterView.text.isBlank()) {
+            mOpponentCharacterView.error = "Opponent character required"
+            error = true
+        }
+        if (mStageView.text.isBlank()) {
+            mStageView.error = "Stage required"
+            error = true
+        }
+        if (!error) {
+            saveMatch(isVictory)
+            clearInput()
+            savePreferences()
+        }
     }
 
-    private fun displayErrors() {
-        if (mGameSpinner.selectedItem.toString() == "All") {
-            val errorText = mGameSpinner.selectedView as TextView
-            errorText.error = ""
-            errorText.setTextColor(Color.RED)//just to highlight that this is an error
-            errorText.text = "my actual error text"//changes the selected item text to this
-        }
-    }
 
     private fun savePreferences() {
         val sharedPref = activity?.getPreferences(Context.MODE_PRIVATE) ?: return
