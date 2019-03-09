@@ -1,8 +1,6 @@
-package edmanfeng.smashnotes
+package edmanfeng.smashnotes.activities
 
 import android.os.Bundle
-import android.util.Log
-import android.view.Menu
 import android.view.MenuItem
 import androidx.annotation.LayoutRes
 import androidx.appcompat.app.ActionBar
@@ -11,6 +9,7 @@ import androidx.appcompat.widget.Toolbar
 import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.fragment.app.Fragment
+import edmanfeng.smashnotes.R
 
 abstract class SingleFragmentNavDrawerActivity : AppCompatActivity() {
 

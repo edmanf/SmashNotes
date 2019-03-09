@@ -1,9 +1,10 @@
-package edmanfeng.smashnotes
+package edmanfeng.smashnotes.repo
 
 import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
+import edmanfeng.smashnotes.GameRecord
 
 @Database(entities = arrayOf(GameRecord::class), version = 1)
 abstract class GameDatabase : RoomDatabase() {
@@ -14,7 +15,7 @@ abstract class GameDatabase : RoomDatabase() {
         private var INSTANCE: GameDatabase? = null
 
         fun getDatabase(context: Context) : GameDatabase {
-            return INSTANCE?: synchronized(this) {
+            return INSTANCE ?: synchronized(this) {
                 val instance = Room.databaseBuilder(
                     context.applicationContext,
                     GameDatabase::class.java,

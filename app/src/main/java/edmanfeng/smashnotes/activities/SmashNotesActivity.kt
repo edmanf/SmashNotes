@@ -1,14 +1,13 @@
-package edmanfeng.smashnotes
+package edmanfeng.smashnotes.activities
 
 import android.os.Bundle
-import android.util.Log
-import android.view.ContextMenu
-import android.view.MenuItem
-import android.view.View
 import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.fragment.app.Fragment
 import com.google.android.material.navigation.NavigationView
+import edmanfeng.smashnotes.R
+import edmanfeng.smashnotes.fragments.OverviewFragment
+import edmanfeng.smashnotes.fragments.StatsFragment
 
 class SmashNotesActivity : SingleFragmentNavDrawerActivity() {
     override fun createFragment(): Fragment {

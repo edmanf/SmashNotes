@@ -10,7 +10,7 @@
             android:supportsRtl="true"
             android:theme="@style/AppTheme">
         <activity
-                android:name=".SmashNotesActivity"
+                android:name=".activities.SmashNotesActivity"
                 android:windowSoftInputMode="adjustResize"
         >
             <intent-filter>

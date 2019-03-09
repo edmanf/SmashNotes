@@ -1,4 +1,4 @@
-package edmanfeng.smashnotes
+package edmanfeng.smashnotes.fragments
 
 import android.content.Context
 import android.os.Bundle
@@ -13,6 +13,7 @@ import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.floatingactionbutton.FloatingActionButton
+import edmanfeng.smashnotes.*
 
 class OverviewFragment : Fragment() {
 
@@ -90,8 +91,8 @@ class OverviewFragment : Fragment() {
 
         val fab: FloatingActionButton = v.findViewById(R.id.add_button)
         fab.setOnClickListener {
-            val frag = MatchRecordFragment
-                .newInstance(gameSpinner.selectedItem.toString())
+            val frag =
+                MatchRecordFragment.newInstance(gameSpinner.selectedItem.toString())
             activity?.supportFragmentManager
                 ?.beginTransaction()
                 ?.replace(R.id.fragment_container, frag)

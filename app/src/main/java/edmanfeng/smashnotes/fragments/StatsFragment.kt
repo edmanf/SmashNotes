@@ -1,4 +1,4 @@
-package edmanfeng.smashnotes
+package edmanfeng.smashnotes.fragments
 
 import android.content.Context
 import android.os.Bundle
@@ -14,12 +14,10 @@ import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.github.mikephil.charting.charts.LineChart
-import com.github.mikephil.charting.components.XAxis
-import com.github.mikephil.charting.components.YAxis
 import com.github.mikephil.charting.data.Entry
 import com.github.mikephil.charting.data.LineData
 import com.github.mikephil.charting.data.LineDataSet
-import java.util.Arrays.sort
+import edmanfeng.smashnotes.*
 
 /**
  * This fragment is for displaying the

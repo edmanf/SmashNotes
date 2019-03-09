@@ -1,4 +1,4 @@
-package edmanfeng.smashnotes
+package edmanfeng.smashnotes.fragments
 
 import android.app.Activity
 import android.os.Bundle
@@ -9,6 +9,7 @@ import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import edmanfeng.smashnotes.R
 
 class CharacterListFragment : Fragment() {
 
@@ -61,7 +62,8 @@ class CharacterListFragment : Fragment() {
         }
 
         override fun onClick(v: View?) {
-            val frag = CharacterDetailFragment.newInstance(mItemView.text as String)
+            val frag =
+                CharacterDetailFragment.newInstance(mItemView.text as String)
 
             activity
                 ?.supportFragmentManager

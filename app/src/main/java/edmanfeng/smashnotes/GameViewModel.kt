@@ -3,6 +3,8 @@ package edmanfeng.smashnotes
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
+import edmanfeng.smashnotes.repo.GameDatabase
+import edmanfeng.smashnotes.repo.GameRepository
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job

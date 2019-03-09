@@ -1,7 +1,9 @@
-package edmanfeng.smashnotes
+package edmanfeng.smashnotes.repo
 
 import androidx.annotation.WorkerThread
 import androidx.lifecycle.LiveData
+import edmanfeng.smashnotes.Game
+import edmanfeng.smashnotes.GameRecord
 
 class GameRepository(private val gameDao: GameDao) {
     val allGames: LiveData<List<GameRecord>> = gameDao.getAll()

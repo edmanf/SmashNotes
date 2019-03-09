@@ -1,4 +1,4 @@
-package edmanfeng.smashnotes
+package edmanfeng.smashnotes.fragments
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import android.widget.Button
 import android.widget.TextView
 import androidx.fragment.app.Fragment
+import edmanfeng.smashnotes.R
 
 class CharacterDetailFragment : Fragment() {
 
@@ -16,7 +17,7 @@ class CharacterDetailFragment : Fragment() {
 
     companion object {
         private const val ARG_CHARACTER_DETAIL = "character_detail"
-        fun newInstance(character : String) : CharacterDetailFragment{
+        fun newInstance(character : String) : CharacterDetailFragment {
             val args = Bundle()
             args.putSerializable(ARG_CHARACTER_DETAIL, character)
 
@@ -30,7 +31,7 @@ class CharacterDetailFragment : Fragment() {
         super.onCreate(savedInstanceState)
 
         mCharacter = arguments?.getSerializable(
-            CharacterDetailFragment.ARG_CHARACTER_DETAIL
+            ARG_CHARACTER_DETAIL
         ) as String
     }
 

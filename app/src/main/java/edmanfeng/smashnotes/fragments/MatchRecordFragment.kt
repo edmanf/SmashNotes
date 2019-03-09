@@ -1,7 +1,6 @@
-package edmanfeng.smashnotes
+package edmanfeng.smashnotes.fragments
 
 import android.content.Context
-import android.graphics.Color
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -16,8 +15,7 @@ import com.google.android.material.switchmaterial.SwitchMaterial
 import kotlinx.android.synthetic.main.match_record_view.view.*
 import kotlinx.android.synthetic.main.player_character_view.view.*
 import java.lang.NumberFormatException
-import android.widget.TextView
-
+import edmanfeng.smashnotes.*
 
 
 class MatchRecordFragment : Fragment() {
@@ -68,7 +66,7 @@ class MatchRecordFragment : Fragment() {
         val player2 = v.findViewById(R.id.player2) as ConstraintLayout
 
         mGame = arguments
-            ?.getString(MatchRecordFragment.ARG_GAME_NAME) ?: ""
+            ?.getString(ARG_GAME_NAME) ?: ""
         if (mGame == "All") {
             mGame = "SSBU"
         }
