@@ -23,7 +23,4 @@ interface GameDao {
 
     @Query("SELECT * FROM game_records WHERE game LIKE :game")
     fun getGame(game: String) : LiveData<List<GameRecord>>
-
-    @Query("SELECT * FROM ")
-    fun get(game: String, pChar: String, oChar: String, stage: String, lim: Int)
 }
