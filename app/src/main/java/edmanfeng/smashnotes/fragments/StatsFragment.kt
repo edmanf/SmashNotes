@@ -156,10 +156,15 @@ class StatsFragment : Fragment() {
             setDrawLabels(false)
         }
 
+        with (mRatingChart.axisLeft) {
+            setAxisMinimum(0f)
+        }
+
         with (mRatingChart.axisRight) {
             setDrawLabels(false)
         }
 
-
+        mRatingChart.description = null
+        mRatingChart.legend.setEnabled(false)
     }
 }
