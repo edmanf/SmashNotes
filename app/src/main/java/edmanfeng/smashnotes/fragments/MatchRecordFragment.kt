@@ -105,28 +105,34 @@ class MatchRecordFragment : Fragment() {
             Game.SSBU.toString() -> {
                 stageArrayId = R.array.stagesUltimate
                 charArrayId = R.array.charactersUltimate
+                mGSPView.visibility = View.VISIBLE
             }
             Game.SSB4.toString() -> {
                 stageArrayId = R.array.stages4wiiu
                 charArrayId = R.array.characters4
+                mGSPView.visibility = View.INVISIBLE
             }
             Game.SSBB.toString() -> {
                 stageArrayId = R.array.stagesBrawl
                 charArrayId = R.array.charactersBrawl
+                mGSPView.visibility = View.INVISIBLE
             }
             Game.SSBM.toString() -> {
                 stageArrayId = R.array.stagesMelee
                 charArrayId = R.array.charactersMelee
+                mGSPView.visibility = View.INVISIBLE
             }
             Game.SSB64.toString() -> {
                 stageArrayId = R.array.stages64
                 charArrayId = R.array.characters64
+                mGSPView.visibility = View.INVISIBLE
             }
             else -> {
                 // throw IllegalStateException("Game string was not in correct format")
                 // TODO: add PM, SSF2
                 stageArrayId = R.array.stagesUltimate
                 charArrayId = R.array.charactersUltimate
+                mGSPView.visibility = View.INVISIBLE
             }
         }
 
