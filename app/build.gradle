@@ -72,7 +72,7 @@ dependencies {
 
 
     // Test helpers
-    testImplementation "androidx.room:room-testing:$room_version"
+    androidTestImplementation "androidx.room:room-testing:$room_version"
 
     implementation 'com.github.PhilJay:MPAndroidChart:v3.1.0-alpha'
 }
