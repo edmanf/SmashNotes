@@ -20,10 +20,10 @@ import java.io.IOException
 /**
  * Tests for the Game Room Database
  */
-@RunWith(AndroidJUnit4::class)
-class GameDatabaseTest {
+class GameDatabaseInstrumentedTest {
     private lateinit var gameDao: GameDao
     private lateinit var db: GameDatabase
+
 
     @get:Rule
     val rule = InstantTaskExecutorRule()
