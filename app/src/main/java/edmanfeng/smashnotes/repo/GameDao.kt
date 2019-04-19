@@ -19,7 +19,7 @@ interface GameDao {
     fun delete(gameRecord: GameRecord)
 
     @Delete
-    fun deleteAll(gameRecord: List<GameRecord>)
+    fun delete(gameRecords: List<GameRecord>)
 
     @Query("SELECT * FROM game_records WHERE game LIKE :game")
     fun getGame(game: String) : LiveData<List<GameRecord>>
