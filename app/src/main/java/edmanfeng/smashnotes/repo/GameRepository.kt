@@ -22,7 +22,4 @@ class GameRepository(private val gameDao: GameDao) {
     suspend fun delete(games: List<GameRecord>) {
         gameDao.delete(games)
     }
-
-    @WorkerThread
-    suspend fun getGame(game: Game) = gameDao.getGame(game.toString())
 }
