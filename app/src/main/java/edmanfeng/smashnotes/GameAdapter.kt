@@ -1,7 +1,6 @@
 package edmanfeng.smashnotes
 
 import android.graphics.Typeface
-import android.os.Build
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -57,12 +56,12 @@ class GameAdapter(games : List<GameRecord>?) : RecyclerView.Adapter<GameAdapter.
                 mItemView.findViewById<TextView>(R.id.player_character).setTypeface(null, Typeface.NORMAL)
             }
             when(mGame.game) {
-                Game.SSB64.toString() -> setColorVersionSafe(R.color.SSB64)
-                Game.SSBM.toString() -> setColorVersionSafe(R.color.SSBM)
-                Game.SSBB.toString() -> setColorVersionSafe(R.color.SSBB)
-                Game.SSB4.toString() -> setColorVersionSafe(R.color.SSB4)
-                Game.SSBU.toString() -> setColorVersionSafe(R.color.SSBU)
-                else -> setColorVersionSafe(R.color.design_default_color_background)
+                Game.SSB64.toString() -> VersionSafeUtil.setBackgroundColor(mItemView, R.color.SSB64)
+                Game.SSBM.toString() -> VersionSafeUtil.setBackgroundColor(mItemView, R.color.SSBM)
+                Game.SSBB.toString() -> VersionSafeUtil.setBackgroundColor(mItemView, R.color.SSBB)
+                Game.SSB4.toString() -> VersionSafeUtil.setBackgroundColor(mItemView, R.color.SSB4)
+                Game.SSBU.toString() -> VersionSafeUtil.setBackgroundColor(mItemView, R.color.SSBU)
+                else -> VersionSafeUtil.setBackgroundColor(mItemView, R.color.design_default_color_background)
             }
         }
 
@@ -75,17 +74,6 @@ class GameAdapter(games : List<GameRecord>?) : RecyclerView.Adapter<GameAdapter.
                 .commit()
         }
 
-        /**
-         * Sets the background color of the holder to the specified color
-         * resource.
-         */
-        private fun setColorVersionSafe(color: Int) {
-            val resources = mItemView.context.resources
-            if (Build.VERSION.SDK_INT >= 23) {
-                mItemView.setBackgroundColor(resources.getColor(color, null))
-            } else {
-                mItemView.setBackgroundColor(resources.getColor(color))
-            }
-        }
+
     }
 }
