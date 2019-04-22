@@ -11,6 +11,7 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.google.android.material.button.MaterialButton
 import com.google.android.material.switchmaterial.SwitchMaterial
 import kotlinx.android.synthetic.main.match_record_view.view.*
 import kotlinx.android.synthetic.main.player_character_view.view.*
@@ -21,6 +22,8 @@ import edmanfeng.smashnotes.*
 class MatchRecordFragment : Fragment() {
     private lateinit var mGameViewModel: GameViewModel
 
+    private lateinit var mWinButton : MaterialButton
+    private lateinit var mLossButton : MaterialButton
     private lateinit var mPlayerTagView : EditText
     private lateinit var mOpponentTagView : EditText
     private lateinit var mPlayerCharacterView : AutoCompleteTextView
@@ -113,11 +116,13 @@ class MatchRecordFragment : Fragment() {
         mGSPView = v.gsp
         mNotes = v.match_notes
 
-        v.win_button.setOnClickListener{
+        mWinButton = v.win_button
+        mWinButton.setOnClickListener{
             saveResultButtonAction(true)
         }
 
-        v.loss_button.setOnClickListener {
+        mLossButton = v.loss_button
+        mLossButton.setOnClickListener {
             saveResultButtonAction(false)
         }
 
@@ -188,18 +193,19 @@ class MatchRecordFragment : Fragment() {
             setHazardsLabel()
         }
 
-
-        val characterAdapter = ArrayAdapter(
+        mPlayerCharacterView = player1.character
+        mPlayerCharacterView.setAdapter(ArrayAdapter(
             context,
             android.R.layout.simple_list_item_1,
             resources.getStringArray(charArrayId)
-        )
-
-        mPlayerCharacterView = player1.character
-        mPlayerCharacterView.setAdapter(characterAdapter)
+        ))
 
         mOpponentCharacterView = player2.character
-        mOpponentCharacterView.setAdapter(characterAdapter)
+        mOpponentCharacterView.setAdapter(ArrayAdapter(
+            context,
+            android.R.layout.simple_list_item_1,
+            resources.getStringArray(charArrayId)
+        ))
 
         mSessionHistory = v.session_history
         if (mNewGame) {
@@ -249,12 +255,15 @@ class MatchRecordFragment : Fragment() {
             mStageView.setText(
                 arguments?.getString(ARG_STAGE)
             )
-            mGSPView.setText(
-                "%d".format(arguments?.getInt(ARG_GSP))
-            )
+            val gsp = arguments?.getInt(ARG_GSP)
+            if (gsp != 0) {
+                mGSPView.setText("%d".format(gsp))
+            }
+
             mNotes.setText(
                 arguments?.getString(ARG_NOTES)
             )
+            setButtonStyle(arguments?.getString(ARG_RESULT).equals("Win"))
         }
     }
 
@@ -273,13 +282,34 @@ class MatchRecordFragment : Fragment() {
             mStageView.error = "Stage required"
             error = true
         }
+
         if (!error) {
-            saveMatch(isVictory)
-            clearInput()
+            if (mNewGame) {
+                saveMatch(isVictory)
+                clearInput()
+            } else {
+                setButtonStyle(isVictory)
+            }
             savePreferences()
         }
     }
 
+    private fun setButtonStyle(isVictory: Boolean) {
+        val opaque = 255
+        val transparent = 100
+        if (isVictory) {
+            VersionSafeUtil.setTextColor(mWinButton, android.R.color.white)
+            VersionSafeUtil.setTextColor(mLossButton, android.R.color.darker_gray)
+            mWinButton.background.alpha = opaque
+            mLossButton.background.alpha = transparent
+
+        } else {
+            VersionSafeUtil.setTextColor(mWinButton, android.R.color.darker_gray)
+            VersionSafeUtil.setTextColor(mLossButton, android.R.color.white)
+            mWinButton.background.alpha = transparent
+            mLossButton.background.alpha = opaque
+        }
+    }
 
     private fun savePreferences() {
         val sharedPref = activity?.getPreferences(Context.MODE_PRIVATE) ?: return
