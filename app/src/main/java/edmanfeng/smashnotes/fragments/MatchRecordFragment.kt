@@ -33,14 +33,45 @@ class MatchRecordFragment : Fragment() {
     private lateinit var mGameSpinner: Spinner
 
     private lateinit var mGame: String
+    private var mNewGame: Boolean = true
 
     companion object {
         private const val ARG_GAME_NAME = "game"
+        private const val ARG_NEW_GAME = "new_game"
+        private const val ARG_PLAYER_NAME = "p_name"
+        private const val ARG_OPP_NAME = "o_name"
+        private const val ARG_PLAYER_CHAR = "player_char"
+        private const val ARG_OPP_CHAR = "opp_char"
+        private const val ARG_RESULT = "result"
+        private const val ARG_STAGE = "stage"
+        private const val ARG_HAZARDS = "hazards"
+        private const val ARG_GSP = "gsp"
+        private const val ARG_NOTES = "notes"
+
 
         fun newInstance(name : String) : MatchRecordFragment {
             val frag = MatchRecordFragment()
             val args = Bundle()
             args.putSerializable(ARG_GAME_NAME, name)
+            args.putBoolean(ARG_NEW_GAME, true)
+
+            frag.arguments = args
+            return frag
+        }
+
+        fun newInstance(game: GameRecord) : MatchRecordFragment {
+            val frag = MatchRecordFragment()
+            val args = Bundle()
+            args.putSerializable(ARG_GAME_NAME, game.game)
+            args.putBoolean(ARG_NEW_GAME, false)
+            args.putString(ARG_OPP_NAME, game.opponentTag)
+            args.putString(ARG_PLAYER_CHAR, game.playerCharacter)
+            args.putString(ARG_OPP_CHAR, game.opponentCharacter)
+            args.putString(ARG_RESULT, game.result)
+            args.putString(ARG_STAGE, game.stage)
+            args.putBoolean(ARG_HAZARDS, game.hazards)
+            args.putInt(ARG_GSP, game.gsp)
+            args.putString(ARG_NOTES, game.notes)
 
             frag.arguments = args
             return frag
@@ -52,6 +83,15 @@ class MatchRecordFragment : Fragment() {
         mGameViewModel = ViewModelProviders
             .of(this)
             .get(GameViewModel::class.java)
+
+        mGame = arguments
+            ?.getString(ARG_GAME_NAME) ?: ""
+        if (mGame == "All") {
+            mGame = "SSBU"
+        }
+
+        mNewGame = arguments
+            ?.getBoolean(ARG_NEW_GAME) ?: true
     }
 
     override fun onCreateView(
@@ -65,11 +105,7 @@ class MatchRecordFragment : Fragment() {
         val player1 = v.findViewById(R.id.player1) as ConstraintLayout
         val player2 = v.findViewById(R.id.player2) as ConstraintLayout
 
-        mGame = arguments
-            ?.getString(ARG_GAME_NAME) ?: ""
-        if (mGame == "All") {
-            mGame = "SSBU"
-        }
+
 
         mPlayerTagView = player1.player_name
         mOpponentTagView = player2.player_name
@@ -96,8 +132,7 @@ class MatchRecordFragment : Fragment() {
             R.layout.support_simple_spinner_dropdown_item
         )
         mGameSpinner.adapter = gameSpinnerAdapter
-        val pos = gameSpinnerAdapter.getPosition(mGame)
-        mGameSpinner.setSelection(pos)
+
 
         val stageArrayId : Int
         val charArrayId : Int
@@ -167,23 +202,60 @@ class MatchRecordFragment : Fragment() {
         mOpponentCharacterView.setAdapter(characterAdapter)
 
         mSessionHistory = v.session_history
-        mSessionHistory.adapter = GameAdapter(mGameViewModel.sessionGames)
-        val manager = LinearLayoutManager(context)
+        if (mNewGame) {
+            mSessionHistory.adapter = GameAdapter(mGameViewModel.sessionGames)
+            val manager = LinearLayoutManager(context)
 
-        // make RecyclerView insert at the top, old items go offscreen
-        manager.stackFromEnd = true
-        manager.reverseLayout = true
-        mSessionHistory.layoutManager = manager
+            // make RecyclerView insert at the top, old items go offscreen
+            manager.stackFromEnd = true
+            manager.reverseLayout = true
+            mSessionHistory.layoutManager = manager
+        } else {
+            mSessionHistory.visibility = View.GONE
+        }
 
-        val sharedPref = activity?.getPreferences(Context.MODE_PRIVATE) ?: return v
-        mPlayerCharacterView.setText(
-            sharedPref.getString(SharedPrefs.CHAR_SHARED_PREF_KEY, "")
-        )
-        mStageView.setText(
-            sharedPref.getString(SharedPrefs.STAGE_SHARED_PREF_KEY, "")
-        )
-
+        populateViews()
         return v
+    }
+
+    /**
+     * Populates views based on last used options if this fragment was
+     * initiated as a new game, or uses the old game's values if it was
+     * not.
+     */
+    private fun populateViews() {
+        val pos = (mGameSpinner.adapter as ArrayAdapter<String>).getPosition(mGame)
+        mGameSpinner.setSelection(pos)
+
+        if (mNewGame) {
+            val sharedPref = requireActivity().getPreferences(Context.MODE_PRIVATE)
+            mPlayerCharacterView.setText(
+                sharedPref.getString(SharedPrefs.CHAR_SHARED_PREF_KEY, "")
+            )
+            mStageView.setText(
+                sharedPref.getString(SharedPrefs.STAGE_SHARED_PREF_KEY, "")
+            )
+        } else {
+            mPlayerCharacterView.setText(
+                arguments?.getString(ARG_PLAYER_CHAR)
+            )
+            mOpponentCharacterView.setText(
+                arguments?.getString(ARG_OPP_CHAR)
+            )
+            mOpponentTagView.setText(
+                arguments?.getString(ARG_OPP_NAME)
+            )
+            mHazardsCheck.isChecked = arguments?.getBoolean(ARG_HAZARDS) ?: false
+            mStageView.setText(
+                arguments?.getString(ARG_STAGE)
+            )
+            mGSPView.setText(
+                "%d".format(arguments?.getInt(ARG_GSP))
+            )
+            mNotes.setText(
+                arguments?.getString(ARG_NOTES)
+            )
+        }
     }
 
     private fun saveResultButtonAction(isVictory: Boolean) {

@@ -6,10 +6,11 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
-import androidx.core.content.res.ResourcesCompat.getColor
+import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.RecyclerView
+import edmanfeng.smashnotes.fragments.MatchRecordFragment
 
-public class GameAdapter(games : List<GameRecord>?) : RecyclerView.Adapter<GameAdapter.GameHolder>() {
+class GameAdapter(games : List<GameRecord>?) : RecyclerView.Adapter<GameAdapter.GameHolder>() {
     private var mGames : List<GameRecord>
 
     init {
@@ -35,9 +36,13 @@ public class GameAdapter(games : List<GameRecord>?) : RecyclerView.Adapter<GameA
     }
 
 
-    public class GameHolder(itemView : View) : RecyclerView.ViewHolder(itemView) {
+    class GameHolder(itemView : View) : RecyclerView.ViewHolder(itemView), View.OnClickListener {
         private var mItemView = itemView
         private lateinit var mGame : GameRecord
+
+        init {
+            mItemView.setOnClickListener(this)
+        }
 
         fun bindGame(game : GameRecord) {
             mGame = game
@@ -59,6 +64,15 @@ public class GameAdapter(games : List<GameRecord>?) : RecyclerView.Adapter<GameA
                 Game.SSBU.toString() -> setColorVersionSafe(R.color.SSBU)
                 else -> setColorVersionSafe(R.color.design_default_color_background)
             }
+        }
+
+        override fun onClick(v: View?) {
+            val frag = MatchRecordFragment.newInstance(mGame)
+            val fm = (v?.context as AppCompatActivity).supportFragmentManager
+            fm.beginTransaction()
+                .replace(R.id.fragment_container, frag)
+                .addToBackStack(null)
+                .commit()
         }
 
         /**
