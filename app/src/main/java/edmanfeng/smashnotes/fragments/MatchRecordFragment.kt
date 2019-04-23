@@ -2,9 +2,7 @@ package edmanfeng.smashnotes.fragments
 
 import android.content.Context
 import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
 import android.widget.*
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.fragment.app.Fragment
@@ -95,6 +93,8 @@ class MatchRecordFragment : Fragment() {
 
         mNewGame = arguments
             ?.getBoolean(ARG_NEW_GAME) ?: true
+
+        setHasOptionsMenu(true)
     }
 
     override fun onCreateView(
@@ -222,6 +222,11 @@ class MatchRecordFragment : Fragment() {
 
         populateViews()
         return v
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        super.onCreateOptionsMenu(menu, inflater)
+        inflater.inflate(R.menu.match_record_menu, menu)
     }
 
     /**

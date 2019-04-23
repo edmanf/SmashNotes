@@ -2,6 +2,8 @@
     <string name="app_name">SmashNotes</string>
 
     <string name="nav_stats">Statistics</string>
+    <string name="menu_save_record_title">Save</string>
+    <string name="menu_delete_record_title">Delete</string>
 
     <string name="record_button_text">Begin Recording</string>
     <string name="record_button_done_text">Done</string>
