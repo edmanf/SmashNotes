@@ -45,6 +45,39 @@ class GameDatabaseInstrumentedTest {
 
     @Test
     @Throws(IOException::class)
+    fun update() {
+        var game1 = GameRecord(playerCharacter = "Lucas", result = "win")
+        var game2 = GameRecord(playerCharacter = "Yoshi", result = "win")
+        var game3 = GameRecord(stage = "Final Destination")
+
+        val id1 = gameDao.insert(game1)
+        val id2 = gameDao.insert(game2)
+        val id3 = gameDao.insert(game3)
+
+        game1 = getValue(gameDao.getGameRecord(id1))
+        gameDao.update(game1)
+        var games = getValue(gameDao.getAll())
+        assertThat(games[0].playerCharacter, equalTo("Ness"))
+        assertThat(games[1].playerCharacter, equalTo("Yoshi"))
+        assertThat(games[2].playerCharacter, equalTo("Mario"))
+
+        game2.result = "loss"
+        game3.stage = "Lylat Cruise"
+        gameDao.update(game2, game3)
+        games = getValue(gameDao.getAll())
+        assertThat(games[0].playerCharacter, equalTo("Ness"))
+        assertThat(games[0].result, equalTo("win"))
+        assertThat(games[1].playerCharacter, equalTo("Yoshi"))
+        assertThat(games[1].result, equalTo("loss"))
+        assertThat(games[2].playerCharacter, equalTo("Mario"))
+        assertThat(games[2].stage, equalTo("Lylat Cruise"))
+
+
+
+    }
+
+    @Test
+    @Throws(IOException::class)
     fun listDelete() {
         val game1 = GameRecord(id = 6, notes = "NOTES")
         val game2 = GameRecord(id = 27, playerCharacter = "Yoshi")
@@ -53,7 +86,7 @@ class GameDatabaseInstrumentedTest {
         gameDao.insert(game2)
         gameDao.insert(game3)
         assertThat(getValue(gameDao.getAll()).size, equalTo(3))
-        gameDao.delete(listOf(game3, game1, game2))
+        gameDao.delete(game3, game1, game2)
         assert(getValue(gameDao.getAll()).isEmpty())
 
         val game4 = GameRecord(id = 3, stage = "Final Destination")
@@ -62,24 +95,24 @@ class GameDatabaseInstrumentedTest {
         gameDao.insert(game3)
         gameDao.insert(game4)
         assertThat(getValue(gameDao.getAll()).size, equalTo(4))
-        gameDao.delete(listOf(game1, game3))
+        gameDao.delete(game1, game3)
         var list = getValue(gameDao.getAll())
         assertThat(list.size, equalTo(2))
         assert(list.contains(game2))
         assert(list.contains(game4))
 
-        gameDao.delete(listOf())
+        gameDao.delete()
         list = getValue(gameDao.getAll())
         assertThat(list.size, equalTo(2))
         assert(list.contains(game2))
         assert(list.contains(game4))
 
-        gameDao.delete(listOf(game2))
+        gameDao.delete(game2)
         list = getValue(gameDao.getAll())
         assertThat(list.size, equalTo(1))
         assert(list.contains(game4))
 
-        gameDao.delete(listOf(game1, game4))
+        gameDao.delete(game1, game4)
         list = getValue(gameDao.getAll())
         assert(list.isEmpty())
     }

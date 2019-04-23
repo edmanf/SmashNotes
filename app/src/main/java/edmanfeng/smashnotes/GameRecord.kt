@@ -6,7 +6,7 @@ import androidx.room.PrimaryKey
 
 @Entity(tableName = "game_records")
 data class GameRecord(
-    @PrimaryKey(autoGenerate = true) var id : Int = 1,
+    @PrimaryKey(autoGenerate = true) var id : Int = 0,
     @ColumnInfo(name = "player_character") var playerCharacter: String = "Mario",
     @ColumnInfo(name = "opponent_character") var opponentCharacter: String = "Mario",
     @ColumnInfo(name = "opponent_tag") var opponentTag : String = "John",
