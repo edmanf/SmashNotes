@@ -54,17 +54,23 @@ class GameDatabaseInstrumentedTest {
         val id2 = gameDao.insert(game2)
         val id3 = gameDao.insert(game3)
 
+
         game1 = getValue(gameDao.getGameRecord(id1))
+        game1.playerCharacter = "Ness"
         gameDao.update(game1)
+
         var games = getValue(gameDao.getAll())
         assertThat(games[0].playerCharacter, equalTo("Ness"))
         assertThat(games[1].playerCharacter, equalTo("Yoshi"))
         assertThat(games[2].playerCharacter, equalTo("Mario"))
 
+        game2 = getValue(gameDao.getGameRecord(id2))
+        game3 = getValue(gameDao.getGameRecord(id3))
         game2.result = "loss"
         game3.stage = "Lylat Cruise"
         gameDao.update(game2, game3)
         games = getValue(gameDao.getAll())
+
         assertThat(games[0].playerCharacter, equalTo("Ness"))
         assertThat(games[0].result, equalTo("win"))
         assertThat(games[1].playerCharacter, equalTo("Yoshi"))

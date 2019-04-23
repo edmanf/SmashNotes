@@ -24,7 +24,7 @@ class GameRepository(private val gameDao: GameDao) {
     }
 
     @WorkerThread
-    suspend fun getGameRecord(id: Int) {
-        gameDao.getGameRecord(id)
+    suspend fun getGameRecord(id: Long) : LiveData<GameRecord> {
+        return gameDao.getGameRecord(id)
     }
 }
