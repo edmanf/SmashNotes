@@ -34,9 +34,11 @@ class MatchRecordFragment : Fragment() {
     private lateinit var mGameSpinner: Spinner
 
     private lateinit var mGame: String
+    private var mIsVictory: Boolean = false
     private var mNewGame: Boolean = true
 
     companion object {
+        private const val ARG_ID = "id"
         private const val ARG_GAME_NAME = "game"
         private const val ARG_NEW_GAME = "new_game"
         private const val ARG_PLAYER_NAME = "p_name"
@@ -63,6 +65,7 @@ class MatchRecordFragment : Fragment() {
         fun newInstance(game: GameRecord) : MatchRecordFragment {
             val frag = MatchRecordFragment()
             val args = Bundle()
+            args.putLong(ARG_ID, game.id)
             args.putSerializable(ARG_GAME_NAME, game.game)
             args.putBoolean(ARG_NEW_GAME, false)
             args.putString(ARG_OPP_NAME, game.opponentTag)
@@ -108,8 +111,6 @@ class MatchRecordFragment : Fragment() {
         val player1 = v.findViewById(R.id.player1) as ConstraintLayout
         val player2 = v.findViewById(R.id.player2) as ConstraintLayout
 
-
-
         mPlayerTagView = player1.player_name
         mOpponentTagView = player2.player_name
 
@@ -118,14 +119,14 @@ class MatchRecordFragment : Fragment() {
 
         mWinButton = v.win_button
         mWinButton.setOnClickListener{
-            saveResultButtonAction(true)
+            mIsVictory = true
+            setButtonStyle(false)
         }
-
         mLossButton = v.loss_button
         mLossButton.setOnClickListener {
-            saveResultButtonAction(false)
+            mIsVictory = false
+            setButtonStyle(false)
         }
-
 
         mGameSpinner = v.game_spinner
         val gameSpinnerAdapter = ArrayAdapter(
@@ -229,6 +230,16 @@ class MatchRecordFragment : Fragment() {
         inflater.inflate(R.menu.match_record_menu, menu)
     }
 
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return when (item.itemId) {
+            R.id.save_record_menu_item -> {
+                saveButtonAction()
+                true
+            }
+            else -> super.onOptionsItemSelected(item)
+        }
+    }
+
     /**
      * Populates views based on last used options if this fragment was
      * initiated as a new game, or uses the old game's values if it was
@@ -268,11 +279,12 @@ class MatchRecordFragment : Fragment() {
             mNotes.setText(
                 arguments?.getString(ARG_NOTES)
             )
-            setButtonStyle(arguments?.getString(ARG_RESULT).equals("Win"))
+            mIsVictory = arguments?.getString(ARG_RESULT).equals("Win")
+            setButtonStyle(false)
         }
     }
 
-    private fun saveResultButtonAction(isVictory: Boolean) {
+    private fun saveButtonAction() {
         var error = false
 
         if (mPlayerCharacterView.text.isBlank()) {
@@ -289,25 +301,27 @@ class MatchRecordFragment : Fragment() {
         }
 
         if (!error) {
+            saveRecord()
             if (mNewGame) {
-                saveMatch(isVictory)
-                clearInput()
-            } else {
-                setButtonStyle(isVictory)
+                resetViews()
             }
             savePreferences()
         }
     }
 
-    private fun setButtonStyle(isVictory: Boolean) {
+    private fun setButtonStyle(reset: Boolean) {
         val opaque = 255
         val transparent = 100
-        if (isVictory) {
+        if (reset) {
+            VersionSafeUtil.setTextColor(mWinButton, android.R.color.white)
+            VersionSafeUtil.setTextColor(mLossButton, android.R.color.white)
+            mWinButton.background.alpha = opaque
+            mLossButton.background.alpha = opaque
+        } else if (mIsVictory) {
             VersionSafeUtil.setTextColor(mWinButton, android.R.color.white)
             VersionSafeUtil.setTextColor(mLossButton, android.R.color.darker_gray)
             mWinButton.background.alpha = opaque
             mLossButton.background.alpha = transparent
-
         } else {
             VersionSafeUtil.setTextColor(mWinButton, android.R.color.darker_gray)
             VersionSafeUtil.setTextColor(mLossButton, android.R.color.white)
@@ -327,7 +341,7 @@ class MatchRecordFragment : Fragment() {
         }
     }
 
-    private fun saveMatch(isVictory: Boolean) {
+    private fun saveRecord() {
         val game = mGameSpinner.selectedItem as String
         if (game == "All") {
             // TODO: Add a spinner to allow game choice, then make a toast that says to choose a game
@@ -342,29 +356,35 @@ class MatchRecordFragment : Fragment() {
         }
 
         val record = GameRecord(
-            0,
+            arguments?.getLong(ARG_ID) ?: 0,
             mPlayerCharacterView.text.toString(),
             mOpponentCharacterView.text.toString(),
             mOpponentTagView.text?.toString() ?: "N/A",
             mStageView.text?.toString() ?: "N/A",
             mHazardsCheck.isChecked,
-            if (isVictory) "Win" else "Loss",
+            if (mIsVictory) "Win" else "Loss",
             gsp,
             mNotes.text?.toString() ?: "",
             game
         )
-        mGameViewModel.insert(record)
-        mSessionHistory.adapter?.notifyDataSetChanged()
-        mSessionHistory.smoothScrollToPosition(mSessionHistory.adapter!!.itemCount)
+        if (mNewGame) {
+            mGameViewModel.insert(record)
+            mSessionHistory.adapter?.notifyDataSetChanged()
+            mSessionHistory.smoothScrollToPosition(mSessionHistory.adapter!!.itemCount)
+        } else {
+            mGameViewModel.updateGame(record)
+        }
+
     }
 
     /**
      * Clears the non-repeating user input.
      * Currently this means GSP and notes
      */
-    private fun clearInput() {
+    private fun resetViews() {
         mNotes.setText("")
         mGSPView.setText("")
+        setButtonStyle(true)
     }
 
     private fun setHazardsLabel() {

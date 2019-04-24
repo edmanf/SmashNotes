@@ -58,4 +58,10 @@ class GameViewModel(application: Application) : AndroidViewModel(application) {
         // TODO: Check if assigning to mutableListOf() would work
         sessionGames.removeAll(sessionGames)
     }
+
+    fun updateGame(game: GameRecord) {
+        scope.launch(Dispatchers.IO) {
+            repository.update(game)
+        }
+    }
 }
