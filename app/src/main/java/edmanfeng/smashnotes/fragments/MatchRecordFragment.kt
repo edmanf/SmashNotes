@@ -228,6 +228,10 @@ class MatchRecordFragment : Fragment() {
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         super.onCreateOptionsMenu(menu, inflater)
         inflater.inflate(R.menu.match_record_menu, menu)
+        if (mNewGame) {
+            val menuSave = menu.findItem(R.id.save_record_menu_item)
+            menuSave.icon = resources.getDrawable(R.drawable.ic_save_new, null)
+        }
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
