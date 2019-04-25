@@ -12,7 +12,6 @@ import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.button.MaterialButton
 import com.google.android.material.switchmaterial.SwitchMaterial
 import kotlinx.android.synthetic.main.match_record_view.view.*
-import kotlinx.android.synthetic.main.player_character_view.view.*
 import java.lang.NumberFormatException
 import edmanfeng.smashnotes.*
 
@@ -108,11 +107,9 @@ class MatchRecordFragment : Fragment() {
 
         val context = requireContext()
         val v = inflater.inflate(R.layout.match_record_view, container, false)
-        val player1 = v.findViewById(R.id.player1) as ConstraintLayout
-        val player2 = v.findViewById(R.id.player2) as ConstraintLayout
 
-        mPlayerTagView = player1.player_name
-        mOpponentTagView = player2.player_name
+        mPlayerTagView = v.player_name
+        mOpponentTagView = v.opponent_name
 
         mGSPView = v.gsp
         mNotes = v.match_notes
@@ -194,14 +191,14 @@ class MatchRecordFragment : Fragment() {
             setHazardsLabel()
         }
 
-        mPlayerCharacterView = player1.character
+        mPlayerCharacterView = v.player_character
         mPlayerCharacterView.setAdapter(ArrayAdapter(
             context,
             android.R.layout.simple_list_item_1,
             resources.getStringArray(charArrayId)
         ))
 
-        mOpponentCharacterView = player2.character
+        mOpponentCharacterView = v.opponent_character
         mOpponentCharacterView.setAdapter(ArrayAdapter(
             context,
             android.R.layout.simple_list_item_1,
@@ -309,6 +306,11 @@ class MatchRecordFragment : Fragment() {
         }
     }
 
+    /**
+     * If reset is true, both win and loss buttons are styled as if no option has been chosen.
+     * If it is false, it is styled based on whether or not the currently chosen option is
+     * a win or loss.
+     */
     private fun setButtonStyle(reset: Boolean) {
         val opaque = 255
         val transparent = 100

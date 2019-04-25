@@ -42,33 +42,96 @@
             app:layout_constraintEnd_toEndOf="parent"/>
 
 
-    <include layout="@layout/player_character_view"
-             android:layout_height="wrap_content"
-             android:layout_width="0dp"
-             android:id="@+id/player1"
-             android:layout_marginTop="8dp"
-             android:layout_marginStart="8dp"
-             android:layout_marginEnd="8dp"
-             app:layout_constraintTop_toBottomOf="@id/win_button"
-             app:layout_constraintStart_toStartOf="parent"
-             app:layout_constraintEnd_toEndOf="parent" />
-    <include layout="@layout/player_character_view"
-             android:id="@+id/player2"
-             android:layout_height="wrap_content"
-             android:layout_width="0dp"
-             app:layout_constraintTop_toBottomOf="@+id/player1"
-             android:layout_marginStart="8dp"
-             app:layout_constraintStart_toStartOf="parent"
-             android:layout_marginEnd="8dp"
-             app:layout_constraintEnd_toEndOf="parent"/>
+    <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/player_name_input_layout"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_margin="8dp"
+
+            app:layout_constraintTop_toBottomOf="@id/win_button"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/player_character_input_layout"
+            >
+
+        <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/player_name"
+                android:hint="@string/player_name_hint"
+                android:imeOptions="actionNext"
+                android:inputType="text"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/player_character_input_layout"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_margin="8dp"
+
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@id/player_name_input_layout"
+            app:layout_constraintBottom_toBottomOf="@id/player_name_input_layout"
+            app:layout_constraintStart_toEndOf="@+id/player_name_input_layout">
+        <AutoCompleteTextView
+                android:id="@+id/player_character"
+                android:imeOptions="actionNext"
+                android:hint="@string/character_hint"
+                android:inputType="textAutoComplete"
+                android:completionThreshold="1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+        />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/opponent_name_input_layout"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_margin="8dp"
+
+            app:layout_constraintTop_toBottomOf="@id/player_name_input_layout"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/opponent_character_input_layout"
+            >
+
+        <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/opponent_name"
+                android:hint="@string/player_name_hint"
+                android:imeOptions="actionNext"
+                android:inputType="text"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/opponent_character_input_layout"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_margin="8dp"
+
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@id/opponent_name_input_layout"
+            app:layout_constraintBottom_toBottomOf="@id/opponent_name_input_layout"
+            app:layout_constraintStart_toEndOf="@+id/opponent_name_input_layout">
+        <AutoCompleteTextView
+                android:id="@+id/opponent_character"
+                android:imeOptions="actionNext"
+                android:hint="@string/character_hint"
+                android:inputType="textAutoComplete"
+                android:completionThreshold="1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+        />
+
+    </com.google.android.material.textfield.TextInputLayout>
     <com.google.android.material.textfield.TextInputLayout
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:id="@+id/stage_input_layout"
             app:layout_constraintHorizontal_weight="3"
-            app:layout_constraintStart_toStartOf="@+id/player2"
+            app:layout_constraintStart_toStartOf="@+id/player_name_input_layout"
             app:layout_constraintHorizontal_chainStyle="packed"
-            app:layout_constraintTop_toBottomOf="@+id/player2"
+            app:layout_constraintTop_toBottomOf="@+id/opponent_name_input_layout"
             android:layout_marginEnd="8dp"
             app:layout_constraintEnd_toStartOf="@+id/hazards_checkbox">
         <AutoCompleteTextView
