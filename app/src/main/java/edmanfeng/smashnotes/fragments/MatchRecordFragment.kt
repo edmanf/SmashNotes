@@ -237,6 +237,12 @@ class MatchRecordFragment : Fragment() {
                 saveButtonAction()
                 true
             }
+            R.id.delete_record_menu_item -> {
+                mGameViewModel.delete(makeGameRecord())
+                requireActivity().supportFragmentManager
+                    .popBackStack()
+                true
+            }
             else -> super.onOptionsItemSelected(item)
         }
     }
@@ -354,14 +360,26 @@ class MatchRecordFragment : Fragment() {
             return
         }
 
+        val record = makeGameRecord()
+        if (mNewGame) {
+            mGameViewModel.insert(record)
+            mSessionHistory.adapter?.notifyDataSetChanged()
+            mSessionHistory.smoothScrollToPosition(mSessionHistory.adapter!!.itemCount)
+        } else {
+            mGameViewModel.updateGame(record)
+        }
+
+    }
+
+    private fun makeGameRecord(): GameRecord {
+        val game = mGameSpinner.selectedItem as String
         val gsp = try {
             mGSPView.text?.toString()?.toInt() ?: 0
         } catch (error: NumberFormatException) {
             // likely because user left input blank, so its an empty string
             0
         }
-
-        val record = GameRecord(
+        return GameRecord(
             arguments?.getLong(ARG_ID) ?: 0,
             mPlayerCharacterView.text.toString(),
             mOpponentCharacterView.text.toString(),
@@ -373,14 +391,6 @@ class MatchRecordFragment : Fragment() {
             mNotes.text?.toString() ?: "",
             game
         )
-        if (mNewGame) {
-            mGameViewModel.insert(record)
-            mSessionHistory.adapter?.notifyDataSetChanged()
-            mSessionHistory.smoothScrollToPosition(mSessionHistory.adapter!!.itemCount)
-        } else {
-            mGameViewModel.updateGame(record)
-        }
-
     }
 
     /**
