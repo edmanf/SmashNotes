@@ -324,21 +324,29 @@ class MatchRecordFragment : Fragment() {
     private fun setButtonStyle(reset: Boolean) {
         val opaque = 255
         val transparent = 100
-        if (reset) {
-            VersionSafeUtil.setTextColor(mWinButton, android.R.color.white)
-            VersionSafeUtil.setTextColor(mLossButton, android.R.color.white)
-            mWinButton.background.alpha = opaque
-            mLossButton.background.alpha = opaque
-        } else if (mIsVictory) {
-            VersionSafeUtil.setTextColor(mWinButton, android.R.color.white)
-            VersionSafeUtil.setTextColor(mLossButton, android.R.color.darker_gray)
-            mWinButton.background.alpha = opaque
-            mLossButton.background.alpha = transparent
-        } else {
-            VersionSafeUtil.setTextColor(mWinButton, android.R.color.darker_gray)
-            VersionSafeUtil.setTextColor(mLossButton, android.R.color.white)
-            mWinButton.background.alpha = transparent
-            mLossButton.background.alpha = opaque
+
+        val resources = requireContext().resources
+        val normalTextColorResource = VersionSafeUtil.getColorResource(resources, android.R.color.white)
+        val fadedTextColorResource = VersionSafeUtil.getColorResource(resources, android.R.color.darker_gray)
+        when {
+            reset -> {
+                mWinButton.setTextColor(normalTextColorResource)
+                mLossButton.setTextColor(normalTextColorResource)
+                mWinButton.background.alpha = opaque
+                mLossButton.background.alpha = opaque
+            }
+            mIsVictory -> {
+                mWinButton.setTextColor(normalTextColorResource)
+                mLossButton.setTextColor(fadedTextColorResource)
+                mWinButton.background.alpha = opaque
+                mLossButton.background.alpha = transparent
+            }
+            else -> {
+                mWinButton.setTextColor(fadedTextColorResource)
+                mLossButton.setTextColor(normalTextColorResource)
+                mWinButton.background.alpha = transparent
+                mLossButton.background.alpha = opaque
+            }
         }
     }
 

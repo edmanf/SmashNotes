@@ -55,14 +55,16 @@ class GameAdapter(games : List<GameRecord>?) : RecyclerView.Adapter<GameAdapter.
                 mItemView.findViewById<TextView>(R.id.opponent_character).setTypeface(null, Typeface.BOLD)
                 mItemView.findViewById<TextView>(R.id.player_character).setTypeface(null, Typeface.NORMAL)
             }
-            when(mGame.game) {
-                Game.SSB64.toString() -> VersionSafeUtil.setBackgroundColor(mItemView, R.color.SSB64)
-                Game.SSBM.toString() -> VersionSafeUtil.setBackgroundColor(mItemView, R.color.SSBM)
-                Game.SSBB.toString() -> VersionSafeUtil.setBackgroundColor(mItemView, R.color.SSBB)
-                Game.SSB4.toString() -> VersionSafeUtil.setBackgroundColor(mItemView, R.color.SSB4)
-                Game.SSBU.toString() -> VersionSafeUtil.setBackgroundColor(mItemView, R.color.SSBU)
-                else -> VersionSafeUtil.setBackgroundColor(mItemView, R.color.design_default_color_background)
-            }
+
+            val resources = mItemView.context.resources
+            mItemView.setBackgroundColor( when(mGame.game) {
+                Game.SSB64.toString() -> VersionSafeUtil.getColorResource(resources, R.color.SSB64)
+                Game.SSBM.toString() -> VersionSafeUtil.getColorResource(resources, R.color.SSBM)
+                Game.SSBB.toString() -> VersionSafeUtil.getColorResource(resources, R.color.SSBB)
+                Game.SSB4.toString() -> VersionSafeUtil.getColorResource(resources, R.color.SSB4)
+                Game.SSBU.toString() -> VersionSafeUtil.getColorResource(resources, R.color.SSBU)
+                else -> VersionSafeUtil.getColorResource(resources, R.color.design_default_color_background)
+            })
         }
 
         override fun onClick(v: View?) {
