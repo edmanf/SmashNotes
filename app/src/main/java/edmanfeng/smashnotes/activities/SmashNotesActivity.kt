@@ -1,6 +1,7 @@
 package edmanfeng.smashnotes.activities
 
 import android.os.Bundle
+import android.util.Log
 import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.fragment.app.Fragment
@@ -8,6 +9,7 @@ import com.google.android.material.navigation.NavigationView
 import edmanfeng.smashnotes.R
 import edmanfeng.smashnotes.fragments.OverviewFragment
 import edmanfeng.smashnotes.fragments.StatsFragment
+import kotlinx.android.synthetic.main.activity_fragment.*
 
 class SmashNotesActivity : SingleFragmentNavDrawerActivity() {
     override fun createFragment(): Fragment {
@@ -32,5 +34,31 @@ class SmashNotesActivity : SingleFragmentNavDrawerActivity() {
                 else -> true
             }
         }
+
+        bottom_nav_view.setOnNavigationItemSelectedListener {
+            when(it.itemId) {
+                R.id.bottom_nav_history -> {
+                    Log.d("SmashNotesActivity", "bottom history")
+                    supportFragmentManager.beginTransaction()
+                        .replace(R.id.fragment_container, OverviewFragment.newInstance())
+                        .commit()
+
+                    true
+                }
+                R.id.bottom_nav_ranking -> {
+                    Log.d("SmashNotesActivity", "bottom ranking")
+                    supportFragmentManager.beginTransaction()
+                        .replace(R.id.fragment_container, StatsFragment.newInstance())
+                        .commit()
+                    true
+                }
+                R.id.bottom_nav_notes -> {
+                    Log.d("SmashNotesActivity", "bottom notes")
+                    true
+                }
+                else -> false
+            }
+        }
+
     }
 }
