@@ -11,8 +11,9 @@
             android:theme="@style/AppTheme">
         <activity
                 android:name=".activities.SmashNotesActivity"
-                android:windowSoftInputMode="adjustResize"
-        >
+                android:windowSoftInputMode="adjustNothing|stateHidden">
+            <!-- windowSoftInputMode set so bottomNavigationView doesn't pop
+                up when the keyboard is open, taking too much screen -->
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
 
