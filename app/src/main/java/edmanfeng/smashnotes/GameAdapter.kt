@@ -8,6 +8,7 @@ import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.RecyclerView
 import edmanfeng.smashnotes.fragments.MatchRecordFragment
+import kotlinx.android.synthetic.main.saved_match_item.view.*
 
 class GameAdapter(games : List<GameRecord>?) : RecyclerView.Adapter<GameAdapter.GameHolder>() {
     private var mGames : List<GameRecord>
@@ -45,6 +46,7 @@ class GameAdapter(games : List<GameRecord>?) : RecyclerView.Adapter<GameAdapter.
 
         fun bindGame(game : GameRecord) {
             mGame = game
+            mItemView.gsp.text = mGame.gsp.toString()
             mItemView.findViewById<TextView>(R.id.player_character).text = mGame.playerCharacter
             mItemView.findViewById<TextView>(R.id.opponent_character).text = mGame.opponentCharacter
             mItemView.findViewById<TextView>(R.id.stage).text = mGame.stage

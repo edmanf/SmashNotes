@@ -13,4 +13,6 @@
 
     <color name="winButton">#388E3C</color>
     <color name="lossButton">#D32F2F</color>
+
+    <color name="viewSeparator">#DDDDDD</color>
 </resources>
