@@ -41,9 +41,10 @@ class GameViewModel(application: Application) : AndroidViewModel(application) {
     }
 
     fun insert(game: GameRecord) {
-        sessionGames.add(game)
         scope.launch(Dispatchers.IO) {
-            repository.insert(game)
+            val id = repository.insert(game)
+            game.id = id
+            sessionGames.add(game)
         }
     }
 

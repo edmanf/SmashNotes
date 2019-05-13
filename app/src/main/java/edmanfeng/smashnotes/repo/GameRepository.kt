@@ -9,8 +9,8 @@ class GameRepository(private val gameDao: GameDao) {
     val allGames: LiveData<List<GameRecord>> = gameDao.getAll()
 
     @WorkerThread
-    suspend fun insert(game: GameRecord) {
-        gameDao.insert(game)
+    suspend fun insert(game: GameRecord) : Long{
+        return gameDao.insert(game)
     }
 
     @WorkerThread

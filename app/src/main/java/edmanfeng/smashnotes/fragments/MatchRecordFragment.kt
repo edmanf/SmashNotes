@@ -2,6 +2,7 @@ package edmanfeng.smashnotes.fragments
 
 import android.content.Context
 import android.os.Bundle
+import android.util.Log
 import android.view.*
 import android.widget.*
 import androidx.constraintlayout.widget.ConstraintLayout
@@ -79,6 +80,12 @@ class MatchRecordFragment : Fragment() {
             frag.arguments = args
             return frag
         }
+    }
+
+    override fun onResume() {
+        super.onResume()
+        mSessionHistory.adapter?.notifyDataSetChanged()
+        Log.d("MatchRecord", "RESUME")
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -371,11 +378,11 @@ class MatchRecordFragment : Fragment() {
         val record = makeGameRecord()
         if (mNewGame) {
             mGameViewModel.insert(record)
-            mSessionHistory.adapter?.notifyDataSetChanged()
             mSessionHistory.smoothScrollToPosition(mSessionHistory.adapter!!.itemCount)
         } else {
             mGameViewModel.updateGame(record)
         }
+        mSessionHistory.adapter?.notifyDataSetChanged()
 
     }
 
