@@ -65,12 +65,13 @@ class CharacterListFragment : Fragment() {
             val frag =
                 CharacterDetailFragment.newInstance(mItemView.text as String)
 
+            /*
             activity
                 ?.supportFragmentManager
                 ?.beginTransaction()
                 ?.replace(R.id.fragment_container, frag)
                 ?.addToBackStack(null)
-                ?.commit()
+                ?.commit()*/
         }
     }
 

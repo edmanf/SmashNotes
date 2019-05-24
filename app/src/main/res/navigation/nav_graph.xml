@@ -1,6 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
             xmlns:app="http://schemas.android.com/apk/res-auto"
-            android:id="@+id/nav_graph">
+            xmlns:tools="http://schemas.android.com/tools"
+            android:id="@+id/nav_graph"
+            app:startDestination="@id/overviewFragment">
 
+    <fragment android:id="@+id/overviewFragment"
+              android:name="edmanfeng.smashnotes.fragments.OverviewFragment"
+              android:label="OverviewFragment">
+        <action android:id="@+id/action_overviewFragment_to_matchRecordFragment"
+                app:destination="@id/matchRecordFragment"/>
+        <action android:id="@+id/action_overviewFragment_to_statsFragment"
+                app:destination="@id/statsFragment"/>
+    </fragment>
+    <fragment android:id="@+id/matchRecordFragment"
+              android:name="edmanfeng.smashnotes.fragments.MatchRecordFragment"
+              android:label="MatchRecordFragment"/>
+    <fragment android:id="@+id/statsFragment"
+              android:name="edmanfeng.smashnotes.fragments.StatsFragment"
+              android:label="StatsFragment"/>
 </navigation>

@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
+import androidx.navigation.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import edmanfeng.smashnotes.fragments.MatchRecordFragment
 import kotlinx.android.synthetic.main.saved_match_item.view.*
@@ -70,12 +71,14 @@ class GameAdapter(games : List<GameRecord>?) : RecyclerView.Adapter<GameAdapter.
         }
 
         override fun onClick(v: View?) {
+            /*
             val frag = MatchRecordFragment.newInstance(mGame)
             val fm = (v?.context as AppCompatActivity).supportFragmentManager
             fm.beginTransaction()
                 .replace(R.id.fragment_container, frag)
                 .addToBackStack(null)
-                .commit()
+                .commit()*/
+            v?.findNavController()?.navigate(R.id.matchRecordFragment)
         }
 
 

@@ -55,13 +55,13 @@ class CharacterDetailFragment : Fragment() {
         )
         recordButton.setOnClickListener{
             val frag = MatchRecordFragment.newInstance(mCharacter)
-
+            /*
             activity
                 ?.supportFragmentManager
                 ?.beginTransaction()
                 ?.replace(R.id.fragment_container, frag)
                 ?.addToBackStack(null)
-                ?.commit()
+                ?.commit()*/
         }
 
         return v
