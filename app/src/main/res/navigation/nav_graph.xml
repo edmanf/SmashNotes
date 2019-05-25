@@ -7,16 +7,18 @@
 
     <fragment android:id="@+id/overviewFragment"
               android:name="edmanfeng.smashnotes.fragments.OverviewFragment"
-              android:label="OverviewFragment">
+              android:label="SmashNotes">
         <action android:id="@+id/action_overviewFragment_to_matchRecordFragment"
                 app:destination="@id/matchRecordFragment"/>
         <action android:id="@+id/action_overviewFragment_to_statsFragment"
                 app:destination="@id/statsFragment"/>
     </fragment>
+
     <fragment android:id="@+id/matchRecordFragment"
               android:name="edmanfeng.smashnotes.fragments.MatchRecordFragment"
-              android:label="MatchRecordFragment"/>
+              android:label="Record Note"/>
+
     <fragment android:id="@+id/statsFragment"
               android:name="edmanfeng.smashnotes.fragments.StatsFragment"
-              android:label="StatsFragment"/>
+              android:label="Statistics"/>
 </navigation>

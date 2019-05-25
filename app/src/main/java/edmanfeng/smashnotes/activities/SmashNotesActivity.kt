@@ -5,6 +5,9 @@ import android.util.Log
 import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.fragment.app.Fragment
+import androidx.navigation.findNavController
+import androidx.navigation.ui.setupWithNavController
+import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.navigation.NavigationView
 import edmanfeng.smashnotes.R
 import edmanfeng.smashnotes.fragments.OverviewFragment
@@ -19,9 +22,11 @@ class SmashNotesActivity : SingleFragmentNavDrawerActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         val drawerLayout = findViewById<DrawerLayout>(R.id.drawer_layout)
-        val navView = findViewById<NavigationView>(R.id.nav_view)
+
+        /*
         navView.setNavigationItemSelectedListener {
             drawerLayout.closeDrawer(GravityCompat.START)
+
             when(it.itemId) {
                 R.id.nav_stats -> {
                     val statsFragment = StatsFragment.newInstance()
@@ -33,8 +38,9 @@ class SmashNotesActivity : SingleFragmentNavDrawerActivity() {
                 }
                 else -> true
             }
-        }
-
+            true
+        }*/
+/*
         bottom_nav_view.setOnNavigationItemSelectedListener {
             when(it.itemId) {
                 R.id.bottom_nav_history -> {
@@ -58,7 +64,7 @@ class SmashNotesActivity : SingleFragmentNavDrawerActivity() {
                 }
                 else -> false
             }
-        }
+        }*/
 
     }
 }
