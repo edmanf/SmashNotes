@@ -1,6 +1,7 @@
 package edmanfeng.smashnotes.activities
 
 import android.os.Bundle
+import android.view.View
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.fragment.app.Fragment
 import androidx.navigation.findNavController
@@ -19,12 +20,19 @@ class SmashNotesActivity : SingleFragmentActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        val drawerLayout = findViewById<DrawerLayout>(R.id.drawer_layout)
 
         val navController = findNavController(R.id.nav_host_fragment)
+        navController.addOnDestinationChangedListener{controller, dest, args ->
+            if (dest.id == R.id.matchRecordFragment) {
+                bottom_nav_view.visibility = View.GONE
+            } else {
+                bottom_nav_view.visibility = View.VISIBLE
+            }
+        }
+
         val appBarConfiguration = AppBarConfiguration(
             setOf(R.id.overviewFragment, R.id.statsFragment),
-            drawerLayout
+            findViewById(R.id.drawer_layout)
         )
         toolbar.setupWithNavController(navController, appBarConfiguration)
 
