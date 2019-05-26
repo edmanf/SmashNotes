@@ -17,11 +17,9 @@ import com.google.android.material.navigation.NavigationView
 import edmanfeng.smashnotes.R
 import kotlinx.android.synthetic.main.activity_fragment.*
 
-abstract class SingleFragmentNavDrawerActivity : AppCompatActivity() {
+abstract class SingleFragmentActivity : AppCompatActivity() {
 
     protected abstract fun createFragment(): Fragment
-
-    lateinit var drawerLayout : DrawerLayout
 
     /**
      * Returns the layout id of the activity that hosts the fragment.
@@ -35,30 +33,6 @@ abstract class SingleFragmentNavDrawerActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(getLayoutResId())
-
-        drawerLayout = findViewById(R.id.drawer_layout)
-
-        val navController = findNavController(R.id.nav_host_fragment)
-        val appBarConfiguration = AppBarConfiguration(
-            setOf(R.id.overviewFragment, R.id.statsFragment),
-            drawerLayout
-        )
-        toolbar.setupWithNavController(navController, appBarConfiguration)
-
-        findViewById<NavigationView>(R.id.nav_view)
-            .setupWithNavController(navController)
-
-        bottom_nav_view.setupWithNavController(navController)
     }
 
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        return when(item.itemId) {
-            android.R.id.home -> {
-                drawerLayout.openDrawer(GravityCompat.START)
-                Log.d("SingleFrag", "HOME")
-                true
-            }
-            else -> super.onOptionsItemSelected(item)
-        }
-    }
 }
