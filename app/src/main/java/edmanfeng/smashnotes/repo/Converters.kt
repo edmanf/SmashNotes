@@ -7,8 +7,8 @@ import edmanfeng.smashnotes.GameRecord
 
 class Converters {
     @TypeConverter
-    fun resultEnumToString(result: GameRecord.RESULT) : String {
-        return if(result == GameRecord.RESULT.VICTORY) {
+    fun resultEnumToString(result: GameRecord.Result) : String {
+        return if(result == GameRecord.Result.VICTORY) {
             ROOM_RESULT_VICTORY
         }  else {
             ROOM_RESULT_LOSS
@@ -16,11 +16,11 @@ class Converters {
     }
 
     @TypeConverter
-    fun resultStringToEnum(result: String) : GameRecord.RESULT {
+    fun resultStringToEnum(result: String) : GameRecord.Result {
         return if(result == ROOM_RESULT_VICTORY) {
-            GameRecord.RESULT.VICTORY
+            GameRecord.Result.VICTORY
         } else {
-            GameRecord.RESULT.LOSS
+            GameRecord.Result.LOSS
         }
     }
 

@@ -12,7 +12,7 @@ data class GameRecord(
     @ColumnInfo(name = "opponent_tag") var opponentTag : String = "John",
     @ColumnInfo(name = "stage") var stage : String = "Battlefield",
     @ColumnInfo(name = "hazards") var hazards : Boolean = false,
-    @ColumnInfo(name = "result") var result : RESULT = RESULT.VICTORY,
+    @ColumnInfo(name = "result") var result : Result = Result.VICTORY,
     @ColumnInfo(name = "gsp") var gsp : Int = 3500000,
     @ColumnInfo(name = "notes") var notes : String = "",
     @ColumnInfo(name = "game") var game : Game = Game.SSBU
@@ -21,7 +21,7 @@ data class GameRecord(
         const val NEW_GAME_ID: Long = -1L
     }
 
-    enum class RESULT {
+    enum class Result {
         VICTORY, LOSS;
 
         override fun toString() : String {
