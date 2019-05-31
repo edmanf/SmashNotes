@@ -5,10 +5,9 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
-import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.findNavController
 import androidx.recyclerview.widget.RecyclerView
-import edmanfeng.smashnotes.fragments.MatchRecordFragment
+import edmanfeng.smashnotes.fragments.OverviewFragmentDirections
 import kotlinx.android.synthetic.main.saved_match_item.view.*
 
 class GameAdapter(games : List<GameRecord>?) : RecyclerView.Adapter<GameAdapter.GameHolder>() {
@@ -51,7 +50,7 @@ class GameAdapter(games : List<GameRecord>?) : RecyclerView.Adapter<GameAdapter.
             mItemView.findViewById<TextView>(R.id.player_character).text = mGame.playerCharacter
             mItemView.findViewById<TextView>(R.id.opponent_character).text = mGame.opponentCharacter
             mItemView.findViewById<TextView>(R.id.stage).text = mGame.stage
-            if (mGame.result == "Win") {
+            if (mGame.isVictory()) {
                 mItemView.findViewById<TextView>(R.id.player_character).setTypeface(null, Typeface.BOLD)
                 mItemView.findViewById<TextView>(R.id.opponent_character).setTypeface(null, Typeface.NORMAL)
             } else {
@@ -61,12 +60,12 @@ class GameAdapter(games : List<GameRecord>?) : RecyclerView.Adapter<GameAdapter.
 
             val resources = mItemView.context.resources
             mItemView.setBackgroundColor( when(mGame.game) {
-                Game.SSB64.toString() -> VersionSafeUtil.getColorResource(resources, R.color.SSB64)
-                Game.SSBM.toString() -> VersionSafeUtil.getColorResource(resources, R.color.SSBM)
-                Game.SSBB.toString() -> VersionSafeUtil.getColorResource(resources, R.color.SSBB)
-                Game.SSB4.toString() -> VersionSafeUtil.getColorResource(resources, R.color.SSB4)
-                Game.SSBU.toString() -> VersionSafeUtil.getColorResource(resources, R.color.SSBU)
-                else -> VersionSafeUtil.getColorResource(resources, R.color.design_default_color_background)
+                Game.SSB64 -> Utils.getColorResourceVersionSafe(resources, R.color.SSB64)
+                Game.SSBM -> Utils.getColorResourceVersionSafe(resources, R.color.SSBM)
+                Game.SSBB -> Utils.getColorResourceVersionSafe(resources, R.color.SSBB)
+                Game.SSB4 -> Utils.getColorResourceVersionSafe(resources, R.color.SSB4)
+                Game.SSBU -> Utils.getColorResourceVersionSafe(resources, R.color.SSBU)
+                else -> Utils.getColorResourceVersionSafe(resources, R.color.design_default_color_background)
             })
         }
 
@@ -78,7 +77,8 @@ class GameAdapter(games : List<GameRecord>?) : RecyclerView.Adapter<GameAdapter.
                 .replace(R.id.fragment_container, frag)
                 .addToBackStack(null)
                 .commit()*/
-            v?.findNavController()?.navigate(R.id.matchRecordFragment)
+            val action = OverviewFragmentDirections.actionOverviewFragmentToMatchRecordFragment(mGame.id)
+            v?.findNavController()?.navigate(action)
         }
 
 

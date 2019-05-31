@@ -5,9 +5,10 @@ import android.os.Bundle
 import android.util.Log
 import android.view.*
 import android.widget.*
-import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
+import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.button.MaterialButton
@@ -19,6 +20,10 @@ import edmanfeng.smashnotes.*
 
 class MatchRecordFragment : Fragment() {
     private lateinit var mGameViewModel: GameViewModel
+    private val args: MatchRecordFragmentArgs by navArgs()
+    private var mGameRecord: GameRecord = GameRecord.newGame()
+    private var mVictorySelected = false
+    private var mResultSelected = false
 
     private lateinit var mWinButton : MaterialButton
     private lateinit var mLossButton : MaterialButton
@@ -33,55 +38,6 @@ class MatchRecordFragment : Fragment() {
     private lateinit var mSessionHistory : RecyclerView
     private lateinit var mGameSpinner: Spinner
 
-    private lateinit var mGame: String
-    private var mIsVictory: Boolean = false
-    private var mNewGame: Boolean = true
-
-    companion object {
-        private const val ARG_ID = "id"
-        private const val ARG_GAME_NAME = "game"
-        private const val ARG_NEW_GAME = "new_game"
-        private const val ARG_PLAYER_NAME = "p_name"
-        private const val ARG_OPP_NAME = "o_name"
-        private const val ARG_PLAYER_CHAR = "player_char"
-        private const val ARG_OPP_CHAR = "opp_char"
-        private const val ARG_RESULT = "result"
-        private const val ARG_STAGE = "stage"
-        private const val ARG_HAZARDS = "hazards"
-        private const val ARG_GSP = "gsp"
-        private const val ARG_NOTES = "notes"
-
-
-        fun newInstance(name : String) : MatchRecordFragment {
-            val frag = MatchRecordFragment()
-            val args = Bundle()
-            args.putSerializable(ARG_GAME_NAME, name)
-            args.putBoolean(ARG_NEW_GAME, true)
-
-            frag.arguments = args
-            return frag
-        }
-
-        fun newInstance(game: GameRecord) : MatchRecordFragment {
-            val frag = MatchRecordFragment()
-            val args = Bundle()
-            args.putLong(ARG_ID, game.id)
-            args.putSerializable(ARG_GAME_NAME, game.game)
-            args.putBoolean(ARG_NEW_GAME, false)
-            args.putString(ARG_OPP_NAME, game.opponentTag)
-            args.putString(ARG_PLAYER_CHAR, game.playerCharacter)
-            args.putString(ARG_OPP_CHAR, game.opponentCharacter)
-            args.putString(ARG_RESULT, game.result)
-            args.putString(ARG_STAGE, game.stage)
-            args.putBoolean(ARG_HAZARDS, game.hazards)
-            args.putInt(ARG_GSP, game.gsp)
-            args.putString(ARG_NOTES, game.notes)
-
-            frag.arguments = args
-            return frag
-        }
-    }
-
     override fun onResume() {
         super.onResume()
         mSessionHistory.adapter?.notifyDataSetChanged()
@@ -93,15 +49,23 @@ class MatchRecordFragment : Fragment() {
         mGameViewModel = ViewModelProviders
             .of(this)
             .get(GameViewModel::class.java)
+        Log.d("MatchRecord", "onCreate")
 
-        mGame = arguments
-            ?.getString(ARG_GAME_NAME) ?: ""
-        if (mGame == "All") {
-            mGame = "SSBU"
+        if (args.id == GameRecord.NEW_GAME_ID) {
+            mGameRecord = GameRecord.newGame()
+            mResultSelected = false
+        } else {
+            val gameRecordLiveData = mGameViewModel.getGameRecord(args.id)
+            gameRecordLiveData.observe(this, Observer {
+                val gameRecord = gameRecordLiveData.value
+                if (gameRecord != null) {
+                    Log.d("MatchRecord", "game observed: " + args.id)
+                    mGameRecord = gameRecord
+                }
+                populateViews()
+            })
+            mResultSelected = true
         }
-
-        mNewGame = arguments
-            ?.getBoolean(ARG_NEW_GAME) ?: true
 
         setHasOptionsMenu(true)
     }
@@ -123,12 +87,14 @@ class MatchRecordFragment : Fragment() {
 
         mWinButton = v.win_button
         mWinButton.setOnClickListener{
-            mIsVictory = true
+            mVictorySelected = true
+            mResultSelected = true
             setButtonStyle(false)
         }
         mLossButton = v.loss_button
         mLossButton.setOnClickListener {
-            mIsVictory = false
+            mVictorySelected = false
+            mResultSelected = true
             setButtonStyle(false)
         }
 
@@ -136,7 +102,7 @@ class MatchRecordFragment : Fragment() {
         val gameSpinnerAdapter = ArrayAdapter(
             context,
             android.R.layout.simple_spinner_item,
-            Game.getAdapterList(null)
+            getAdapterList(null)
         )
         gameSpinnerAdapter.setDropDownViewResource(
             R.layout.support_simple_spinner_dropdown_item
@@ -146,28 +112,28 @@ class MatchRecordFragment : Fragment() {
 
         val stageArrayId : Int
         val charArrayId : Int
-        when (mGame) {
-            Game.SSBU.toString() -> {
+        when (mGameRecord.game) {
+            Game.SSBU -> {
                 stageArrayId = R.array.stagesUltimate
                 charArrayId = R.array.charactersUltimate
                 mGSPView.visibility = View.VISIBLE
             }
-            Game.SSB4.toString() -> {
+            Game.SSB4 -> {
                 stageArrayId = R.array.stages4wiiu
                 charArrayId = R.array.characters4
                 mGSPView.visibility = View.INVISIBLE
             }
-            Game.SSBB.toString() -> {
+            Game.SSBB -> {
                 stageArrayId = R.array.stagesBrawl
                 charArrayId = R.array.charactersBrawl
                 mGSPView.visibility = View.INVISIBLE
             }
-            Game.SSBM.toString() -> {
+            Game.SSBM -> {
                 stageArrayId = R.array.stagesMelee
                 charArrayId = R.array.charactersMelee
                 mGSPView.visibility = View.INVISIBLE
             }
-            Game.SSB64.toString() -> {
+            Game.SSB64 -> {
                 stageArrayId = R.array.stages64
                 charArrayId = R.array.characters64
                 mGSPView.visibility = View.INVISIBLE
@@ -213,7 +179,8 @@ class MatchRecordFragment : Fragment() {
         ))
 
         mSessionHistory = v.session_history
-        if (mNewGame) {
+        // Sessions are only started when you are recording new games
+        if (mGameRecord.isNewGame()) {
             mSessionHistory.adapter = GameAdapter(mGameViewModel.sessionGames)
             val manager = LinearLayoutManager(context)
 
@@ -225,16 +192,22 @@ class MatchRecordFragment : Fragment() {
             mSessionHistory.visibility = View.GONE
         }
 
-        populateViews()
         return v
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         super.onCreateOptionsMenu(menu, inflater)
+
         inflater.inflate(R.menu.match_record_menu, menu)
-        if (mNewGame) {
-            val menuSave = menu.findItem(R.id.save_record_menu_item)
+        val menuSave = menu.findItem(R.id.save_record_menu_item)
+
+        // Can't use mGameRecord.isNewGame() - this may run before the observe
+        if (args.id == GameRecord.NEW_GAME_ID) {
+            Log.d("MatchRecord", "NEWGAME")
             menuSave.icon = resources.getDrawable(R.drawable.ic_save_new, null)
+        } else {
+            Log.d("MatchRecord", "NOTNEW")
+            menuSave.icon = resources.getDrawable(R.drawable.ic_save, null)
         }
     }
 
@@ -260,10 +233,13 @@ class MatchRecordFragment : Fragment() {
      * not.
      */
     private fun populateViews() {
-        val pos = (mGameSpinner.adapter as ArrayAdapter<String>).getPosition(mGame)
+        val pos = (mGameSpinner.adapter as ArrayAdapter<String>)
+            .getPosition(mGameRecord.game.toString())
         mGameSpinner.setSelection(pos)
 
-        if (mNewGame) {
+        if (args.id == GameRecord.NEW_GAME_ID) {
+            // Get previously used values
+
             val sharedPref = requireActivity().getPreferences(Context.MODE_PRIVATE)
             mPlayerCharacterView.setText(
                 sharedPref.getString(SharedPrefs.CHAR_SHARED_PREF_KEY, "")
@@ -272,28 +248,16 @@ class MatchRecordFragment : Fragment() {
                 sharedPref.getString(SharedPrefs.STAGE_SHARED_PREF_KEY, "")
             )
         } else {
-            mPlayerCharacterView.setText(
-                arguments?.getString(ARG_PLAYER_CHAR)
-            )
-            mOpponentCharacterView.setText(
-                arguments?.getString(ARG_OPP_CHAR)
-            )
-            mOpponentTagView.setText(
-                arguments?.getString(ARG_OPP_NAME)
-            )
-            mHazardsCheck.isChecked = arguments?.getBoolean(ARG_HAZARDS) ?: false
-            mStageView.setText(
-                arguments?.getString(ARG_STAGE)
-            )
-            val gsp = arguments?.getInt(ARG_GSP)
+            mPlayerCharacterView.setText(mGameRecord.playerCharacter)
+            mOpponentCharacterView.setText(mGameRecord.opponentCharacter)
+            mOpponentTagView.setText(mGameRecord.opponentTag)
+            mHazardsCheck.isChecked = mGameRecord.hazards
+            mStageView.setText(mGameRecord.stage)
+            val gsp = mGameRecord.gsp
             if (gsp != 0) {
                 mGSPView.setText("%d".format(gsp))
             }
-
-            mNotes.setText(
-                arguments?.getString(ARG_NOTES)
-            )
-            mIsVictory = arguments?.getString(ARG_RESULT).equals("Win")
+            mNotes.setText(mGameRecord.notes)
             setButtonStyle(false)
         }
     }
@@ -314,9 +278,9 @@ class MatchRecordFragment : Fragment() {
             error = true
         }
 
-        if (!error) {
+        if (!error && mResultSelected) {
             saveRecord()
-            if (mNewGame) {
+            if (args.id == GameRecord.NEW_GAME_ID) {
                 resetViews()
             }
             savePreferences()
@@ -333,8 +297,8 @@ class MatchRecordFragment : Fragment() {
         val transparent = 100
 
         val resources = requireContext().resources
-        val normalTextColorResource = VersionSafeUtil.getColorResource(resources, android.R.color.white)
-        val fadedTextColorResource = VersionSafeUtil.getColorResource(resources, android.R.color.darker_gray)
+        val normalTextColorResource = Utils.getColorResourceVersionSafe(resources, android.R.color.white)
+        val fadedTextColorResource = Utils.getColorResourceVersionSafe(resources, android.R.color.darker_gray)
         when {
             reset -> {
                 mWinButton.setTextColor(normalTextColorResource)
@@ -342,7 +306,7 @@ class MatchRecordFragment : Fragment() {
                 mWinButton.background.alpha = opaque
                 mLossButton.background.alpha = opaque
             }
-            mIsVictory -> {
+            mVictorySelected -> {
                 mWinButton.setTextColor(normalTextColorResource)
                 mLossButton.setTextColor(fadedTextColorResource)
                 mWinButton.background.alpha = opaque
@@ -359,7 +323,12 @@ class MatchRecordFragment : Fragment() {
 
     private fun savePreferences() {
         val sharedPref = activity?.getPreferences(Context.MODE_PRIVATE) ?: return
-        val game: String = if (mGame != "All") mGameSpinner.selectedItem as String else "All"
+        var game: String = sharedPref.getString(
+            SharedPrefs.GAME_SHARED_PREF_KEY, "All"
+        ) ?: "All"
+        if (game != "All") {
+            game = mGameSpinner.selectedItem as String
+        }
         with (sharedPref.edit()) {
             putString(SharedPrefs.GAME_SHARED_PREF_KEY, game)
             putString(SharedPrefs.CHAR_SHARED_PREF_KEY, mPlayerCharacterView.text.toString())
@@ -376,7 +345,7 @@ class MatchRecordFragment : Fragment() {
         }
 
         val record = makeGameRecord()
-        if (mNewGame) {
+        if (mGameRecord.isNewGame()) {
             mGameViewModel.insert(record)
             mSessionHistory.smoothScrollToPosition(mSessionHistory.adapter!!.itemCount)
         } else {
@@ -394,17 +363,18 @@ class MatchRecordFragment : Fragment() {
             // likely because user left input blank, so its an empty string
             0
         }
+        val id = if (mGameRecord.isNewGame()) 0 else mGameRecord.id
         return GameRecord(
-            arguments?.getLong(ARG_ID) ?: 0,
+            id,
             mPlayerCharacterView.text.toString(),
             mOpponentCharacterView.text.toString(),
             mOpponentTagView.text?.toString() ?: "N/A",
             mStageView.text?.toString() ?: "N/A",
             mHazardsCheck.isChecked,
-            if (mIsVictory) "Win" else "Loss",
+            if (mVictorySelected) GameRecord.Result.VICTORY else GameRecord.Result.LOSS,
             gsp,
             mNotes.text?.toString() ?: "",
-            game
+            Game.valueOf(game)
         )
     }
 

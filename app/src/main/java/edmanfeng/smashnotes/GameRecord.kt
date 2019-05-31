@@ -19,6 +19,18 @@ data class GameRecord(
 ) {
     companion object {
         const val NEW_GAME_ID: Long = -1L
+
+        fun newGame() : GameRecord {
+            return GameRecord(NEW_GAME_ID)
+        }
+    }
+
+    fun isNewGame() : Boolean {
+        return id == NEW_GAME_ID
+    }
+
+    fun isVictory() : Boolean {
+        return result == Result.VICTORY
     }
 
     enum class Result {

@@ -74,7 +74,7 @@ class StatsFragment : Fragment() {
         val gameSpinnerAdapter = ArrayAdapter<String>(
             context,
             android.R.layout.simple_spinner_item,
-            Game.getAdapterList(null)
+            getAdapterList(null)
         )
 
 

@@ -34,12 +34,11 @@ class SmashNotesActivity : SingleFragmentActivity() {
             setOf(R.id.overviewFragment, R.id.statsFragment),
             findViewById(R.id.drawer_layout)
         )
+
         setSupportActionBar(toolbar)
         toolbar.setupWithNavController(navController, appBarConfiguration)
-
         findViewById<NavigationView>(R.id.nav_view)
             .setupWithNavController(navController)
-
         bottom_nav_view.setupWithNavController(navController)
     }
 }

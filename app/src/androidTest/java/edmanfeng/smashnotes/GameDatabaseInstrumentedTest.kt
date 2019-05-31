@@ -46,8 +46,8 @@ class GameDatabaseInstrumentedTest {
     @Test
     @Throws(IOException::class)
     fun update() {
-        var game1 = GameRecord(playerCharacter = "Lucas", result = "win")
-        var game2 = GameRecord(playerCharacter = "Yoshi", result = "win")
+        var game1 = GameRecord(playerCharacter = "Lucas", result = GameRecord.Result.VICTORY)
+        var game2 = GameRecord(playerCharacter = "Yoshi", result = GameRecord.Result.VICTORY)
         var game3 = GameRecord(stage = "Final Destination")
 
         val id1 = gameDao.insert(game1)
@@ -66,15 +66,15 @@ class GameDatabaseInstrumentedTest {
 
         game2 = getValue(gameDao.getGameRecord(id2))
         game3 = getValue(gameDao.getGameRecord(id3))
-        game2.result = "loss"
+        game2.result = GameRecord.Result.LOSS
         game3.stage = "Lylat Cruise"
         gameDao.update(game2, game3)
         games = getValue(gameDao.getAll())
 
         assertThat(games[0].playerCharacter, equalTo("Ness"))
-        assertThat(games[0].result, equalTo("win"))
+        assertThat(games[0].result, equalTo(GameRecord.Result.VICTORY))
         assertThat(games[1].playerCharacter, equalTo("Yoshi"))
-        assertThat(games[1].result, equalTo("loss"))
+        assertThat(games[1].result, equalTo(GameRecord.Result.LOSS))
         assertThat(games[2].playerCharacter, equalTo("Mario"))
         assertThat(games[2].stage, equalTo("Lylat Cruise"))
 
@@ -160,10 +160,10 @@ class GameDatabaseInstrumentedTest {
             "d",
             "e",
             true,
-            "g",
+            GameRecord.Result.VICTORY,
             1,
             "j",
-            "k"
+            Game.SSBM
         )
         assertThat(getValue(gameDao.getAll()).size, equalTo(0))
         gameDao.insert(game)
@@ -178,10 +178,10 @@ class GameDatabaseInstrumentedTest {
             "e",
             "f",
             false,
-            "a",
+            GameRecord.Result.VICTORY,
             20,
             "fdksal",
-            "no"
+            Game.SSB64
         )
         gameDao.insert(game2)
         list = getValue(gameDao.getAll())

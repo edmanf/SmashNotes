@@ -17,28 +17,28 @@ class GameStatsTest {
                 "Mario", "Yoshi",
                 "ESAM",
                 "Battlefield", true,
-                "win", 192999,
-                "I LOSE", Game.SSBU.toString()
+                GameRecord.Result.VICTORY, 192999,
+                "I LOSE", Game.SSBU
             ),
             GameRecord(0,
                 "Mario", "Mario",
                 "Zero",
                 "Final Destination", false,
-                "lose", 291994,
-                "WHAT", Game.SSBU.toString()
+                GameRecord.Result.LOSS, 291994,
+                "WHAT", Game.SSBU
             ),
             GameRecord(0,
                 "Pikachu", "Mario",
                 "A",
                 "Smashville", true,
-                "win", 299129,
-                "HUH", Game.SSBU.toString()),
+                GameRecord.Result.VICTORY, 299129,
+                "HUH", Game.SSBU),
             GameRecord(0,
                 "Mario", "Mario",
                 "Nairo",
                 "Battlefield", false,
-                "win", 0,
-                "HUH", Game.SSB4.toString())
+                GameRecord.Result.VICTORY, 0,
+                "HUH", Game.SSB4)
         )
     }
     @Test

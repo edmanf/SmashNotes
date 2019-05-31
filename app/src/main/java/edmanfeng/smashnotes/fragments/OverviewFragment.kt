@@ -67,7 +67,7 @@ class OverviewFragment : Fragment() {
         val spinnerAdapter = ArrayAdapter(
             context,
             android.R.layout.simple_spinner_item,
-            Game.getAdapterList("All")
+            getAdapterList("All")
         )
         spinnerAdapter.setDropDownViewResource(
             android.R.layout.simple_spinner_dropdown_item
@@ -92,15 +92,9 @@ class OverviewFragment : Fragment() {
 
         val fab: FloatingActionButton = v.findViewById(R.id.add_button)
         fab.setOnClickListener {
-            /*
-            val frag =
-                MatchRecordFragment.newInstance(gameSpinner.selectedItem.toString())
-            activity?.supportFragmentManager
-                ?.beginTransaction()
-                ?.replace(R.id.fragment_container, frag)
-                ?.addToBackStack(null)
-                ?.commit()*/
-            findNavController().navigate(R.id.matchRecordFragment)
+            val action = OverviewFragmentDirections
+                .actionOverviewFragmentToMatchRecordFragment(GameRecord.NEW_GAME_ID)
+            findNavController().navigate(action)
         }
 
         return v

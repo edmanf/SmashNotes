@@ -14,9 +14,18 @@
                 app:destination="@id/statsFragment"/>
     </fragment>
 
-    <fragment android:id="@+id/matchRecordFragment"
-              android:name="edmanfeng.smashnotes.fragments.MatchRecordFragment"
-              android:label="@string/match_record_label"/>
+    <fragment
+            android:id="@+id/matchRecordFragment"
+            android:name="edmanfeng.smashnotes.fragments.MatchRecordFragment"
+            android:label="@string/match_record_label">
+            <argument
+                android:name="id"
+                app:argType="long"
+                android:defaultValue="-1L"/>
+    </fragment>
+
+
+
 
     <fragment android:id="@+id/statsFragment"
               android:name="edmanfeng.smashnotes.fragments.StatsFragment"

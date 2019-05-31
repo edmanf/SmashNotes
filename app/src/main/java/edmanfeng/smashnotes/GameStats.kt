@@ -33,7 +33,7 @@ class GameStats {
                 return BigDecimal.ZERO
             }
             val count = BigDecimal(countedGames.filter{
-                it.result == "win"
+                it.result == GameRecord.Result.VICTORY
             }.size)
             return count.divide(
                 BigDecimal(countedGames.size),
@@ -49,7 +49,7 @@ class GameStats {
             lastGames: Int = Integer.MAX_VALUE
         ) : List<GameRecord> {
             val filteredGames = gameList.filter {
-                it.game == game.toString()
+                it.game == game
                         && (character == null || it.playerCharacter == character)
                         && (stage == null || it.stage == stage)
             }

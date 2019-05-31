@@ -30,7 +30,7 @@ class GameViewModel(application: Application) : AndroidViewModel(application) {
         if (game == null) {
             return allGames.value ?: listOf()
         }
-        return allGames.value?.filter {it.game == game.toString()} ?: listOf()
+        return allGames.value?.filter {it.game == game} ?: listOf()
     }
 
     fun getGame(game: String) : List<GameRecord> {
@@ -38,6 +38,10 @@ class GameViewModel(application: Application) : AndroidViewModel(application) {
             return getGame(null)
         }
         return getGame(Game.valueOf(game))
+    }
+
+    fun getGameRecord(id: Long) : LiveData<GameRecord> {
+        return repository.getGameRecord(id)
     }
 
     fun insert(game: GameRecord) {
