@@ -12,8 +12,23 @@ data class GameRecord(
     @ColumnInfo(name = "opponent_tag") var opponentTag : String = "John",
     @ColumnInfo(name = "stage") var stage : String = "Battlefield",
     @ColumnInfo(name = "hazards") var hazards : Boolean = false,
-    @ColumnInfo(name = "result") var result : String = "win",
+    @ColumnInfo(name = "result") var result : RESULT = RESULT.VICTORY,
     @ColumnInfo(name = "gsp") var gsp : Int = 3500000,
     @ColumnInfo(name = "notes") var notes : String = "",
-    @ColumnInfo(name = "game") var game : String = Game.SSBU.toString()
-)
+    @ColumnInfo(name = "game") var game : Game = Game.SSBU
+) {
+    companion object {
+        const val NEW_GAME_ID: Long = -1L
+    }
+
+    enum class RESULT {
+        VICTORY, LOSS;
+
+        override fun toString() : String {
+            return when(this) {
+                VICTORY -> "Victory"
+                LOSS -> "Loss"
+            }
+        }
+    }
+}

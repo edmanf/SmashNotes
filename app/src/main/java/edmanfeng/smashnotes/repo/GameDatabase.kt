@@ -1,12 +1,11 @@
 package edmanfeng.smashnotes.repo
 
 import android.content.Context
-import androidx.room.Database
-import androidx.room.Room
-import androidx.room.RoomDatabase
+import androidx.room.*
 import edmanfeng.smashnotes.GameRecord
 
 @Database(entities = arrayOf(GameRecord::class), version = 1)
+@TypeConverters(Converters::class)
 abstract class GameDatabase : RoomDatabase() {
     abstract fun gameDao() : GameDao
 
