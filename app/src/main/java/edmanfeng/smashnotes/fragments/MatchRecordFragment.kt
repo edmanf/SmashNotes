@@ -192,6 +192,7 @@ class MatchRecordFragment : Fragment() {
             mSessionHistory.visibility = View.GONE
         }
 
+        populateViews()
         return v
     }
 
@@ -233,14 +234,18 @@ class MatchRecordFragment : Fragment() {
      * not.
      */
     private fun populateViews() {
+        val sharedPref = requireActivity().getPreferences(Context.MODE_PRIVATE)
+        var game = sharedPref.getString(SharedPrefs.GAME_SHARED_PREF_KEY, Game.SSBU.toString())!!
+        if (game == "All") {
+            // Came from "All" in overview fragment, start with default game
+            game = Game.SSBU.toString()
+        }
         val pos = (mGameSpinner.adapter as ArrayAdapter<String>)
-            .getPosition(mGameRecord.game.toString())
+            .getPosition(game)
         mGameSpinner.setSelection(pos)
 
         if (args.id == GameRecord.NEW_GAME_ID) {
             // Get previously used values
-
-            val sharedPref = requireActivity().getPreferences(Context.MODE_PRIVATE)
             mPlayerCharacterView.setText(
                 sharedPref.getString(SharedPrefs.CHAR_SHARED_PREF_KEY, "")
             )
@@ -325,7 +330,7 @@ class MatchRecordFragment : Fragment() {
         val sharedPref = activity?.getPreferences(Context.MODE_PRIVATE) ?: return
         var game: String = sharedPref.getString(
             SharedPrefs.GAME_SHARED_PREF_KEY, "All"
-        ) ?: "All"
+        )!!
         if (game != "All") {
             game = mGameSpinner.selectedItem as String
         }
