@@ -77,7 +77,7 @@ class GameAdapter(games : List<GameRecord>?) : RecyclerView.Adapter<GameAdapter.
                 .replace(R.id.fragment_container, frag)
                 .addToBackStack(null)
                 .commit()*/
-            val action = OverviewFragmentDirections.actionOverviewFragmentToMatchRecordFragment(mGame.id)
+            val action = NavGraphDirections.actionGlobalMatchRecordFragment(mGame.id)
             v?.findNavController()?.navigate(action)
         }
 

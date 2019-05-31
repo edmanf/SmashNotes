@@ -18,16 +18,25 @@
             android:id="@+id/matchRecordFragment"
             android:name="edmanfeng.smashnotes.fragments.MatchRecordFragment"
             android:label="@string/match_record_label">
-            <argument
-                android:name="id"
-                app:argType="long"
-                android:defaultValue="-1L"/>
+        <argument
+            android:name="id"
+            app:argType="long"
+            android:defaultValue="-1L"/>
     </fragment>
-
-
-
 
     <fragment android:id="@+id/statsFragment"
               android:name="edmanfeng.smashnotes.fragments.StatsFragment"
               android:label="@string/stats_label"/>
+    <action
+        android:id="@+id/action_global_matchRecordFragment"
+        app:destination="@id/matchRecordFragment"
+        app:enterAnim="@anim/nav_default_enter_anim"
+        app:exitAnim="@anim/nav_default_exit_anim"
+        app:popEnterAnim="@anim/nav_default_pop_enter_anim"
+        app:popExitAnim="@anim/nav_default_pop_exit_anim" >
+        <argument
+            android:name="id"
+            app:argType="long"
+            android:defaultValue="-1L"/>
+    </action>
 </navigation>

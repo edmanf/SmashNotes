@@ -92,8 +92,7 @@ class OverviewFragment : Fragment() {
 
         val fab: FloatingActionButton = v.findViewById(R.id.add_button)
         fab.setOnClickListener {
-            val action = OverviewFragmentDirections
-                .actionOverviewFragmentToMatchRecordFragment(GameRecord.NEW_GAME_ID)
+            val action = NavGraphDirections.actionGlobalMatchRecordFragment(GameRecord.NEW_GAME_ID)
             findNavController().navigate(action)
         }
 
