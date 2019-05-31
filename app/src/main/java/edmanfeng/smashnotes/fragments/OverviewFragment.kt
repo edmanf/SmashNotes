@@ -33,6 +33,8 @@ class OverviewFragment : Fragment() {
         mGameViewModel = ViewModelProviders
             .of(this)
             .get(GameViewModel::class.java)
+
+
     }
 
     override fun onCreateView(
@@ -44,10 +46,12 @@ class OverviewFragment : Fragment() {
         val context = requireContext()
         val v = inflater.inflate(R.layout.overview_fragment, container, false)
 
-        val sharedPrefs = activity?.getPreferences(Context.MODE_PRIVATE)
-        val game = sharedPrefs?.getString(
-            SharedPrefs.GAME_SHARED_PREF_KEY, Game.SSBU.toString()
-        ) ?: Game.SSBU.toString()
+        val sharedPrefs = requireActivity().getPreferences(Context.MODE_PRIVATE)
+        // getString is nullable because defValue is nullable
+        // because it is set to an immutable, the !! operator is still null-safe
+        val game = sharedPrefs.getString(
+            SharedPrefs.GAME_SHARED_PREF_KEY, "All"
+        )!!
 
 
         val gamesRecyclerView = v
