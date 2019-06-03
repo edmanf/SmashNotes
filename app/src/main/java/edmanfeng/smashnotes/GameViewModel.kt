@@ -48,8 +48,9 @@ class GameViewModel(application: Application) : AndroidViewModel(application) {
         scope.launch(Dispatchers.IO) {
             val id = repository.insert(game)
             game.id = id
-            sessionGames.add(game)
         }
+        // Currently not guaranteed that the id will change before a user tries to click it
+        sessionGames.add(game)
     }
 
     fun delete(game: GameRecord) {
