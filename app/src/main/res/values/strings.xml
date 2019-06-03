@@ -3,6 +3,10 @@
     <string name="match_record_label">Record Note</string>
     <string name="stats_label">Statistics</string>
 
+    <string name="menu_history_title">History</string>
+    <string name="menu_stats_title">Stats</string>
+    <string name="menu_notes_title">Notes</string>
+
     <string name="menu_save_record_title">Save</string>
     <string name="menu_delete_record_title">Delete</string>
 
@@ -23,15 +27,6 @@
     <string name="player_name_hint">Name</string>
 
     <string name="game_vs_text">v</string>
-
-    <string-array name="games">
-        <item>64</item>
-        <item>Melee</item>
-        <item>Brawl</item>
-        <item>PM</item>
-        <item>Smash 4</item>
-        <item>Ultimate</item>
-    </string-array>
 
     <string-array name="stagesUltimate">
         <item>Battlefield</item>
@@ -551,10 +546,5 @@
         <item>Fox</item>
         <item>Pikachu</item>
         <item>Jigglypuff</item>
-    </string-array>
-
-    <string-array name="win_loss">
-        <item>Win</item>
-        <item>Loss</item>
     </string-array>
 </resources>
