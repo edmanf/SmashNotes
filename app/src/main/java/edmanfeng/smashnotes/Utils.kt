@@ -2,9 +2,6 @@ package edmanfeng.smashnotes
 
 import android.content.res.Resources
 import android.os.Build
-import android.view.View
-import android.widget.TextView
-import androidx.core.widget.TextViewCompat
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.Observer

@@ -2,7 +2,6 @@ package edmanfeng.smashnotes
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.test.core.app.ApplicationProvider
-import androidx.test.ext.junit.runners.AndroidJUnit4
 import android.content.Context
 import androidx.room.Room
 import edmanfeng.smashnotes.repo.GameDao
@@ -14,7 +13,6 @@ import org.junit.After
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
-import org.junit.runner.RunWith
 import testUtil.LiveDataTestUtil.getValue
 import java.io.IOException
 

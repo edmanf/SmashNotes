@@ -2,7 +2,6 @@ package edmanfeng.smashnotes.activities
 
 import android.os.Bundle
 import android.view.View
-import androidx.drawerlayout.widget.DrawerLayout
 import androidx.fragment.app.Fragment
 import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration

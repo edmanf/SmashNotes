@@ -7,7 +7,6 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.navigation.findNavController
 import androidx.recyclerview.widget.RecyclerView
-import edmanfeng.smashnotes.fragments.OverviewFragmentDirections
 import kotlinx.android.synthetic.main.saved_match_item.view.*
 
 class GameAdapter(games : List<GameRecord>?) : RecyclerView.Adapter<GameAdapter.GameHolder>() {
