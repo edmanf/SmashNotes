@@ -157,7 +157,7 @@ class StatsFragment : Fragment() {
         }
 
         with (mRatingChart.axisLeft) {
-            setAxisMinimum(0f)
+            axisMinimum = 0f
         }
 
         with (mRatingChart.axisRight) {
@@ -165,6 +165,6 @@ class StatsFragment : Fragment() {
         }
 
         mRatingChart.description = null
-        mRatingChart.legend.setEnabled(false)
+        mRatingChart.legend.isEnabled = false
     }
 }
