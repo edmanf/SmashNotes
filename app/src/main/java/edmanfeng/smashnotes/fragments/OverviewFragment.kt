@@ -15,6 +15,10 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import edmanfeng.smashnotes.*
+import kotlinx.android.synthetic.main.overview_fragment.*
+import kotlinx.android.synthetic.main.overview_fragment.game_history_recyclerview
+import kotlinx.android.synthetic.main.overview_fragment.view.*
+import kotlinx.android.synthetic.main.stats_fragment.*
 
 class OverviewFragment : Fragment() {
 
@@ -22,7 +26,6 @@ class OverviewFragment : Fragment() {
     private lateinit var mGameViewModel : GameViewModel
 
     companion object {
-        private const val TAG = "OverviewFragment"
         fun newInstance() : OverviewFragment {
             return OverviewFragment()
         }
@@ -33,8 +36,6 @@ class OverviewFragment : Fragment() {
         mGameViewModel = ViewModelProviders
             .of(this)
             .get(GameViewModel::class.java)
-
-
     }
 
     override fun onCreateView(
@@ -43,7 +44,6 @@ class OverviewFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
 
-        val context = requireContext()
         val v = inflater.inflate(R.layout.overview_fragment, container, false)
 
         val sharedPrefs = requireActivity().getPreferences(Context.MODE_PRIVATE)
@@ -53,23 +53,45 @@ class OverviewFragment : Fragment() {
             SharedPrefs.GAME_SHARED_PREF_KEY, "All"
         )!!
 
+        setupGameRecyclerView(v, game)
 
-        val gamesRecyclerView = v
-            .findViewById<RecyclerView>(R.id.game_history_recyclerview)
+        setupGameSpinner(v, game)
+
+        val fab: FloatingActionButton = v.findViewById(R.id.add_button)
+        fab.setOnClickListener {
+            val action = NavGraphDirections.actionGlobalMatchRecordFragment(GameRecord.NEW_GAME_ID)
+            findNavController().navigate(action)
+        }
+
+        return v
+    }
+
+    /**
+     * Sets up the gameRecyclerView and connects it to the given game
+     */
+    private fun setupGameRecyclerView(v: View, game: String) {
+        val gamesRecyclerView = v.game_history_recyclerview
         val adapter = GameAdapter(mGameViewModel.getGame(game))
+
         mGameViewModel.allGames.observe(this, Observer {
             // update games whenever any game gets added/removed
             adapter.setGames(mGameViewModel.getGame(game))
         })
+
         gamesRecyclerView.adapter = adapter
         val manager = LinearLayoutManager(context)
         manager.stackFromEnd = true
         manager.reverseLayout = true
         gamesRecyclerView.layoutManager = manager
 
+
+        scrollGamesRecyclerView(gamesRecyclerView)
+    }
+
+    private fun setupGameSpinner(v: View, game: String) {
         val gameSpinner = v.findViewById<Spinner>(R.id.game_spinner)
         val spinnerAdapter = ArrayAdapter(
-            context,
+            requireContext(),
             android.R.layout.simple_spinner_item,
             getAdapterList("All")
         )
@@ -84,24 +106,27 @@ class OverviewFragment : Fragment() {
 
             override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
                 val item = parent?.getItemAtPosition(position) as String
+                val gamesRecyclerView = v.game_history_recyclerview
+                val adapter = gamesRecyclerView.adapter as GameAdapter
                 adapter.setGames(mGameViewModel.getGame(item))
+                scrollGamesRecyclerView(gamesRecyclerView)
 
-                val editor = sharedPrefs?.edit()
-                editor?.putString(SharedPrefs.GAME_SHARED_PREF_KEY, item)
-                editor?.apply()
+                with (requireActivity().getPreferences(Context.MODE_PRIVATE).edit()) {
+                    putString(SharedPrefs.GAME_SHARED_PREF_KEY, item)
+                    apply()
+                }
             }
         }
-        Log.d("Overview", "count: " + adapter.itemCount)
-        gamesRecyclerView.smoothScrollToPosition(adapter.itemCount)
-
-        val fab: FloatingActionButton = v.findViewById(R.id.add_button)
-        fab.setOnClickListener {
-            val action = NavGraphDirections.actionGlobalMatchRecordFragment(GameRecord.NEW_GAME_ID)
-            findNavController().navigate(action)
-        }
-
-        return v
     }
 
-
+    private fun scrollGamesRecyclerView(gamesRecyclerView: RecyclerView) {
+        if (gamesRecyclerView.adapter != null) {
+            // Scroll to the top (most recent games) of the recyclerview
+            // must happen after both game spinner (to get the correct count)
+            // and the gamerecyclerview have been set up
+            val itemCount = (gamesRecyclerView.adapter as GameAdapter).itemCount
+            Log.d("OverviewFragment", "adapter item count: $itemCount")
+            gamesRecyclerView.smoothScrollToPosition(itemCount)
+        }
+    }
 }
