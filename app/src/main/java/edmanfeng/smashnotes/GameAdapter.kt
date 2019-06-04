@@ -69,13 +69,6 @@ class GameAdapter(games : List<GameRecord>?) : RecyclerView.Adapter<GameAdapter.
         }
 
         override fun onClick(v: View?) {
-            /*
-            val frag = MatchRecordFragment.newInstance(mGame)
-            val fm = (v?.context as AppCompatActivity).supportFragmentManager
-            fm.beginTransaction()
-                .replace(R.id.fragment_container, frag)
-                .addToBackStack(null)
-                .commit()*/
             val action = NavGraphDirections.actionGlobalMatchRecordFragment(mGame.id)
             v?.findNavController()?.navigate(action)
         }

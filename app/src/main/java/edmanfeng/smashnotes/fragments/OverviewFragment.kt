@@ -2,7 +2,6 @@ package edmanfeng.smashnotes.fragments
 
 import android.content.Context
 import android.os.Bundle
-import android.util.Log
 import android.view.*
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
@@ -15,10 +14,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import edmanfeng.smashnotes.*
-import kotlinx.android.synthetic.main.overview_fragment.*
-import kotlinx.android.synthetic.main.overview_fragment.game_history_recyclerview
 import kotlinx.android.synthetic.main.overview_fragment.view.*
-import kotlinx.android.synthetic.main.stats_fragment.*
 
 class OverviewFragment : Fragment() {
 
@@ -125,7 +121,6 @@ class OverviewFragment : Fragment() {
             // must happen after both game spinner (to get the correct count)
             // and the gamerecyclerview have been set up
             val itemCount = (gamesRecyclerView.adapter as GameAdapter).itemCount
-            Log.d("OverviewFragment", "adapter item count: $itemCount")
             gamesRecyclerView.smoothScrollToPosition(itemCount)
         }
     }

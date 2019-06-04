@@ -2,7 +2,6 @@ package edmanfeng.smashnotes.fragments
 
 import android.content.Context
 import android.os.Bundle
-import android.util.Log
 import android.view.*
 import android.widget.*
 import androidx.fragment.app.Fragment
@@ -41,7 +40,6 @@ class MatchRecordFragment : Fragment() {
     override fun onResume() {
         super.onResume()
         mSessionHistory.adapter?.notifyDataSetChanged()
-        Log.d("MatchRecord", "RESUME")
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -49,7 +47,6 @@ class MatchRecordFragment : Fragment() {
         mGameViewModel = ViewModelProviders
             .of(this)
             .get(GameViewModel::class.java)
-        Log.d("MatchRecord", "onCreate")
 
         if (args.id == GameRecord.NEW_GAME_ID) {
             mGameRecord = GameRecord.newGame()
@@ -59,7 +56,6 @@ class MatchRecordFragment : Fragment() {
             gameRecordLiveData.observe(this, Observer {
                 val gameRecord = gameRecordLiveData.value
                 if (gameRecord != null) {
-                    Log.d("MatchRecord", "game observed: " + args.id)
                     mGameRecord = gameRecord
                 }
                 populateViews()
@@ -204,10 +200,8 @@ class MatchRecordFragment : Fragment() {
 
         // Can't use mGameRecord.isNewGame() - this may run before the observe
         if (args.id == GameRecord.NEW_GAME_ID) {
-            Log.d("MatchRecord", "NEWGAME")
             menuSave.icon = resources.getDrawable(R.drawable.ic_save_new, null)
         } else {
-            Log.d("MatchRecord", "NOTNEW")
             menuSave.icon = resources.getDrawable(R.drawable.ic_save, null)
         }
     }
