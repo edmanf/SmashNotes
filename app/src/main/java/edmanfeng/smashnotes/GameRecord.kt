@@ -13,7 +13,7 @@ data class GameRecord(
     @ColumnInfo(name = "stage") var stage : String = "Battlefield",
     @ColumnInfo(name = "hazards") var hazards : Boolean = false,
     @ColumnInfo(name = "result") var result : Result = Result.VICTORY,
-    @ColumnInfo(name = "gsp") var gsp : Int = 3500000,
+    @ColumnInfo(name = "gsp") var gsp : Int = 0,
     @ColumnInfo(name = "notes") var notes : String = "",
     @ColumnInfo(name = "game") var game : Game = Game.SSBU
 ) {
