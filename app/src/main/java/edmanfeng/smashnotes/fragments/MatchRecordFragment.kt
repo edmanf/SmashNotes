@@ -71,122 +71,28 @@ class MatchRecordFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-
-        val context = requireContext()
         val v = inflater.inflate(R.layout.match_record_view, container, false)
 
         mPlayerTagView = v.player_name
         mOpponentTagView = v.opponent_name
-
         mGSPView = v.gsp
         mNotes = v.match_notes
-
-        mWinButton = v.win_button
-        mWinButton.setOnClickListener{
-            mVictorySelected = true
-            mResultSelected = true
-            setButtonStyle(false)
-        }
-        mLossButton = v.loss_button
-        mLossButton.setOnClickListener {
-            mVictorySelected = false
-            mResultSelected = true
-            setButtonStyle(false)
-        }
-
         mGameSpinner = v.game_spinner
-        val gameSpinnerAdapter = ArrayAdapter(
-            context,
-            android.R.layout.simple_spinner_item,
-            getAdapterList(null)
-        )
-        gameSpinnerAdapter.setDropDownViewResource(
-            R.layout.support_simple_spinner_dropdown_item
-        )
-        mGameSpinner.adapter = gameSpinnerAdapter
-
-
-        val stageArrayId : Int
-        val charArrayId : Int
-        when (mGameRecord.game) {
-            Game.SSBU -> {
-                stageArrayId = R.array.stagesUltimate
-                charArrayId = R.array.charactersUltimate
-                mGSPView.visibility = View.VISIBLE
-            }
-            Game.SSB4 -> {
-                stageArrayId = R.array.stages4wiiu
-                charArrayId = R.array.characters4
-                mGSPView.visibility = View.INVISIBLE
-            }
-            Game.SSBB -> {
-                stageArrayId = R.array.stagesBrawl
-                charArrayId = R.array.charactersBrawl
-                mGSPView.visibility = View.INVISIBLE
-            }
-            Game.SSBM -> {
-                stageArrayId = R.array.stagesMelee
-                charArrayId = R.array.charactersMelee
-                mGSPView.visibility = View.INVISIBLE
-            }
-            Game.SSB64 -> {
-                stageArrayId = R.array.stages64
-                charArrayId = R.array.characters64
-                mGSPView.visibility = View.INVISIBLE
-            }
-            else -> {
-                // throw IllegalStateException("Game string was not in correct format")
-                // TODO: add PM, SSF2
-                stageArrayId = R.array.stagesUltimate
-                charArrayId = R.array.charactersUltimate
-                mGSPView.visibility = View.INVISIBLE
-            }
-        }
-
-        val stageAdapter = ArrayAdapter(
-            context,
-            android.R.layout.simple_list_item_1,
-            resources.getStringArray(stageArrayId)
-        )
-
         mStageView = v.stage_choice
-        mStageView.setAdapter(stageAdapter)
-        mStageView.setDropDownBackgroundDrawable(requireContext().getDrawable(R.drawable.autocomplete_dropdown))
-
-
-        mHazardsCheck = v.hazards_checkbox
-        setHazardsLabel()
-        mHazardsCheck.setOnClickListener {
-            setHazardsLabel()
-        }
-
         mPlayerCharacterView = v.player_character
-        mPlayerCharacterView.setAdapter(ArrayAdapter(
-            context,
-            android.R.layout.simple_list_item_1,
-            resources.getStringArray(charArrayId)
-        ))
-
         mOpponentCharacterView = v.opponent_character
-        mOpponentCharacterView.setAdapter(ArrayAdapter(
-            context,
-            android.R.layout.simple_list_item_1,
-            resources.getStringArray(charArrayId)
-        ))
-
+        mWinButton = v.win_button
+        mLossButton = v.loss_button
+        mHazardsCheck = v.hazards_checkbox
         mSessionHistory = v.session_history
-        // Sessions are only started when you are recording new games
-        if (mGameRecord.isNewGame()) {
-            mSessionHistory.adapter = GameAdapter(mGameViewModel.sessionGames)
-            val manager = LinearLayoutManager(context)
 
-            // make RecyclerView insert at the top, old items go offscreen
-            manager.stackFromEnd = true
-            manager.reverseLayout = true
-            mSessionHistory.layoutManager = manager
-        } else {
-            mSessionHistory.visibility = View.GONE
-        }
+
+        setupGameSpinner()
+        setupStage()
+        setupCharacterViews()
+        setupResultButtons()
+        setupHazards()
+        setupSessionHistoryRecyclerView()
 
         populateViews()
         return v
@@ -393,6 +299,91 @@ class MatchRecordFragment : Fragment() {
             mHazardsCheck.text = context.getString(R.string.hazards_on_switch_label)
         } else {
             mHazardsCheck.text = context.getString(R.string.hazards_off_switch_label)
+        }
+    }
+
+    /**
+     * Returns the user's game selection from the game spinner as a Game
+     */
+    private fun getGameSpinnerSelection() : Game {
+        return Game.valueOf(mGameSpinner.selectedItem as String)
+    }
+
+    private fun setupResultButtons() {
+        mWinButton.setOnClickListener{
+            mVictorySelected = true
+            mResultSelected = true
+            setButtonStyle(false)
+        }
+
+        mLossButton.setOnClickListener {
+            mVictorySelected = false
+            mResultSelected = true
+            setButtonStyle(false)
+        }
+    }
+
+    /**
+     * Sets the autofill dropdown on the Stage's textview.
+     */
+    private fun setupStage() {
+        val stageAdapter = ArrayAdapter(
+            requireContext(),
+            android.R.layout.simple_list_item_1,
+            resources.getStringArray(getGameSpinnerSelection().getStageArrayResourceId())
+        )
+        mStageView.setAdapter(stageAdapter)
+        mStageView.setDropDownBackgroundDrawable(requireContext().getDrawable(R.drawable.autocomplete_dropdown))
+    }
+
+    private fun setupCharacterViews() {
+        val charArray = resources.getStringArray(
+            getGameSpinnerSelection().getCharacterArrayResourceId()
+        )
+        mPlayerCharacterView.setAdapter(ArrayAdapter(
+            requireContext(),
+            android.R.layout.simple_list_item_1,
+            charArray
+        ))
+
+        mOpponentCharacterView.setAdapter(ArrayAdapter(
+            requireContext(),
+            android.R.layout.simple_list_item_1,
+            charArray
+        ))
+    }
+
+    private fun setupGameSpinner() {
+        val gameSpinnerAdapter = ArrayAdapter(
+            requireContext(),
+            android.R.layout.simple_spinner_item,
+            getAdapterList(null)
+        )
+        gameSpinnerAdapter.setDropDownViewResource(
+            R.layout.support_simple_spinner_dropdown_item
+        )
+        mGameSpinner.adapter = gameSpinnerAdapter
+    }
+
+    private fun setupSessionHistoryRecyclerView() {
+        // Sessions are only started when you are recording new games
+        if (mGameRecord.isNewGame()) {
+            mSessionHistory.adapter = GameAdapter(mGameViewModel.sessionGames)
+            val manager = LinearLayoutManager(context)
+
+            // make RecyclerView insert at the top, old items go offscreen
+            manager.stackFromEnd = true
+            manager.reverseLayout = true
+            mSessionHistory.layoutManager = manager
+        } else {
+            mSessionHistory.visibility = View.GONE
+        }
+    }
+
+    private fun setupHazards() {
+        setHazardsLabel()
+        mHazardsCheck.setOnClickListener {
+            setHazardsLabel()
         }
     }
 }
