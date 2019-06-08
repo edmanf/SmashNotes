@@ -42,6 +42,33 @@ class GameStatsTest {
                 game =  Game.SSB4)
         )
     }
+
+    @Test
+    fun testStageWinRate() {
+        val actual = GameStats.getWinRate(mGameRecordList, Game.SSBU, stage = "Battlefield")
+        assertThat(actual, `is`(BigDecimal.ONE))
+    }
+
+    @Test
+    fun testLastGames() {
+        val actual = GameStats.getWinRate(mGameRecordList, Game.SSBU, lastGames = 2)
+        val expected = BigDecimal.ONE.divide(
+            BigDecimal(2),
+            MathContext(GameStats.PRECISION)
+        )
+        assertThat(actual, `is`(expected))
+    }
+
+    @Test
+    fun testGetOverallGameWinRate() {
+        val actual = GameStats.getWinRate(mGameRecordList, Game.SSBU)
+        val expected = BigDecimal(2).divide(
+            BigDecimal(3),
+            MathContext(GameStats.PRECISION)
+        )
+        assertThat(actual, `is`(expected))
+    }
+
     @Test
     fun testCharacterWinRate() {
         val actual = GameStats.getWinRate(
