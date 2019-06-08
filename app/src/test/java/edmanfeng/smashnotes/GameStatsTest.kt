@@ -1,6 +1,7 @@
 package edmanfeng.smashnotes
 
-import org.junit.Assert.assertEquals
+import org.hamcrest.MatcherAssert.assertThat
+import org.hamcrest.core.Is.`is`
 import org.junit.Before
 import org.junit.Test
 import java.math.BigDecimal
@@ -13,65 +14,84 @@ class GameStatsTest {
     @Before
     fun setup() {
         mGameRecordList = listOf(
-            GameRecord(0,
-                "Mario", "Yoshi",
-                "ESAM",
-                "Battlefield", true,
-                GameRecord.Result.VICTORY, 192999,
-                "I LOSE", Game.SSBU
+            GameRecord(
+                playerCharacter = "Mario",
+                opponentCharacter = "Yoshi",
+                stage = "Battlefield",
+                result = GameRecord.Result.VICTORY,
+                game = Game.SSBU
             ),
-            GameRecord(0,
-                "Mario", "Mario",
-                "Zero",
-                "Final Destination", false,
-                GameRecord.Result.LOSS, 291994,
-                "WHAT", Game.SSBU
+            GameRecord(
+                playerCharacter = "Mario",
+                opponentCharacter = "Mario",
+                stage = "Final Destination",
+                result = GameRecord.Result.LOSS,
+                game = Game.SSBU
             ),
-            GameRecord(0,
-                "Pikachu", "Mario",
-                "A",
-                "Smashville", true,
-                GameRecord.Result.VICTORY, 299129,
-                "HUH", Game.SSBU),
-            GameRecord(0,
-                "Mario", "Mario",
-                "Nairo",
-                "Battlefield", false,
-                GameRecord.Result.VICTORY, 0,
-                "HUH", Game.SSB4)
+            GameRecord(
+                playerCharacter = "Pikachu",
+                opponentCharacter = "Mario",
+                stage = "Smashville",
+                result = GameRecord.Result.VICTORY,
+                game = Game.SSBU),
+            GameRecord(
+                playerCharacter = "Mario",
+                opponentCharacter = "Mario",
+                stage = "Battlefield",
+                result = GameRecord.Result.VICTORY,
+                game =  Game.SSB4)
         )
     }
     @Test
     fun testCharacterWinRate() {
-        assertEquals(
-            BigDecimal.ONE.divide(BigDecimal(2), MathContext(GameStats.PRECISION)),
-            GameStats.getWinRate(mGameRecordList, Game.SSBU, character = "Mario")
+        val actual = GameStats.getWinRate(
+            mGameRecordList,
+            Game.SSBU,
+            character = "Mario"
         )
+        val expected = BigDecimal.ONE.divide(
+            BigDecimal(2),
+            MathContext(GameStats.PRECISION)
+        )
+
+        assertThat(actual, `is`(expected))
     }
 
     @Test
     fun emptyListTest() {
-        assertEquals(
-            BigDecimal.ZERO,
-            GameStats.getWinRate(emptyList(),Game.SSBU, character = "Yoshi")
+        val actual = GameStats.getWinRate(
+            emptyList(),
+            Game.SSBU,
+            character = "Yoshi"
         )
+        assertThat(actual, `is`(BigDecimal.ZERO))
     }
 
     @Test
     fun zeroWinTest() {
-        assertEquals(
-            BigDecimal.ZERO,
-            GameStats.getWinRate(mGameRecordList, Game.SSBU, "Yoshi")
+        val actual = GameStats.getWinRate(
+            mGameRecordList,
+            Game.SSBU,
+            "Yoshi"
         )
+        assertThat(actual, `is`(BigDecimal.ZERO))
     }
 
     @Test
     fun differentGameTest() {
-        assertEquals(
-            BigDecimal(0.5), GameStats.getWinRate(mGameRecordList, Game.SSBU, character = "Mario")
+        var actual = GameStats.getWinRate(
+            mGameRecordList,
+            Game.SSBU,
+            character = "Mario"
         )
-        assertEquals(
-            BigDecimal.ONE, GameStats.getWinRate(mGameRecordList, Game.SSB4, character = "Mario")
+        assertThat(actual, `is`(BigDecimal(0.5)))
+
+
+        actual = GameStats.getWinRate(
+            mGameRecordList,
+            Game.SSB4,
+            character = "Mario"
         )
+        assertThat(actual, `is`(BigDecimal.ONE))
     }
 }
