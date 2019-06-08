@@ -58,7 +58,7 @@ class GameStatsTest {
     }
 
     @Test
-    fun emptyListTest() {
+    fun testEmptyList() {
         val actual = GameStats.getWinRate(
             emptyList(),
             Game.SSBU,
@@ -68,7 +68,7 @@ class GameStatsTest {
     }
 
     @Test
-    fun zeroWinTest() {
+    fun testZeroWins() {
         val actual = GameStats.getWinRate(
             mGameRecordList,
             Game.SSBU,
@@ -78,7 +78,7 @@ class GameStatsTest {
     }
 
     @Test
-    fun differentGameTest() {
+    fun testDifferentGames() {
         var actual = GameStats.getWinRate(
             mGameRecordList,
             Game.SSBU,
