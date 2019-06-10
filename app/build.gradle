@@ -64,11 +64,9 @@ dependencies {
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
     implementation 'com.github.PhilJay:MPAndroidChart:v3.1.0-alpha'
 
-
     def room_version = '2.1.0-rc01'
     implementation "androidx.room:room-runtime:$room_version"
     kapt "androidx.room:room-compiler:$room_version"
-    // optional - Coroutines support for Room
     implementation "androidx.room:room-ktx:$room_version"
 
     def lifecycle_version = '2.2.0-alpha01'
@@ -81,21 +79,19 @@ dependencies {
     implementation 'androidx.test:rules:1.2.0'
     implementation 'androidx.test:runner:1.2.0'
 
-
     testImplementation 'androidx.test.ext:junit:1.1.1'
     androidTestImplementation 'androidx.test.ext:junit:1.1.1'
 
-    //shared
+    debugImplementation "androidx.fragment:fragment-testing:1.1.0-beta01"
+
+    // separating mockito core into androidTest and test breaks OverviewFragmentTest
     implementation 'org.mockito:mockito-core:2.28.2'
     androidTestImplementation 'org.mockito:mockito-android:2.28.2'
-    //testImplementation 'org.mockito:mockito-core:2.19.0'
-    debugImplementation "androidx.fragment:fragment-testing:1.1.0-beta01"
+    
     testImplementation 'androidx.test.espresso:espresso-core:3.2.0'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
     implementation "androidx.test.espresso:espresso-contrib:3.2.0"
     implementation "androidx.test.espresso:espresso-intents:3.2.0"
-    implementation 'androidx.test:runner:1.2.0'
-    implementation 'androidx.test:rules:1.2.0'
 
     testImplementation 'org.robolectric:robolectric:4.3'
     implementation 'net.bytebuddy:byte-buddy:1.9.10'
