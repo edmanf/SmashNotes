@@ -18,9 +18,12 @@ import java.io.IOException
 
 
 /**
- * Tests for the Game Room Database
+ * Tests for the Game Room Database.
+ *
+ * Although it runs on a device, it does not need an activity
+ * and is faster than UI tests
  */
-class GameDatabaseInstrumentedTest {
+class GameDatabaseUnitTest {
     private lateinit var gameDao: GameDao
     private lateinit var db: GameDatabase
 
