@@ -41,6 +41,26 @@ class Converters {
             else -> Game.SSBU
         }
     }
+
+    @TypeConverter
+    fun groupModeEnumToString(groupMode: GameRecord.GroupMode) : String {
+        return groupMode.toString()
+    }
+
+    @TypeConverter
+    fun groupModeStringToEnum(groupMode: String) : GameRecord.GroupMode {
+        return GameRecord.GroupMode.valueOf(groupMode)
+    }
+
+    @TypeConverter
+    fun gameTypeEnumToString(gameType: GameRecord.GameType) : String {
+        return gameType.toString()
+    }
+
+    @TypeConverter
+    fun gameTypeStringToEnum(gameType: String) : GameRecord.GameType {
+        return GameRecord.GameType.valueOf(gameType)
+    }
 }
 
 
