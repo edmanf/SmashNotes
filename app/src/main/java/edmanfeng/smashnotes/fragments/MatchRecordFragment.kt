@@ -366,8 +366,7 @@ class MatchRecordFragment : Fragment() {
         mGameSpinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             // Likely not used
             override fun onNothingSelected(parent: AdapterView<*>?) {
-                setupStageAdapter()
-                setupCharacterAdapters()
+                // Do nothing
             }
 
             override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
