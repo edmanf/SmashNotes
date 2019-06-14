@@ -88,8 +88,8 @@ class MatchRecordFragment : Fragment() {
 
 
         setupGameSpinner()
-        setupStage()
-        setupCharacterViews()
+        setupStageAdapter()
+        setupCharacterAdapters()
         setupResultButtons()
         setupHazards()
         setupSessionHistoryRecyclerView()
@@ -326,7 +326,7 @@ class MatchRecordFragment : Fragment() {
     /**
      * Sets the autofill dropdown on the Stage's textview.
      */
-    private fun setupStage() {
+    private fun setupStageAdapter() {
         val stageAdapter = ArrayAdapter(
             requireContext(),
             android.R.layout.simple_list_item_1,
@@ -336,7 +336,7 @@ class MatchRecordFragment : Fragment() {
         mStageView.setDropDownBackgroundDrawable(requireContext().getDrawable(R.drawable.autocomplete_dropdown))
     }
 
-    private fun setupCharacterViews() {
+    private fun setupCharacterAdapters() {
         val charArray = resources.getStringArray(
             getGameSpinnerSelection().getCharacterArrayResourceId()
         )
@@ -363,6 +363,18 @@ class MatchRecordFragment : Fragment() {
             R.layout.support_simple_spinner_dropdown_item
         )
         mGameSpinner.adapter = gameSpinnerAdapter
+        mGameSpinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+            // Likely not used
+            override fun onNothingSelected(parent: AdapterView<*>?) {
+                setupStageAdapter()
+                setupCharacterAdapters()
+            }
+
+            override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
+                setupStageAdapter()
+                setupCharacterAdapters()
+            }
+        }
     }
 
     private fun setupSessionHistoryRecyclerView() {
