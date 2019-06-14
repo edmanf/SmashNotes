@@ -10,4 +10,31 @@
           android:icon="@drawable/ic_delete"
           app:showAsAction="never"
           />
+    <item android:id="@+id/group_type_record_menu_item"
+        android:title="@string/menu_group_type_title"
+        app:showAsAction="never">
+        <menu>
+            <item android:id="@+id/BO3_group_type_menu_item"
+                android:title="@string/menu_BO3_group_type_title"/>
+
+            <item android:id="@+id/BO5_group_type_menu_item"
+                android:title="@string/menu_BO5_group_type_title"/>
+
+            <item android:id="@+id/any_group_type_menu_item"
+                android:title="@string/menu_any_group_type_title"/>
+        </menu>
+    </item>
+    <item android:id="@+id/game_type_record_menu_item"
+        android:title="@string/menu_game_type_title"
+        app:showAsAction="never">
+        <menu>
+            <item android:id="@+id/tournament_game_type_menu_item"
+                android:title="@string/menu_tournament_game_type_menu_item"/>
+            <item android:id="@+id/practice_game_type_menu_item"
+                android:title="@string/menu_practice_game_type_title"/>
+            <item android:id="@+id/quickplay_game_type_menu_item"
+                android:title="@string/menu_quickplay_game_type_title"/>
+        </menu>
+    </item>
+
 </menu>

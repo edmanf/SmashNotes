@@ -12,7 +12,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.button.MaterialButton
 import com.google.android.material.switchmaterial.SwitchMaterial
-import kotlinx.android.synthetic.main.match_record_view.view.*
+import kotlinx.android.synthetic.main.match_record_fragment.view.*
 import java.lang.NumberFormatException
 import edmanfeng.smashnotes.*
 
@@ -71,7 +71,7 @@ class MatchRecordFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        val v = inflater.inflate(R.layout.match_record_view, container, false)
+        val v = inflater.inflate(R.layout.match_record_fragment, container, false)
 
         mPlayerTagView = v.player_name
         mOpponentTagView = v.opponent_name
@@ -110,6 +110,10 @@ class MatchRecordFragment : Fragment() {
         } else {
             menuSave.icon = resources.getDrawable(R.drawable.ic_save, null)
         }
+
+        // clears sub menu header
+        menu.findItem(R.id.group_type_record_menu_item).subMenu.clearHeader()
+        menu.findItem(R.id.game_type_record_menu_item).subMenu.clearHeader()
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {

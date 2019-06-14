@@ -9,6 +9,8 @@
 
     <string name="menu_save_record_title">Save</string>
     <string name="menu_delete_record_title">Delete</string>
+    <string name="menu_group_type_title">Group Records</string>
+    <string name="menu_BO3_group_type_title">Best of 3</string>
 
     <string name="record_button_text">Begin Recording</string>
     <string name="record_button_done_text">Done</string>
@@ -27,6 +29,13 @@
     <string name="player_name_hint">Name</string>
 
     <string name="game_vs_text">v</string>
+    <string name="menu_BO5_group_type_title">Best of 5</string>
+    <string name="menu_any_group_type_title">Any</string>
+    <string name="menu_game_type_title">Game Type</string>
+    <string name="menu_tournament_game_type_menu_item">Tournament</string>
+    <string name="menu_practice_game_type_title">Practice</string>
+    <string name="menu_quickplay_game_type_title">Quickplay</string>
+
 
     <string-array name="stagesUltimate">
         <item>Battlefield</item>
