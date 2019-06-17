@@ -128,7 +128,22 @@ class MatchRecordFragment : Fragment() {
                     .popBackStack()
                 true
             }
+            R.id.quickplay_game_type_menu_item -> {
+                if (item is TextView) {
+                    (item as TextView).setTextColor(Utils.getColorResourceVersionSafe(item.resources, R.color.colorPrimaryDark))
+                }
+                true
+            }
             else -> super.onOptionsItemSelected(item)
+        }
+    }
+
+    /**
+     * Sets the given menu option's text color to the given color
+     */
+    private fun setMenuOptionTextColor(item: MenuItem, color: Int) {
+        if (item is TextView) {
+            (item as TextView).setTextColor(Utils.getColorResourceVersionSafe(item.resources, color))
         }
     }
 
