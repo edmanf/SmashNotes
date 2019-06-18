@@ -2,6 +2,7 @@ package edmanfeng.smashnotes.fragments
 
 import android.content.Context
 import android.os.Bundle
+import android.util.Log
 import android.view.*
 import android.widget.*
 import androidx.fragment.app.Fragment
@@ -111,9 +112,18 @@ class MatchRecordFragment : Fragment() {
             menuSave.icon = resources.getDrawable(R.drawable.ic_save, null)
         }
 
+        val groupType = requireActivity().getPreferences(Context.MODE_PRIVATE).getString(
+            SharedPrefs.GROUP_TYPE_SHARED_PREF_KEY,
+            resources.getString(R.string.menu_any_group_type_title)
+        )
+
         // clears sub menu header
-        menu.findItem(R.id.group_type_record_menu_item).subMenu.clearHeader()
+        menu.findItem(R.id.group_type_record_menu_item)
+            .setTitle(resources.getString(R.string.menu_group_type_title) + " (" + groupType + ")")
+            .subMenu.clearHeader()
         menu.findItem(R.id.game_type_record_menu_item).subMenu.clearHeader()
+
+        // set game type and group type
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
@@ -129,22 +139,45 @@ class MatchRecordFragment : Fragment() {
                 true
             }
             R.id.quickplay_game_type_menu_item -> {
-                if (item is TextView) {
-                    (item as TextView).setTextColor(Utils.getColorResourceVersionSafe(item.resources, R.color.colorPrimaryDark))
-                }
+                setSubMenuTitle(menu.findItemById(R.id.game_type_record_menu_item))
                 true
             }
             else -> super.onOptionsItemSelected(item)
         }
     }
 
+    override fun onPrepareOptionsMenu(menu: Menu) {
+        super.onPrepareOptionsMenu(menu)
+
+
+    }
+
     /**
      * Sets the given menu option's text color to the given color
      */
-    private fun setMenuOptionTextColor(item: MenuItem, color: Int) {
+    private fun setSubMenuTitle(menu: Menu, item: MenuItem) {
+        var choice = ""
+        when (item.itemId) {
+            R.id.BO3_group_type_menu_item -> {
+                subMenu = resources.getString(R.string.menu_group_type_title)
+                choice = resources.getString(R.string.menu_BO3_group_type_title)
+            }
+            R.id.BO5_group_type_menu_item -> {
+                subMenu = resources.getString(R.string.menu_group_type_title)
+                choice = resources.getString(R.string.menu_BO5_group_type_title)
+            }
+            R.id.any_group_type_menu_item -> {
+                subMenu = resources.getString(R.string.menu_group_type_title)
+                choice = resources.getString(R.string.menu_any_group_type_title)
+            }
+        }
         if (item is TextView) {
             (item as TextView).setTextColor(Utils.getColorResourceVersionSafe(item.resources, color))
         }
+    }
+
+    private fun formatSubMenuTitle(subMenu: String, choice: String) : String {
+        return "$subMenu ($choice)"
     }
 
     /**
