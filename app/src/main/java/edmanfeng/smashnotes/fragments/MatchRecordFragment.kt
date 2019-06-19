@@ -111,12 +111,6 @@ class MatchRecordFragment : Fragment() {
         } else {
             menuSave.icon = resources.getDrawable(R.drawable.ic_save, null)
         }
-
-        // clears sub menu header
-        menu.findItem(R.id.group_type_record_menu_item).subMenu.clearHeader()
-        menu.findItem(R.id.game_type_record_menu_item).subMenu.clearHeader()
-
-        // set game type and group type
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
