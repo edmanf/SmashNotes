@@ -2,6 +2,7 @@ package edmanfeng.smashnotes.repo
 
 import androidx.annotation.WorkerThread
 import androidx.lifecycle.LiveData
+import edmanfeng.smashnotes.Game
 import edmanfeng.smashnotes.GameRecord
 
 class GameRepository(private val gameDao: GameDao) {
@@ -25,5 +26,19 @@ class GameRepository(private val gameDao: GameDao) {
 
     fun getGameRecord(id: Long) : LiveData<GameRecord> {
         return gameDao.getGameRecord(id)
+    }
+
+    fun getGame(game: Game?) : List<GameRecord> {
+        if (game == null) {
+            return allGames.value ?: listOf()
+        }
+        return allGames.value?.filter {it.game == game} ?: listOf()
+    }
+
+    fun getGame(game: String) : List<GameRecord> {
+        if (game == "All") {
+            return getGame(null)
+        }
+        return getGame(Game.valueOf(game))
     }
 }
