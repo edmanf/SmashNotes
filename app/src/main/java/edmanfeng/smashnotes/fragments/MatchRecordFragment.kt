@@ -4,6 +4,7 @@ import android.content.Context
 import android.os.Bundle
 import android.view.*
 import android.widget.*
+import androidx.annotation.StringRes
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
@@ -111,10 +112,6 @@ class MatchRecordFragment : Fragment() {
         } else {
             menuSave.icon = resources.getDrawable(R.drawable.ic_save, null)
         }
-
-        // clears sub menu header
-        menu.findItem(R.id.group_type_record_menu_item).subMenu.clearHeader()
-        menu.findItem(R.id.game_type_record_menu_item).subMenu.clearHeader()
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
@@ -130,23 +127,109 @@ class MatchRecordFragment : Fragment() {
                 true
             }
             R.id.quickplay_game_type_menu_item -> {
-                if (item is TextView) {
-                    (item as TextView).setTextColor(Utils.getColorResourceVersionSafe(item.resources, R.color.colorPrimaryDark))
-                }
+                setSubMenuChoice(
+                    R.string.menu_quickplay_game_type_title,
+                    SharedPrefs.GAME_TYPE_SHARED_PREF_KEY
+                )
+                true
+            }
+            R.id.tournament_game_type_menu_item -> {
+                setSubMenuChoice(
+                    R.string.menu_tournament_game_type_menu_item,
+                    SharedPrefs.GAME_TYPE_SHARED_PREF_KEY
+                )
+                true
+            }
+            R.id.practice_game_type_menu_item -> {
+                setSubMenuChoice(
+                    R.string.menu_practice_game_type_title,
+                    SharedPrefs.GAME_TYPE_SHARED_PREF_KEY
+                )
+                true
+            }
+            R.id.BO5_group_type_menu_item -> {
+                setSubMenuChoice(
+                    R.string.menu_BO5_group_type_title,
+                    SharedPrefs.GROUP_TYPE_SHARED_PREF_KEY
+                )
+                true
+            }
+            R.id.BO3_group_type_menu_item -> {
+                setSubMenuChoice(
+                    R.string.menu_BO3_group_type_title,
+                    SharedPrefs.GROUP_TYPE_SHARED_PREF_KEY
+                )
+                true
+            }
+            R.id.any_group_type_menu_item -> {
+                setSubMenuChoice(
+                    R.string.menu_any_group_type_title,
+                    SharedPrefs.GROUP_TYPE_SHARED_PREF_KEY
+                )
                 true
             }
             else -> super.onOptionsItemSelected(item)
         }
     }
 
+    override fun onPrepareOptionsMenu(menu: Menu) {
+        super.onPrepareOptionsMenu(menu)
+
+        val defaultGroupType = resources.getString(R.string.menu_any_group_type_title)
+        val defaultGameType = resources.getString(R.string.menu_practice_game_type_title)
+
+        val prefs = requireActivity().getPreferences(Context.MODE_PRIVATE)
+
+        val groupType = prefs.getString(
+            SharedPrefs.GROUP_TYPE_SHARED_PREF_KEY,
+            defaultGroupType
+        ) ?: defaultGroupType
+
+        val gameType = prefs.getString(
+            SharedPrefs.GAME_TYPE_SHARED_PREF_KEY,
+            defaultGameType
+        ) ?: defaultGameType
+
+        updateSubMenu(
+            menu.findItem(R.id.group_type_record_menu_item),
+            R.string.menu_group_type_title,
+            groupType
+        )
+
+        updateSubMenu(
+            menu.findItem(R.id.game_type_record_menu_item),
+            R.string.menu_game_type_title,
+            gameType
+        )
+    }
+
     /**
-     * Sets the given menu option's text color to the given color
+     * Updates the given menuItem to display the chosen submenu item in its title.
+     * Also clears the submenu's header
      */
-    private fun setMenuOptionTextColor(item: MenuItem, color: Int) {
-        if (item is TextView) {
-            (item as TextView).setTextColor(Utils.getColorResourceVersionSafe(item.resources, color))
+    private fun updateSubMenu(menuItem: MenuItem, @StringRes menuItemTitle: Int, chosenItem: String) {
+        val formatSubMenuTitle: (String, String) -> String = { subMenu, choice -> "$subMenu ($choice)"}
+        with(menuItem) {
+            title = formatSubMenuTitle(resources.getString(menuItemTitle), chosenItem)
+            subMenu.clearHeader()
         }
     }
+
+    /**
+     * Saves the given menuTitle as the chosen sub menu choice, then
+     * invalidates the options menu
+     */
+    private fun setSubMenuChoice(@StringRes menuTitle: Int, sharedPrefKey: String) {
+        with(requireActivity().getPreferences(Context.MODE_PRIVATE).edit()) {
+            putString(
+                sharedPrefKey,
+                resources.getString(menuTitle)
+            )
+            apply()
+        }
+        requireActivity().invalidateOptionsMenu()
+    }
+
 
     /**
      * Populates views based on last used options if this fragment was
