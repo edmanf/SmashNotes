@@ -18,6 +18,7 @@ import com.github.mikephil.charting.data.Entry
 import com.github.mikephil.charting.data.LineData
 import com.github.mikephil.charting.data.LineDataSet
 import edmanfeng.smashnotes.*
+import edmanfeng.smashnotes.viewmodels.MatchRecordViewModel
 
 /**
  * This fragment is for displaying the
@@ -31,16 +32,16 @@ class StatsFragment : Fragment() {
     private lateinit var mGame : Game
     private lateinit var mCharacter : String
 
-    lateinit var mGameViewModel : GameViewModel
+    lateinit var mMatchRecordViewModel : MatchRecordViewModel
     lateinit var mRatingChart : LineChart
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        mGameViewModel = ViewModelProviders
+        mMatchRecordViewModel = ViewModelProviders
             .of(this)
-            .get(GameViewModel::class.java)
+            .get(MatchRecordViewModel::class.java)
 
         val game = activity?.getPreferences(Context.MODE_PRIVATE)
             ?.getString(SharedPrefs.GAME_SHARED_PREF_KEY, Game.SSBU.toString())
@@ -55,7 +56,7 @@ class StatsFragment : Fragment() {
         val context = requireContext()
         val v = inflater.inflate(R.layout.stats_fragment, container, false)
         val gameRecyclerView = v.findViewById<RecyclerView>(R.id.game_history_recyclerview)
-        val gameAdapter = GameAdapter(mGameViewModel.allGames.value)
+        val gameAdapter = GameAdapter(mMatchRecordViewModel.allGames.value)
         gameRecyclerView.adapter = gameAdapter
         val gameRecyclerViewManager = LinearLayoutManager(context)
         gameRecyclerViewManager.stackFromEnd = true
@@ -65,9 +66,9 @@ class StatsFragment : Fragment() {
         mRatingChart = v.findViewById(R.id.rating_chart)
         styleRatingChart()
 
-        mGameViewModel.allGames.observe(this, Observer {
-            updateChart(mGameViewModel.getGame(mGame))
-            gameAdapter.setGames(mGameViewModel.getGame(mGame))
+        mMatchRecordViewModel.allGames.observe(this, Observer {
+            updateChart(mMatchRecordViewModel.getGame(mGame))
+            gameAdapter.setGames(mMatchRecordViewModel.getGame(mGame))
         })
 
         val gameSpinner = v.findViewById<Spinner>(R.id.game_spinner)
@@ -87,7 +88,7 @@ class StatsFragment : Fragment() {
 
             override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
                 val item = parent?.getItemAtPosition(position) as String
-                val games = mGameViewModel.getGame(item).filter {it.playerCharacter == mCharacter}
+                val games = mMatchRecordViewModel.getGame(item).filter {it.playerCharacter == mCharacter}
                 mGame = Game.valueOf(item)
                 gameAdapter.setGames(games)
                 updateChart(games)
@@ -122,7 +123,7 @@ class StatsFragment : Fragment() {
             override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
                 val item = parent?.getItemAtPosition(position) as String
                 mCharacter = item
-                val games = mGameViewModel.getGame(mGame).filter {it.playerCharacter == item}
+                val games = mMatchRecordViewModel.getGame(mGame).filter {it.playerCharacter == item}
                 updateChart(games)
                 gameAdapter.setGames(games)
             }

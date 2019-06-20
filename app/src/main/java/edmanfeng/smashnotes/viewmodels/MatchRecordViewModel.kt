@@ -1,8 +1,10 @@
-package edmanfeng.smashnotes
+package edmanfeng.smashnotes.viewmodels
 
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
+import edmanfeng.smashnotes.Game
+import edmanfeng.smashnotes.GameRecord
 import edmanfeng.smashnotes.repo.GameDatabase
 import edmanfeng.smashnotes.repo.GameRepository
 import kotlinx.coroutines.CoroutineScope
@@ -10,7 +12,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
 
-class GameViewModel(application: Application) : AndroidViewModel(application) {
+class MatchRecordViewModel(application: Application) : AndroidViewModel(application) {
 
     private val repository: GameRepository
 

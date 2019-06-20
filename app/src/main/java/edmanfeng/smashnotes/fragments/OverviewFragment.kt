@@ -14,12 +14,13 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import edmanfeng.smashnotes.*
+import edmanfeng.smashnotes.viewmodels.OverviewViewModel
 import kotlinx.android.synthetic.main.overview_fragment.view.*
 
 class OverviewFragment : Fragment() {
 
 
-    private lateinit var mGameViewModel : GameViewModel
+    private lateinit var mOverviewViewModel : OverviewViewModel
 
     companion object {
         fun newInstance() : OverviewFragment {
@@ -29,9 +30,9 @@ class OverviewFragment : Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        mGameViewModel = ViewModelProviders
+        mOverviewViewModel = ViewModelProviders
             .of(this)
-            .get(GameViewModel::class.java)
+            .get(OverviewViewModel::class.java)
     }
 
     override fun onCreateView(
@@ -67,11 +68,11 @@ class OverviewFragment : Fragment() {
      */
     private fun setupGameRecyclerView(v: View, game: String) {
         val gamesRecyclerView = v.game_history_recyclerview
-        val adapter = GameAdapter(mGameViewModel.getGame(game))
+        val adapter = GameAdapter(mOverviewViewModel.getGame(game))
 
-        mGameViewModel.allGames.observe(this, Observer {
+        mOverviewViewModel.allGames.observe(this, Observer {
             // update games whenever any game gets added/removed
-            adapter.setGames(mGameViewModel.getGame(game))
+            adapter.setGames(mOverviewViewModel.getGame(game))
         })
 
         gamesRecyclerView.adapter = adapter
@@ -104,7 +105,7 @@ class OverviewFragment : Fragment() {
                 val item = parent?.getItemAtPosition(position) as String
                 val gamesRecyclerView = v.game_history_recyclerview
                 val adapter = gamesRecyclerView.adapter as GameAdapter
-                adapter.setGames(mGameViewModel.getGame(item))
+                adapter.setGames(mOverviewViewModel.getGame(item))
                 scrollGamesRecyclerView(gamesRecyclerView)
 
                 with (requireActivity().getPreferences(Context.MODE_PRIVATE).edit()) {

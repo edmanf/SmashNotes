@@ -15,10 +15,11 @@ import com.google.android.material.switchmaterial.SwitchMaterial
 import kotlinx.android.synthetic.main.match_record_fragment.view.*
 import java.lang.NumberFormatException
 import edmanfeng.smashnotes.*
+import edmanfeng.smashnotes.viewmodels.MatchRecordViewModel
 
 
 class MatchRecordFragment : Fragment() {
-    private lateinit var mGameViewModel: GameViewModel
+    private lateinit var mMatchRecordViewModel: MatchRecordViewModel
     private val args: MatchRecordFragmentArgs by navArgs()
     private var mGameRecord: GameRecord = GameRecord.newGame()
     private var mVictorySelected = false
@@ -44,15 +45,15 @@ class MatchRecordFragment : Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        mGameViewModel = ViewModelProviders
+        mMatchRecordViewModel = ViewModelProviders
             .of(this)
-            .get(GameViewModel::class.java)
+            .get(MatchRecordViewModel::class.java)
 
         if (args.id == GameRecord.NEW_GAME_ID) {
             mGameRecord = GameRecord.newGame()
             mResultSelected = false
         } else {
-            val gameRecordLiveData = mGameViewModel.getGameRecord(args.id)
+            val gameRecordLiveData = mMatchRecordViewModel.getGameRecord(args.id)
             gameRecordLiveData.observe(this, Observer {
                 val gameRecord = gameRecordLiveData.value
                 if (gameRecord != null) {
@@ -123,7 +124,7 @@ class MatchRecordFragment : Fragment() {
                 true
             }
             R.id.delete_record_menu_item -> {
-                mGameViewModel.delete(makeGameRecord())
+                mMatchRecordViewModel.delete(makeGameRecord())
                 requireActivity().supportFragmentManager
                     .popBackStack()
                 true
@@ -270,10 +271,10 @@ class MatchRecordFragment : Fragment() {
 
         val record = makeGameRecord()
         if (mGameRecord.isNewGame()) {
-            mGameViewModel.insert(record)
+            mMatchRecordViewModel.insert(record)
             mSessionHistory.smoothScrollToPosition(mSessionHistory.adapter!!.itemCount)
         } else {
-            mGameViewModel.updateGame(record)
+            mMatchRecordViewModel.updateGame(record)
         }
         mSessionHistory.adapter?.notifyDataSetChanged()
 
@@ -398,7 +399,7 @@ class MatchRecordFragment : Fragment() {
     private fun setupSessionHistoryRecyclerView() {
         // Sessions are only started when you are recording new games
         if (mGameRecord.isNewGame()) {
-            mSessionHistory.adapter = GameAdapter(mGameViewModel.sessionGames)
+            mSessionHistory.adapter = GameAdapter(mMatchRecordViewModel.sessionGames)
             val manager = LinearLayoutManager(context)
 
             // make RecyclerView insert at the top, old items go offscreen
