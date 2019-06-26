@@ -11,7 +11,7 @@ import androidx.test.espresso.assertion.ViewAssertions.matches
 import androidx.test.espresso.matcher.ViewMatchers.*
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import edmanfeng.smashnotes.fragments.OverviewFragment
-import edmanfeng.smashnotes.fragments.OverviewFragmentDirections
+import edmanfeng.smashnotes.repo.GameRecord
 import org.hamcrest.Matchers.*
 import org.hamcrest.core.Is.`is`
 import org.junit.Test

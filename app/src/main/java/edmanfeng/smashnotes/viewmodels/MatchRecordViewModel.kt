@@ -4,7 +4,7 @@ import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import edmanfeng.smashnotes.Game
-import edmanfeng.smashnotes.GameRecord
+import edmanfeng.smashnotes.repo.GameRecord
 import edmanfeng.smashnotes.repo.GameDatabase
 import edmanfeng.smashnotes.repo.GameRepository
 import kotlinx.coroutines.CoroutineScope

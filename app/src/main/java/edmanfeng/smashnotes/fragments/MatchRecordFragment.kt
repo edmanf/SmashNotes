@@ -16,6 +16,7 @@ import com.google.android.material.switchmaterial.SwitchMaterial
 import kotlinx.android.synthetic.main.match_record_fragment.view.*
 import java.lang.NumberFormatException
 import edmanfeng.smashnotes.*
+import edmanfeng.smashnotes.repo.GameRecord
 import edmanfeng.smashnotes.viewmodels.MatchRecordViewModel
 
 

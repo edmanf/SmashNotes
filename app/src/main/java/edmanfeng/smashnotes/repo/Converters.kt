@@ -2,7 +2,6 @@ package edmanfeng.smashnotes.repo
 
 import androidx.room.TypeConverter
 import edmanfeng.smashnotes.Game
-import edmanfeng.smashnotes.GameRecord
 
 
 class Converters {

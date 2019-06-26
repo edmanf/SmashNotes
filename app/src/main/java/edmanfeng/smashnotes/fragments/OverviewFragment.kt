@@ -14,6 +14,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import edmanfeng.smashnotes.*
+import edmanfeng.smashnotes.repo.GameRecord
 import edmanfeng.smashnotes.viewmodels.OverviewViewModel
 import kotlinx.android.synthetic.main.overview_fragment.view.*
 

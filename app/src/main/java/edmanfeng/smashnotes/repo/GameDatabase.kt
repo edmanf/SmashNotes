@@ -4,9 +4,8 @@ import android.content.Context
 import androidx.room.*
 import androidx.room.migration.Migration
 import androidx.sqlite.db.SupportSQLiteDatabase
-import edmanfeng.smashnotes.GameRecord
 
-@Database(entities = arrayOf(GameRecord::class), version = 2)
+@Database(entities = [GameRecord::class, GameGroup::class], version = 3)
 @TypeConverters(Converters::class)
 abstract class GameDatabase : RoomDatabase() {
     abstract fun gameDao() : GameDao
@@ -24,6 +23,14 @@ abstract class GameDatabase : RoomDatabase() {
                 ).addMigrations(MIGRATION_1_2).build()
                 INSTANCE = instance // Can't return INSTANCE because it is private
                 return instance
+            }
+        }
+
+        private val MIGRATION_2_3 = object : Migration(2, 3) {
+            override fun migrate(database: SupportSQLiteDatabase) {
+                database.execSQL("CREATE TABLE `Fruit` (`id` INTEGER, `name` TEXT, " +
+                        "PRIMARY KEY(`id`))")
+
             }
         }
 

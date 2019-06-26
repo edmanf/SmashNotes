@@ -3,10 +3,10 @@ package edmanfeng.smashnotes.repo
 import androidx.annotation.WorkerThread
 import androidx.lifecycle.LiveData
 import edmanfeng.smashnotes.Game
-import edmanfeng.smashnotes.GameRecord
 
 class GameRepository(private val gameDao: GameDao) {
     val allGames: LiveData<List<GameRecord>> = gameDao.getAll()
+
 
     @WorkerThread
     suspend fun insert(game: GameRecord) : Long{
@@ -40,5 +40,9 @@ class GameRepository(private val gameDao: GameDao) {
             return getGame(null)
         }
         return getGame(Game.valueOf(game))
+    }
+
+    fun getGroup(groupId: Long) : List<GameRecord> {
+
     }
 }

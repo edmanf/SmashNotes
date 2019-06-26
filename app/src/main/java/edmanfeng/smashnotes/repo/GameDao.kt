@@ -2,7 +2,6 @@ package edmanfeng.smashnotes.repo
 
 import androidx.lifecycle.LiveData
 import androidx.room.*
-import edmanfeng.smashnotes.GameRecord
 
 @Dao
 interface GameDao {

@@ -1,5 +1,6 @@
 package edmanfeng.smashnotes
 
+import edmanfeng.smashnotes.repo.GameRecord
 import java.math.BigDecimal
 import java.math.MathContext
 

@@ -1,8 +1,9 @@
-package edmanfeng.smashnotes
+package edmanfeng.smashnotes.repo
 
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
+import edmanfeng.smashnotes.Game
 
 /**
  * GroupMode = BO3, BO5, session
@@ -23,7 +24,8 @@ data class GameRecord(
     @ColumnInfo(name = "game") var game : Game = Game.SSBU,
     @ColumnInfo(name = "group_mode") var groupMode : GroupMode = GroupMode.SESSION,
     @ColumnInfo(name = "game_number") var gameNumber : Int = 0,
-    @ColumnInfo(name = "game_type") var gameType : GameType = GameType.PRACTICE) {
+    @ColumnInfo(name = "game_type") var gameType : GameType = GameType.PRACTICE
+) {
     companion object {
         const val NEW_GAME_ID: Long = -1L
 

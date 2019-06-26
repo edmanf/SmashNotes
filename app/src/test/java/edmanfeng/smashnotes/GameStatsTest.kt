@@ -1,5 +1,6 @@
 package edmanfeng.smashnotes
 
+import edmanfeng.smashnotes.repo.GameRecord
 import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.core.Is.`is`
 import org.junit.Before
@@ -33,13 +34,15 @@ class GameStatsTest {
                 opponentCharacter = "Mario",
                 stage = "Smashville",
                 result = GameRecord.Result.VICTORY,
-                game = Game.SSBU),
+                game = Game.SSBU
+            ),
             GameRecord(
                 playerCharacter = "Mario",
                 opponentCharacter = "Mario",
                 stage = "Battlefield",
                 result = GameRecord.Result.VICTORY,
-                game =  Game.SSB4)
+                game = Game.SSB4
+            )
         )
     }
 

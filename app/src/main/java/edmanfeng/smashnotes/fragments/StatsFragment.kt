@@ -18,6 +18,7 @@ import com.github.mikephil.charting.data.Entry
 import com.github.mikephil.charting.data.LineData
 import com.github.mikephil.charting.data.LineDataSet
 import edmanfeng.smashnotes.*
+import edmanfeng.smashnotes.repo.GameRecord
 import edmanfeng.smashnotes.viewmodels.MatchRecordViewModel
 
 /**
