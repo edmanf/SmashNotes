@@ -6,6 +6,7 @@ import android.content.Context
 import androidx.room.Room
 import edmanfeng.smashnotes.repo.GameDao
 import edmanfeng.smashnotes.repo.GameDatabase
+import edmanfeng.smashnotes.repo.GameRecord
 import kotlinx.coroutines.*
 import org.hamcrest.CoreMatchers.equalTo
 import org.hamcrest.MatcherAssert.assertThat
@@ -49,8 +50,14 @@ class GameDatabaseUnitTest {
     fun update() {
 
         runBlocking {
-            var game1 = GameRecord(playerCharacter = "Lucas", result = GameRecord.Result.VICTORY)
-            var game2 = GameRecord(playerCharacter = "Yoshi", result = GameRecord.Result.VICTORY)
+            var game1 = GameRecord(
+                playerCharacter = "Lucas",
+                result = GameRecord.Result.VICTORY
+            )
+            var game2 = GameRecord(
+                playerCharacter = "Yoshi",
+                result = GameRecord.Result.VICTORY
+            )
             var game3 = GameRecord(stage = "Final Destination")
 
 

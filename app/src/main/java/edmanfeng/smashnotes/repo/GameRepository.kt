@@ -43,6 +43,6 @@ class GameRepository(private val gameDao: GameDao) {
     }
 
     fun getGroup(groupId: Long) : List<GameRecord> {
-
+        return listOf()
     }
 }

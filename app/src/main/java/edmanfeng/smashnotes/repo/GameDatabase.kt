@@ -28,9 +28,11 @@ abstract class GameDatabase : RoomDatabase() {
 
         private val MIGRATION_2_3 = object : Migration(2, 3) {
             override fun migrate(database: SupportSQLiteDatabase) {
-                database.execSQL("CREATE TABLE `Fruit` (`id` INTEGER, `name` TEXT, " +
-                        "PRIMARY KEY(`id`))")
-
+                database.execSQL("CREATE TABLE `game_groups` (" +
+                        "`group_id` LONG, " +
+                        "`game_id` UNIQUE LONG, " +
+                        "`group_type` TEXT, " +
+                        "PRIMARY KEY(`game_id`, `group_id))")
             }
         }
 
