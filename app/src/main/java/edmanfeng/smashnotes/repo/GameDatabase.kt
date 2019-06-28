@@ -20,7 +20,7 @@ abstract class GameDatabase : RoomDatabase() {
                     context.applicationContext,
                     GameDatabase::class.java,
                     "game_database"
-                ).addMigrations(MIGRATION_1_2).build()
+                ).addMigrations(MIGRATION_1_2, MIGRATION_2_3).build()
                 INSTANCE = instance // Can't return INSTANCE because it is private
                 return instance
             }
@@ -28,11 +28,11 @@ abstract class GameDatabase : RoomDatabase() {
 
         private val MIGRATION_2_3 = object : Migration(2, 3) {
             override fun migrate(database: SupportSQLiteDatabase) {
-                database.execSQL("CREATE TABLE `game_groups` (" +
-                        "`group_id` LONG, " +
-                        "`game_id` UNIQUE LONG, " +
-                        "`group_type` TEXT, " +
-                        "PRIMARY KEY(`game_id`, `group_id))")
+                database.execSQL("CREATE TABLE `group` (" +
+                        "`group_id` INTEGER NOT NULL, " +
+                        "`game_id` INTEGER UNIQUE NOT NULL REFERENCES game_records(id), " +
+                        "`group_type` TEXT NOT NULL DEFAULT ${GameRecord.GroupMode.SESSION}, " +
+                        "PRIMARY KEY(`game_id`, `group_id`))")
             }
         }
 
