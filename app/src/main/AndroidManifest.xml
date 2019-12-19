@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-          package="edmanfeng.smashnotes">
+          xmlns:tools="http://schemas.android.com/tools"
+          package="edmanfeng.smashnotes"
+          tools:ignore="GoogleAppIndexingWarning" >
 
     <application
             android:allowBackup="true"
@@ -11,9 +13,10 @@
             android:theme="@style/AppTheme">
         <activity
                 android:name=".activities.SmashNotesActivity"
-                android:windowSoftInputMode="adjustNothing|stateHidden">
-            <!-- windowSoftInputMode set so bottomNavigationView doesn't pop
-                up when the keyboard is open, taking too much screen -->
+                android:windowSoftInputMode="adjustPan|stateHidden">
+            <!-- windowSoftInputMode set stateHidden so bottomNavigationView doesn't pop
+                up when the keyboard is open, taking too much screen. Pan prevents keyboard
+                 from blocking textbox-->
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
 
