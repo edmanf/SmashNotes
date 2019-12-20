@@ -140,6 +140,10 @@
         <item>Great Plateau Tower</item>
         <item>Moray Towers</item>
         <item>Dracula\'s Castle</item>
+        <item>Mementos</item>
+        <item>Yggdrasil's Altar</item>
+        <item>Spiral Mountain</item>
+        <item>King of Fighters Stadium</item>
     </string-array>
 
     <string-array name="stages43ds">
@@ -412,6 +416,11 @@
         <item>King K. Rool</item>
         <item>Isabelle</item>
         <item>Incineroar</item>
+        <item>Piranha Plant</item>
+        <item>Joker</item>
+        <item>Hero</item>
+        <item>Banjoe &amp; Kazooie</item>
+        <item>Terry</item>
     </string-array>
 
     <string-array name="characters4">
