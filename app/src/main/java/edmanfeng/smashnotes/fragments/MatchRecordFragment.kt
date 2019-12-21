@@ -60,6 +60,7 @@ class MatchRecordFragment : Fragment() {
                 val gameRecord = gameRecordLiveData.value
                 if (gameRecord != null) {
                     mGameRecord = gameRecord
+                    mVictorySelected = mGameRecord.isVictory()
                 }
                 populateViews()
             })
